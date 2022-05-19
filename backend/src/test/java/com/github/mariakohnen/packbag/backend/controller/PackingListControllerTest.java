@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
@@ -31,11 +30,11 @@ class PackingListControllerTest {
     void getAllPackingLists() {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
-                ._id("1")
+                .id("1")
                 .name("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
-                ._id("2")
+                .id("2")
                 .name("Frankfurt")
                 .build();
         packingListRepository.insert(packingList1);
@@ -50,11 +49,11 @@ class PackingListControllerTest {
                 .getResponseBody();
         //THEN
         List<PackingList> expected = List.of((PackingList.builder()
-                        ._id("1")
+                        .id("1")
                         .name("Bayreuth")
                         .build()),
                 PackingList.builder()
-                        ._id("2")
+                        .id("2")
                         .name("Frankfurt")
                         .build());
         assertEquals(expected, actual);
