@@ -3,7 +3,7 @@ import './App.css';
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 
-function App() {
+export default function App() {
     return (
         <HashRouter>
             <div className="App">
@@ -15,5 +15,3 @@ function App() {
         </HashRouter>
     )
 }
-
-export default App

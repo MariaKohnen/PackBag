@@ -1,6 +1,6 @@
 
 export type PackingList = {
-    id : string
+    id : string;
     name : string;
-    dateOfArrival : string
+    dateOfArrival : string;
 }
