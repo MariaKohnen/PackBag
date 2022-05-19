@@ -19,11 +19,11 @@ class PackingListServiceTest {
     void getAllPackingLists() {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
-                ._id("1")
+                .id("1")
                 .name("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
-                ._id("2")
+                .id("2")
                 .name("Frankfurt")
                 .build();
         when(packingListRepository.findAll()).thenReturn(List.of(packingList1, packingList2));
@@ -32,11 +32,11 @@ class PackingListServiceTest {
         //THEN
         verify(packingListRepository).findAll();
         List<PackingList> expected = List.of((PackingList.builder()
-                        ._id("1")
+                        .id("1")
                         .name("Bayreuth")
                         .build()),
                 PackingList.builder()
-                        ._id("2")
+                        .id("2")
                         .name("Frankfurt")
                         .build());
         assertEquals(expected, actual);

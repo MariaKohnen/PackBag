@@ -17,7 +17,7 @@ import java.time.Instant;
 public class PackingList {
 
     @Id
-    private String _id;
+    private String id;
     private String name;
     private Instant dateOfArrival;
 }
