@@ -1,5 +1,6 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
+import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,5 +61,53 @@ class PackingListControllerTest {
                         .name("Frankfurt")
                         .build());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void postNewPackingList_whenListIsNotEmpty_shouldReturnNewPackingList() {
+        //GIVEN
+        PackingListDto packingListDto1 = PackingListDto.builder()
+                .name("Bayreuth")
+                .dateOfArrival("2022-10-02")
+                .build();
+        //WHEN
+        PackingList actual = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        PackingList expected = PackingList.builder()
+                .id(actual.getId())
+                .name("Bayreuth")
+                .dateOfArrival(stringToInstant("2022-10-02"))
+                .build();
+        assertEquals(24, actual.getId().length());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void postNewPackingList_whenNameIsNotGiven_shouldReturnException() {
+        //GIVEN
+        PackingListDto packingListDto1 = PackingListDto.builder()
+                .name(null)
+                .dateOfArrival("2022-10-02")
+                .build();
+        //WHEN
+        webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().isEqualTo(400);
+    }
+
+    private Instant stringToInstant(String dateAsString) {
+        LocalDate date = LocalDate.parse(dateAsString);
+        return date.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
     }
 }
