@@ -7,7 +7,6 @@ function App() {
     return (
         <HashRouter>
             <div className="App">
-                <h1>Hello World!</h1>
                 <Routes>
                     <Route path="/"
                            element={<PackingListOverviewPage/>}/>

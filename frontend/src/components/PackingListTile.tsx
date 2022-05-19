@@ -1,4 +1,5 @@
 import {PackingList} from "../model/PackingList";
+import "./PackingListTile.css"
 
 type packingListTileProps = {
     packingList : PackingList;
@@ -6,7 +7,7 @@ type packingListTileProps = {
 
 export default function packingListTile({packingList} : packingListTileProps) {
     return (
-        <div>
+        <div className="packing-list-tile">
             <p>{packingList.name}</p>
         </div>
     )

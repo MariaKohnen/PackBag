@@ -1,6 +1,7 @@
 import usePackingLists from "../hooks/usePackingLists";
-import {Header} from "../components/Header";
+import {HeaderOverview} from "../components/HeaderOverview";
 import PackingListTile from "../components/PackingListTile";
+import "./PackingListOverviewPage.css";
 
 export default function PackingListOverviewPage() {
 
@@ -9,10 +10,10 @@ export default function PackingListOverviewPage() {
     return (
         <div>
             <div>
-                <Header/>
+                <HeaderOverview/>
             </div>
             <div>
-                <div>
+                <div className="packing-list-overview">
                     {packingLists.map(list => <PackingListTile
                         key={list.id}
                         packingList={list}/>)}

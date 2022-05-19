@@ -1,0 +1,16 @@
+.packing-list-tile:nth-child(odd){
+    background-color: #de5928;
+}
+
+.packing-list-tile:nth-child(even){
+    background-color: #9adae3;
+}
+
+.packing-list-tile p {
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #eaeadf;
+}
