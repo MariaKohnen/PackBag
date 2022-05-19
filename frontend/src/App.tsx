@@ -1,17 +1,20 @@
 import React from 'react';
 import './App.css';
-import {HashRouter} from "react-router-dom";
+import {HashRouter, Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 
 function App() {
     return (
-        <div className="App">
-            <h1>Hello World!</h1>
-            <HashRouter>
-                <PackingListOverviewPage/>
-            </HashRouter>
-        </div>
-    );
+        <HashRouter>
+            <div className="App">
+                <h1>Hello World!</h1>
+                <Routes>
+                    <Route path="/"
+                           element={<PackingListOverviewPage/>}/>
+                </Routes>
+            </div>
+        </HashRouter>
+    )
 }
 
-export default App;
+export default App
