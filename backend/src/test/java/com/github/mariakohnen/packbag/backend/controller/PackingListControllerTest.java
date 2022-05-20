@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +66,7 @@ class PackingListControllerTest {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
                 .name("Bayreuth")
-                .dateOfArrival("2022-10-02")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN
         PackingList actual = webTestClient.post()
@@ -85,7 +83,7 @@ class PackingListControllerTest {
         PackingList expected = PackingList.builder()
                 .id(actual.getId())
                 .name("Bayreuth")
-                .dateOfArrival(stringToInstant("2022-10-02"))
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -96,7 +94,7 @@ class PackingListControllerTest {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
                 .name(null)
-                .dateOfArrival("2022-10-02")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN//THEN
         webTestClient.post()
@@ -106,8 +104,4 @@ class PackingListControllerTest {
                 .expectStatus().isEqualTo(400);
     }
 
-    private Instant stringToInstant(String dateAsString) {
-        LocalDate date = LocalDate.parse(dateAsString);
-        return date.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
-    }
 }

@@ -5,6 +5,7 @@ import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,19 +15,19 @@ class PackingListServiceTest {
 
     private final PackingListRepository packingListRepository = mock(PackingListRepository.class);
 
-    private final UtilService utilService = mock(UtilService.class);
-
-    private final PackingListService packingListService = new PackingListService(packingListRepository, utilService);
+    private final PackingListService packingListService = new PackingListService(packingListRepository);
 
     @Test
     void getAllPackingLists() {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
                 .id("1")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .name("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
                 .id("2")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
                 .name("Frankfurt")
                 .build();
         when(packingListRepository.findAll()).thenReturn(List.of(packingList1, packingList2));
@@ -36,10 +37,12 @@ class PackingListServiceTest {
         verify(packingListRepository).findAll();
         List<PackingList> expected = List.of((PackingList.builder()
                         .id("1")
+                        .dateOfArrival(LocalDate.parse("2022-10-02"))
                         .name("Bayreuth")
                         .build()),
                 PackingList.builder()
                         .id("2")
+                        .dateOfArrival(LocalDate.parse("2022-10-03"))
                         .name("Frankfurt")
                         .build());
         assertEquals(expected, actual);
@@ -50,13 +53,15 @@ class PackingListServiceTest {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .name("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
-
         PackingList packingListToAdd = PackingList.builder()
                 .name("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("123")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .name("Bayreuth")
                 .build());
         //WHEN
@@ -64,6 +69,7 @@ class PackingListServiceTest {
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .name("Bayreuth")
                 .build();
         verify(packingListRepository).insert(packingListToAdd);
@@ -75,6 +81,7 @@ class PackingListServiceTest {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .name(null)
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(packingListDto));

@@ -13,12 +13,9 @@ public class PackingListService {
 
     private final PackingListRepository packingListRepository;
 
-    private final UtilService utilService;
-
     @Autowired
-    public PackingListService(PackingListRepository packingListRepository, UtilService utilService) {
+    public PackingListService(PackingListRepository packingListRepository) {
         this.packingListRepository = packingListRepository;
-        this.utilService = utilService;
     }
 
     public List<PackingList> getAllPackingLists() {
@@ -31,7 +28,7 @@ public class PackingListService {
         }
         PackingList newPackingList = PackingList.builder()
                 .name(packingListDto.getName())
-                .dateOfArrival(utilService.dateStringToInstant(packingListDto.getDateOfArrival()))
+                .dateOfArrival(packingListDto.getDateOfArrival())
                 .build();
         return packingListRepository.insert(newPackingList);
     }
