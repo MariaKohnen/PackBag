@@ -10,7 +10,7 @@ import java.time.ZoneId;
 public class UtilService {
 
     public Instant dateStringToInstant(String dateAsString) {
-        LocalDate date = LocalDate.parse(dateAsString);
-        return date.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
+            LocalDate date = LocalDate.parse(dateAsString);
+            return date.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
     }
 }
