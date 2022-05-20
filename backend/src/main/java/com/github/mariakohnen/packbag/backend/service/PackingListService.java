@@ -6,9 +6,6 @@ import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -16,9 +13,12 @@ public class PackingListService {
 
     private final PackingListRepository packingListRepository;
 
+    private final UtilService utilService;
+
     @Autowired
-    public PackingListService(PackingListRepository packingListRepository) {
+    public PackingListService(PackingListRepository packingListRepository, UtilService utilService) {
         this.packingListRepository = packingListRepository;
+        this.utilService = utilService;
     }
 
     public List<PackingList> getAllPackingLists() {
@@ -31,13 +31,9 @@ public class PackingListService {
         }
         PackingList newPackingList = PackingList.builder()
                 .name(packingListDto.getName())
-                .dateOfArrival(dateStringToInstant(packingListDto.getDateOfArrival()))
+                .dateOfArrival(utilService.dateStringToInstant(packingListDto.getDateOfArrival()))
                 .build();
         return packingListRepository.insert(newPackingList);
     }
 
-    public Instant dateStringToInstant(String dateAsString) {
-        LocalDate date = LocalDate.parse(dateAsString);
-        return date.atStartOfDay(ZoneId.of("Europe/Paris")).toInstant();
-    }
 }

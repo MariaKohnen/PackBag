@@ -98,7 +98,7 @@ class PackingListControllerTest {
                 .name(null)
                 .dateOfArrival("2022-10-02")
                 .build();
-        //WHEN
+        //WHEN//THEN
         webTestClient.post()
                 .uri("/api/packinglists")
                 .bodyValue(packingListDto1)
