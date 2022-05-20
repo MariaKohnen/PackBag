@@ -14,10 +14,9 @@ class UtilServiceTest {
         //GIVEN
         String dateAsString = "2022-10-02";
         //WHEN
-        Instant dateAsInstant = utilService.dateStringToInstant(dateAsString);
-        String actual = dateAsInstant.toString();
+        Instant actual = utilService.dateStringToInstant(dateAsString);
         //THEN
-        String expected = "2022-10-01T22:00:00Z";
+        Instant expected = Instant.parse("2022-10-01T22:00:00Z");
         Assertions.assertEquals(expected, actual);
     }
 }
