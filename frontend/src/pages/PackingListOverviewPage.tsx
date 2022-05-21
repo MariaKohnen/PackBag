@@ -20,7 +20,8 @@ export default function PackingListOverviewPage() {
                 <div className="packing-list-overview">
                     {packingLists.map(list => <PackingListTile
                         key={list.id}
-                        packingList={list}/>)}
+                        packingList={list}/>)
+                        .reverse()}
             </div>
         </div>
     )

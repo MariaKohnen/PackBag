@@ -15,7 +15,7 @@ export default function usePackingLists() {
 
     const addPackingList = (newPackingList : Omit<PackingList, "id"> ) => {
         postPackingList(newPackingList)
-            .then(addedPackingList => setPackingLists([addedPackingList, ...packingLists]))
+            .then(addedPackingList => setPackingLists([...packingLists, addedPackingList]))
             .then(() => {toast.success("PackingList was added")})
             .catch(() => toast.error("Connection failed! Please try again later."))
     }
