@@ -17,7 +17,7 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
         }
         const newPackingList : Omit<PackingList, "id"> = {
             name : newName,
-            dateOfArrival : '2022-05-21'
+            dateOfArrival : "2022-05-21"
         }
         addPackingList(newPackingList)
         setNewName('')
