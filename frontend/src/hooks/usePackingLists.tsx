@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
-import {getAllPackingLists} from "../service/api-service";
+import {getAllPackingLists, postPackingList} from "../service/api-service";
 
 
 export default function usePackingLists() {
@@ -13,5 +13,12 @@ export default function usePackingLists() {
             .catch(() => toast.error("Connection failed. Please try again."));
     }, []);
 
-    return {packingLists}
+    const addPackingList = (newPackingList : Omit<PackingList, "id"> ) => {
+        postPackingList(newPackingList)
+            .then(addedPackingList => setPackingLists([addedPackingList, ...packingLists]))
+            .then(() => {toast.success("PackingList was added")})
+            .catch(() => toast.error("Connection failed! Please try again later."))
+    }
+
+    return {packingLists, addPackingList}
 }
