@@ -28,7 +28,6 @@ public class PackingListService {
         }
         PackingList newPackingList = PackingList.builder()
                 .name(packingListDto.getName())
-                .dateOfArrival(packingListDto.getDateOfArrival())
                 .build();
         return packingListRepository.insert(newPackingList);
     }

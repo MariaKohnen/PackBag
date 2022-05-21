@@ -13,7 +13,7 @@ export default function usePackingLists() {
             .catch(() => toast.error("Connection failed. Please try again."));
     }, []);
 
-    const addPackingList = (newPackingList : Omit<PackingList, "id"> ) => {
+    const addPackingList = (newPackingList : Omit<PackingList, "id" | "dateOfArrival">) => {
         postPackingList(newPackingList)
             .then(addedPackingList => setPackingLists([...packingLists, addedPackingList]))
             .then(() => {toast.success("PackingList was added")})

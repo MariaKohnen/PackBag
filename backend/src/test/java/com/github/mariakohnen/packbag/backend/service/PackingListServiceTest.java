@@ -53,15 +53,12 @@ class PackingListServiceTest {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         PackingList packingListToAdd = PackingList.builder()
                 .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("123")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .name("Bayreuth")
                 .build());
         //WHEN
@@ -69,7 +66,6 @@ class PackingListServiceTest {
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .name("Bayreuth")
                 .build();
         verify(packingListRepository).insert(packingListToAdd);
@@ -81,7 +77,6 @@ class PackingListServiceTest {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .name(null)
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(packingListDto));

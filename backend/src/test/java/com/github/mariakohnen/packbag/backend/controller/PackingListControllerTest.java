@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,7 +65,6 @@ class PackingListControllerTest {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
                 .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN
         PackingList actual = webTestClient.post()
@@ -83,7 +81,6 @@ class PackingListControllerTest {
         PackingList expected = PackingList.builder()
                 .id(actual.getId())
                 .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -94,7 +91,6 @@ class PackingListControllerTest {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
                 .name(null)
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         //WHEN//THEN
         webTestClient.post()

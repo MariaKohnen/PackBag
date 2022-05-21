@@ -1,0 +1,31 @@
+.add-packing-list {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.add-packing-list .text-field {
+    padding: 5px 0 5px 40px;
+    background-color: unset;
+    border: 0;
+    border-bottom: 1px solid #6a7a7a;
+    margin-bottom: 15px;
+    background-image: url('../../public/search-icon.png');
+    background-size: 20px;
+    background-position: 10px;
+    background-repeat: no-repeat;
+}
+
+.text-field:focus {
+    border: 2px solid #6a7a7a;
+}
+
+.add-packing-list .button {
+    background-color: #d7a36f;
+    border: 0;
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 1.4rem;
+    color: #253d3e;
+}

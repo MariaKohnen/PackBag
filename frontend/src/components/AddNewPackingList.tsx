@@ -1,9 +1,10 @@
 import {FormEvent, useState} from "react";
 import { toast } from "react-toastify";
 import {PackingList} from "../model/PackingList";
+import "./AddNewPackingList.css";
 
 type AddPackingListProp = {
-    addPackingList : (newPackingList : Omit<PackingList, "id">) => void
+    addPackingList : (newPackingList : Omit<PackingList, "id" | "dateOfArrival">) => void
 }
 
 export default function AddNewPackingList({addPackingList} : AddPackingListProp) {
@@ -15,9 +16,8 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
             toast.error("Destination ist required.")
             return
         }
-        const newPackingList : Omit<PackingList, "id"> = {
-            name : newName,
-            dateOfArrival : "2022-05-21"
+        const newPackingList : Omit<PackingList, "id" | "dateOfArrival"> = {
+            name : newName
         }
         addPackingList(newPackingList)
         setNewName('')
@@ -25,9 +25,9 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
 
     return (
         <div>
-            <form onSubmit={getOnSubmit}>
-                <input type="name" min="2" value={newName} onChange={event => setNewName(event.target.value)}/>
-                <input type="submit" value={"add item"}/>
+            <form className="add-packing-list" onSubmit={getOnSubmit}>
+                <input className="text-field" type="name" placeholder="where do you want to go next?" value={newName} onChange={event => setNewName(event.target.value)}/>
+                <input className="button" type="submit" value={"add item"}/>
             </form>
 
         </div>

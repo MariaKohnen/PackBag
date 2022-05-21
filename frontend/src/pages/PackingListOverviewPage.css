@@ -12,7 +12,7 @@
 .packing-list-overview div {
     display: flex;
     justify-content: flex-start;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .packing-list-overview div:nth-child(even) {
