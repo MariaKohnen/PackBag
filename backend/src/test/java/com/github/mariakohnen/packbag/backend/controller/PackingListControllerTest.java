@@ -1,5 +1,6 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
+import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,11 +32,11 @@ class PackingListControllerTest {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
                 .id("1")
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
                 .id("2")
-                .name("Frankfurt")
+                .destination("Frankfurt")
                 .build();
         packingListRepository.insert(packingList1);
         packingListRepository.insert(packingList2);
@@ -50,12 +51,53 @@ class PackingListControllerTest {
         //THEN
         List<PackingList> expected = List.of((PackingList.builder()
                         .id("1")
-                        .name("Bayreuth")
+                        .destination("Bayreuth")
                         .build()),
                 PackingList.builder()
                         .id("2")
-                        .name("Frankfurt")
+                        .destination("Frankfurt")
                         .build());
         assertEquals(expected, actual);
     }
+
+    @Test
+    void postNewPackingList_whenListIsNotEmpty_shouldReturnNewPackingList() {
+        //GIVEN
+        PackingListDto packingListDto1 = PackingListDto.builder()
+                .destination("Bayreuth")
+                .build();
+        //WHEN
+        PackingList actual = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        PackingList expected = PackingList.builder()
+                .id(actual.getId())
+                .destination("Bayreuth")
+                .build();
+        assertEquals(24, actual.getId().length());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void postNewPackingList_whenNameIsNotGiven_shouldReturnException() {
+        //GIVEN
+        PackingListDto packingListDto1 = PackingListDto.builder()
+                .destination(null)
+                .build();
+        //WHEN//THEN
+        webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().isEqualTo(400);
+    }
+
 }

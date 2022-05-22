@@ -1,11 +1,3 @@
-.packing-list-tile:nth-child(odd){
-    background-color: #de5928;
-}
-
-.packing-list-tile:nth-child(even){
-    background-color: #9adae3;
-}
-
 .packing-list-tile p {
     margin-left: 10px;
     margin-right: 10px;
@@ -13,4 +5,28 @@
     font-size: 1.4rem;
     font-weight: bold;
     color: #eaeadf;
+}
+
+.packing-list-tile:nth-child(1){
+    background-color: #fb5e00;
+}
+
+.packing-list-tile:nth-child(2){
+    background-color: #9ac8c8;
+}
+
+.packing-list-tile:nth-child(3){
+    background-color: #005a5a;
+}
+
+.packing-list-tile:nth-child(4){
+    background-color: #f583b4;
+}
+
+.packing-list-tile:nth-child(5){
+    background-color: #fbc117;
+}
+
+.packing-list-tile:nth-child(6){
+    background-color: #e20002;
 }

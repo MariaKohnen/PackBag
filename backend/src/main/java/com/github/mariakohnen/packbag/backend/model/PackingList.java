@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.Instant;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +18,6 @@ public class PackingList {
 
     @Id
     private String id;
-    private String name;
-    private Instant dateOfArrival;
+    private String destination;
+    private LocalDate dateOfArrival;
 }

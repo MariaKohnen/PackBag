@@ -5,3 +5,8 @@ export function getAllPackingLists() {
     return axios.get<PackingList[]>("/api/packinglists")
         .then(response => response.data);
 }
+
+export function postPackingList(newPackingList : Omit<PackingList, "id" | "dateOfArrival">) {
+    return axios.post("/api/packinglists", newPackingList)
+        .then(response => response.data);
+}
