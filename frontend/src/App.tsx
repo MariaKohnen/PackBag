@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
+import PackingListDetailsPage from "./components/PackingListDetailsPage";
 
 export default function App() {
     return (
@@ -11,7 +12,7 @@ export default function App() {
                     <Route path="/"
                            element={<PackingListOverviewPage/>}/>
                     <Route path={`/packinglist/:id`}
-                           element={<PackingListOverviewPage />}/>
+                           element={<PackingListDetailsPage />}/>
                 </Routes>
             </div>
         </HashRouter>

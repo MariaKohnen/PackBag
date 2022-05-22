@@ -1,6 +1,6 @@
 
 export default function PackingListDetailsPage() {
     return (
-        <div></div>
+        <div><h2>Details</h2></div>
     )
 }

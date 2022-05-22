@@ -64,7 +64,7 @@ class PackingListControllerTest {
     void getPackingListById_whenIdIsValid_shouldReturnPackingList() {
         //GIVEN
         PackingList packingListDto1 = PackingList.builder()
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
 
         PackingList addedPackingList = webTestClient.post()
@@ -89,7 +89,7 @@ class PackingListControllerTest {
         assertNotNull(actual);
         PackingList expected = PackingList.builder()
                 .id(actual.getId())
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         assertEquals(expected, actual);
     }
@@ -98,7 +98,7 @@ class PackingListControllerTest {
     void getPackingListById_whenIdIsNotValid_shouldThrowException() {
         //GIVEN
         PackingList packingListDto1 = PackingList.builder()
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         String invalidId = "123";
 

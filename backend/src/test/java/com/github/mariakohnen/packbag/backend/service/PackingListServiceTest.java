@@ -55,8 +55,7 @@ class PackingListServiceTest {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
                 .id("1")
-                .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .destination("Bayreuth")
                 .build();
         when(packingListRepository.findById("1")).thenReturn(Optional.ofNullable(packingList1));
         //WHEN
@@ -64,8 +63,7 @@ class PackingListServiceTest {
         //THEN
         PackingList expected = PackingList.builder()
                 .id("1")
-                .name("Bayreuth")
-                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .destination("Bayreuth")
                 .build();
         verify(packingListRepository).findById("1");
         assertEquals(expected, actual);
