@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PackingListDto {
 
-    private String name;
+    private String destination;
 }

@@ -18,6 +18,6 @@ public class PackingList {
 
     @Id
     private String id;
-    private String name;
+    private String destination;
     private LocalDate dateOfArrival;
 }

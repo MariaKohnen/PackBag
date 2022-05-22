@@ -25,12 +25,12 @@ class PackingListServiceTest {
         PackingList packingList1 = PackingList.builder()
                 .id("1")
                 .dateOfArrival(LocalDate.parse("2022-10-02"))
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
                 .id("2")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
-                .name("Frankfurt")
+                .destination("Frankfurt")
                 .build();
         when(packingListRepository.findAll()).thenReturn(List.of(packingList1, packingList2));
         //WHEN
@@ -40,12 +40,12 @@ class PackingListServiceTest {
         List<PackingList> expected = List.of((PackingList.builder()
                         .id("1")
                         .dateOfArrival(LocalDate.parse("2022-10-02"))
-                        .name("Bayreuth")
+                        .destination("Bayreuth")
                         .build()),
                 PackingList.builder()
                         .id("2")
                         .dateOfArrival(LocalDate.parse("2022-10-03"))
-                        .name("Frankfurt")
+                        .destination("Frankfurt")
                         .build());
         assertEquals(expected, actual);
     }
@@ -84,21 +84,21 @@ class PackingListServiceTest {
     void addNewPackingList_whenNameIsGiven_shouldReturnNewPackingList() {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         PackingList packingListToAdd = PackingList.builder()
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("123")
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build());
         //WHEN
         PackingList actual = packingListService.addNewPackingList(packingListDto);
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         verify(packingListRepository).insert(packingListToAdd);
         assertEquals(expected, actual);
@@ -108,7 +108,7 @@ class PackingListServiceTest {
     void addNewPackingList_whenNameNull_shouldThrowException() {
         //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
-                .name(null)
+                .destination(null)
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(packingListDto));
