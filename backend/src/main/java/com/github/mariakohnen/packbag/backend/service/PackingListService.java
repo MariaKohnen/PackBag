@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PackingListService {
@@ -32,4 +33,8 @@ public class PackingListService {
         return packingListRepository.insert(newPackingList);
     }
 
+    public PackingList getPackingListById(String id) {
+        return packingListRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
+    }
 }
