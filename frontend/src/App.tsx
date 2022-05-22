@@ -10,6 +10,8 @@ export default function App() {
                 <Routes>
                     <Route path="/"
                            element={<PackingListOverviewPage/>}/>
+                    <Route path={`/packinglist/:id`}
+                           element={<PackingListOverviewPage />}/>
                 </Routes>
             </div>
         </HashRouter>

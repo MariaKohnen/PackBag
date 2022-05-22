@@ -6,6 +6,11 @@ export function getAllPackingLists() {
         .then(response => response.data);
 }
 
+export function getPackingListById(id : string) {
+    return axios.get<PackingList>(`/api/packinglists/${id}`)
+        .then(response => response.data)
+}
+
 export function postPackingList(newPackingList : Omit<PackingList, "id" | "dateOfArrival">) {
     return axios.post("/api/packinglists", newPackingList)
         .then(response => response.data);
