@@ -32,11 +32,11 @@ class PackingListControllerTest {
         //GIVEN
         PackingList packingList1 = PackingList.builder()
                 .id("1")
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         PackingList packingList2 = PackingList.builder()
                 .id("2")
-                .name("Frankfurt")
+                .destination("Frankfurt")
                 .build();
         packingListRepository.insert(packingList1);
         packingListRepository.insert(packingList2);
@@ -51,11 +51,11 @@ class PackingListControllerTest {
         //THEN
         List<PackingList> expected = List.of((PackingList.builder()
                         .id("1")
-                        .name("Bayreuth")
+                        .destination("Bayreuth")
                         .build()),
                 PackingList.builder()
                         .id("2")
-                        .name("Frankfurt")
+                        .destination("Frankfurt")
                         .build());
         assertEquals(expected, actual);
     }
@@ -64,7 +64,7 @@ class PackingListControllerTest {
     void postNewPackingList_whenListIsNotEmpty_shouldReturnNewPackingList() {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         //WHEN
         PackingList actual = webTestClient.post()
@@ -80,7 +80,7 @@ class PackingListControllerTest {
         assertNotNull(actual.getId());
         PackingList expected = PackingList.builder()
                 .id(actual.getId())
-                .name("Bayreuth")
+                .destination("Bayreuth")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -90,7 +90,7 @@ class PackingListControllerTest {
     void postNewPackingList_whenNameIsNotGiven_shouldReturnException() {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
-                .name(null)
+                .destination(null)
                 .build();
         //WHEN//THEN
         webTestClient.post()

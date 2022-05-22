@@ -8,7 +8,7 @@ type packingListTileProps = {
 export default function packingListTile({packingList} : packingListTileProps) {
     return (
         <div className="packing-list-tile">
-            <p>{packingList.name}</p>
+            <p>{packingList.destination}</p>
         </div>
     )
 }

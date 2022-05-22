@@ -23,11 +23,11 @@ public class PackingListService {
     }
 
     public PackingList addNewPackingList(PackingListDto packingListDto) {
-        if (packingListDto.getName() == null) {
-            throw new IllegalArgumentException("Name of the given packing list was null");
+        if (packingListDto.getDestination() == null) {
+            throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
         PackingList newPackingList = PackingList.builder()
-                .name(packingListDto.getName())
+                .destination(packingListDto.getDestination())
                 .build();
         return packingListRepository.insert(newPackingList);
     }
