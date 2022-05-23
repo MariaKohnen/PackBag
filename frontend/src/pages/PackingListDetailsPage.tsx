@@ -12,7 +12,7 @@ export default function PackingListDetailsPage() {
     useEffect(() => {
         if(id) {
             getDetailedPackingListById(id)
-        }
+        }//eslint-disable-next-line
     },[id])
 
     return (
