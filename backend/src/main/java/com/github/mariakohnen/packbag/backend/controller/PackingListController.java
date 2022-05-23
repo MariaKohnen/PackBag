@@ -24,6 +24,11 @@ public class PackingListController {
         return packingListService.getAllPackingLists();
     }
 
+    @GetMapping("{id}")
+    public PackingList getPackingListById (@PathVariable String id) {
+        return packingListService.getPackingListById(id);
+    }
+
     @PostMapping
     public PackingList postNewPackingList(@RequestBody PackingListDto packingListDto) {
         return packingListService.addNewPackingList(packingListDto);

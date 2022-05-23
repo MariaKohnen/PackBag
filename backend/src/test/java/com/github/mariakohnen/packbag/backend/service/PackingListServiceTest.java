@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -46,6 +47,34 @@ class PackingListServiceTest {
                         .destination("Frankfurt")
                         .build());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPackingListById_whenIdIsValid_shouldReturnPackingList() {
+        //GIVEN
+        PackingList packingList1 = PackingList.builder()
+                .id("1")
+                .destination("Bayreuth")
+                .build();
+        when(packingListRepository.findById("1")).thenReturn(Optional.ofNullable(packingList1));
+        //WHEN
+        PackingList actual = packingListService.getPackingListById("1");
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id("1")
+                .destination("Bayreuth")
+                .build();
+        verify(packingListRepository).findById("1");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPackingListById_whenIdIsNotValid_shouldThrowException() {
+        //GIVEN
+        String invalidId = "123";
+        when(packingListRepository.findById(invalidId)).thenReturn(Optional.empty());
+        //WHEN//THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.getPackingListById(invalidId));
     }
 
     @Test

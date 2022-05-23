@@ -61,6 +61,65 @@ class PackingListControllerTest {
     }
 
     @Test
+    void getPackingListById_whenIdIsValid_shouldReturnPackingList() {
+        //GIVEN
+        PackingList packingListDto1 = PackingList.builder()
+                .destination("Bayreuth")
+                .build();
+
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+
+        //WHEN
+        assertNotNull(addedPackingList);
+        PackingList actual = webTestClient.get()
+                .uri("/api/packinglists/" + addedPackingList.getId())
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        assertNotNull(actual);
+        PackingList expected = PackingList.builder()
+                .id(actual.getId())
+                .destination("Bayreuth")
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPackingListById_whenIdIsNotValid_shouldThrowException() {
+        //GIVEN
+        PackingList packingListDto1 = PackingList.builder()
+                .destination("Bayreuth")
+                .build();
+        String invalidId = "123";
+
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto1)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+
+        //WHEN
+        assertNotNull(addedPackingList);
+        webTestClient.get()
+                .uri("/api/packinglists/" + invalidId)
+                .exchange()
+                .expectStatus().is4xxClientError();
+    }
+
+    @Test
     void postNewPackingList_whenListIsNotEmpty_shouldReturnNewPackingList() {
         //GIVEN
         PackingListDto packingListDto1 = PackingListDto.builder()
