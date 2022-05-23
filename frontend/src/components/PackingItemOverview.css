@@ -1,0 +1,13 @@
+.items-overview-container {
+    min-height: 600px;
+    background-color: #eaeadf;
+    display: flex;
+    align-items: stretch;
+    border-radius: 20px;
+}
+
+.items-overview-card {
+    width: auto;
+    height: auto;
+    background-color: beige;
+}

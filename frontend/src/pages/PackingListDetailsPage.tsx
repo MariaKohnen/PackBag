@@ -1,6 +1,8 @@
 import useDetailedPackingList from "../hooks/useDetailedPackingList";
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
+import "./PackingListDetailsPage.css";
+import PackingItemOverview from "../components/PackingItemOverview";
 
 export default function PackingListDetailsPage() {
 
@@ -14,9 +16,14 @@ export default function PackingListDetailsPage() {
     },[id])
 
     return (
-        <div>
-            <h2>Details</h2>
+        <div className="details-page">
+            <div className="header-details-page">
             {detailedPackingList && <p>{detailedPackingList.destination}</p>}
+            </div>
+            <div>
+                {detailedPackingList && <PackingItemOverview
+                    actualPackingList={detailedPackingList}/>}
+            </div>
         </div>
     )
 }

@@ -1,3 +1,7 @@
+.header-overview {
+    height: 130px;
+}
+
 .header-overview h2 {
     font-size: 2rem;
     color : #eaeadf;

@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
-import PackingListDetailsPage from "./components/PackingListDetailsPage";
+import PackingListDetailsPage from "./pages/PackingListDetailsPage";
 
 export default function App() {
     return (
