@@ -1,68 +1,66 @@
-.navbar {
-    margin: 10px -30px 0 -30px;
-    background-color: #253d3e;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    border-radius: 20px;
-    box-shadow: rgba(19, 19, 37, 0.25) 0 50px 100px -20px, rgba(0, 0, 0, 0.3) 0 30px 60px -30px, rgba(10, 37, 64, 0.35) 0 -2px 6px 0 inset;
+.nav-container {
+    margin: 20px -30px 0 -30px;
+    width: 100%;
+    height: 40px;
+    position: fixed;
+    bottom: 0;
 }
 
-.menu-bars {
-    font-size: 3rem;
+.navbar {
+    background-color: #253d3e;
+    height: 40px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0 0 0 2px, rgba(6, 24, 44, 0.65) 0 4px 6px -1px, rgba(255, 255, 255, 0.08) 0 1px 0 inset;
+}
+
+.menu-open {
+    padding-top: 3px;
+    font-size: 2rem;
+    position: relative;
+    left: 45%;
+}
+
+.menu-close {
+    font-size: 2rem;
+    padding: 0 5px 0 5px;
 }
 
 .nav-menu {
-    background-color: rebeccapurple;
-    margin: 10px -30px 0 -30px;
+    width: 100%;
     height: 60px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0 0 0 2px, rgba(6, 24, 44, 0.65) 0 4px 6px -1px, rgba(255, 255, 255, 0.08) 0 1px 0 inset;
     position: fixed;
     bottom: -150px;
     transition: 850ms;
 }
 
 .nav-menu.active {
-    background-color: #fb5e00;
+    background-color: #253d3e;
     bottom: 0;
     transition: 350ms;
 }
 
-.nav-text {
+.nav-menu-items {
+    width: 100%;
+    padding-top: 10px;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: baseline;
-    padding: 8px 0 8px 16px;
-    list-style: none;
-    height: 60px;
+    justify-content: space-around;
+    align-items: center;
 }
 
+.nav-menu-items div:nth-child(1) {
+    position: absolute;
+    left: 45%;
+}
+
+.nav-text {
+    padding: 8px 0 8px 0;
+}
 .nav-text a {
     text-decoration: none;
-    color: #f5f5f5;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
+    font-size: 28px;
 }
 
-.nav-text a:hover {
-    background-color: #519E8A;
-}
-
-.nav-menu-items {
-    width: fit-content;
-    display: flex;
-    justify-content: space-evenly;
-    flex-grow: 1;
-}
-
-.navbar-toggle {
-    background-color: #476A6F;
-}
-
-span {
-    margin-left: 0;
-}

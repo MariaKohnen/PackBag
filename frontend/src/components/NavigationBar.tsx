@@ -12,34 +12,40 @@ export default function NavigationBar() {
     const openSidebar = () => setOpenNavBar(!openNavBar);
 
 
-    return(
-        <div className="nav-container">
-            <IconContext.Provider value={{ color: 'white'}}>
-                <div className="navbar">
-                    <Link to='#' className="menu-bars">
-                        <AiOutlineLine onClick={openSidebar} />
-                    </Link>
+    return (
+        <IconContext.Provider value={{color: '#eaeadf'}}>
+            <div className="nav-container">
+
+                    <div className="navbar">
+                        <Link to='#' className="menu-open">
+                            <AiOutlinePlus onClick={openSidebar}/>
+                        </Link>
+                    </div>
+
+                    <nav className={openNavBar ? 'nav-menu active' : 'nav-menu'}>
+
+                        <div className="nav-menu-items" onClick={openSidebar}>
+
+                            <div className="navbar-toogle">
+                                <Link to={"#"} className="menu-close">
+                                    <AiOutlineLine onClick={openSidebar}/>
+                                </Link>
+                            </div>
+                            {NavigationBarData.map((item, index) => {
+                                return (
+
+                                    <div key={index} className={item.cName}>
+                                        <Link to={item.path}>
+                                            {item.icon}
+                                        </Link>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </nav>
+
                 </div>
-                <nav className={openNavBar? 'nav-menu active' : 'nav-menu'}>
-                    <ul className="nav-menu-items" onClick={openSidebar}>
-                        <li className="navbar-toogle">
-                            <Link to={"#"} className="menu-bars">
-                                <AiOutlinePlus onClick={openSidebar} />
-                            </Link>
-                        </li>
-                        {NavigationBarData.map((item, index) => {
-                            return (
-                                <li key={index} className={item.cName}>
-                                    <Link to={item.path}>
-                                        {item.icon}
-                                        <span>{item.title}</span>
-                                    </Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </nav>
-            </IconContext.Provider>
-        </div>
+
+        </IconContext.Provider>
     )
 }
