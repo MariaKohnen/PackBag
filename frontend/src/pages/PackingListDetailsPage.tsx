@@ -9,7 +9,7 @@ import {AiOutlineLine, AiOutlinePlus} from "react-icons/ai";
 import EditPackingList from "../components/EditPackingList";
 
 type PackingListDetailsPageProps = {
-    updatePackingList: (editedPackingList: Omit<PackingList, "id">) => void
+    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
 }
 
 export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
@@ -41,9 +41,10 @@ export default function PackingListDetailsPage({updatePackingList}: PackingListD
                 </div>
                 {showsDetails ?
                     <div>
-                    {detailedPackingList && <EditPackingList
+                    {detailedPackingList && id && <EditPackingList
                         updatePackingList={updatePackingList}
-                        detailedPackingList={detailedPackingList}/>}
+                        detailedPackingList={detailedPackingList}
+                        id={id}/>}
                     </div>
                     :
                     <div className="item-overview">

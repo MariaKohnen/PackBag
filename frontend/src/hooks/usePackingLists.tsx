@@ -22,8 +22,9 @@ export default function usePackingLists() {
             .catch((exception) => toast.error(exception + "Connection failed! Please try again later."))
     }
 
-    const updatePackingList = (editedPackingList: Omit<PackingList, "id">) => {
-        return putPackingList(editedPackingList)
+    const updatePackingList = (id: string, editedPackingList: Omit<PackingList, "id">) => {
+        console.log(editedPackingList + "before to api")
+        return putPackingList(id, editedPackingList)
             .then(updatedPackingList => {
                 setPackingLists(packingLists.map(list => list.id === updatedPackingList.id
                     ? updatedPackingList
