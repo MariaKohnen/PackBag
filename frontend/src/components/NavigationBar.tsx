@@ -2,8 +2,8 @@ import {useState} from "react";
 import {IconContext} from "react-icons";
 import {Link} from "react-router-dom";
 import {AiOutlineLine, AiOutlinePlus} from "react-icons/ai";
-import {NavigationBarData} from "./NavigationBarData";
 import "./NavigationBar.css";
+import NavigationItems from "./NavigationItems";
 
 export default function NavigationBar() {
 
@@ -27,15 +27,7 @@ export default function NavigationBar() {
                                 <AiOutlineLine onClick={openSidebar}/>
                             </Link>
                         </div>
-                        {NavigationBarData.map((item, index) => {
-                            return (
-                                <div key={index} className={item.cName}>
-                                    <Link to={item.path}>
-                                        {item.icon}
-                                    </Link>
-                                </div>
-                            );
-                        })}
+                            <NavigationItems />
                     </div>
                 </nav>
             </div>
