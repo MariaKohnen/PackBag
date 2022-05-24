@@ -15,3 +15,8 @@ export function postPackingList(newPackingList : Omit<PackingList, "id" | "dateO
     return axios.post("/api/packinglists", newPackingList)
         .then(response => response.data);
 }
+
+export function putPackingList(editedPackingList : Omit<PackingList, "id">) {
+    return axios.put("/api/packinglists", editedPackingList)
+        .then(response => response.data);
+}
