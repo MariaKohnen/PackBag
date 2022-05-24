@@ -33,4 +33,9 @@ public class PackingListController {
     public PackingList postNewPackingList(@RequestBody PackingListDto packingListDto) {
         return packingListService.addNewPackingList(packingListDto);
     }
+
+    @PutMapping("{id}")
+    public PackingList updateExistingPackingList(@PathVariable String id, @RequestBody PackingListDto packingListDto) {
+        return packingListService.updatePackingListById(id, packingListDto);
+    }
 }
