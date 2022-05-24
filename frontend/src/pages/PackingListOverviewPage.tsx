@@ -1,12 +1,15 @@
-import usePackingLists from "../hooks/usePackingLists";
 import {HeaderOverview} from "../components/HeaderOverview";
 import PackingListTile from "../components/PackingListTile";
 import "./PackingListOverviewPage.css";
 import AddNewPackingList from "../components/AddNewPackingList";
+import {PackingList} from "../model/PackingList";
 
-export default function PackingListOverviewPage() {
+type PackingListOverviewPageProps = {
+    packingLists : PackingList[]
+    addPackingList : (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => void
+}
 
-    const {packingLists, addPackingList} = usePackingLists();
+export default function PackingListOverviewPage({packingLists, addPackingList} : PackingListOverviewPageProps) {
 
     return (
         <div>

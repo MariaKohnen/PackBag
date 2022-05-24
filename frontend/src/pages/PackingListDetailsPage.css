@@ -1,7 +1,34 @@
+.details-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+}
+
 .header-details-page {
-    height: 130px;
+    height: 90px;
     font-size: 2rem;
     color : #eaeadf;
     margin: 40px 0 0 0;
     font-weight: bold;
+}
+
+.header-details-page > p {
+    margin: 0;
+    display: inline-block;
+}
+
+.edit-list-button {
+    display: inline-block;
+}
+
+.edit-list-button button {
+    border: none;
+    background-color: #253d3e;
+    font-size: 1.8rem;
+}
+
+.item-overview {
+    background-color: #eaeadf;
+    border-radius: 20px;
+    flex-grow: 1;
 }
