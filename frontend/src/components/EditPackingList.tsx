@@ -6,9 +6,10 @@ type EditPackingListProps = {
     detailedPackingList: PackingList
     updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
     id: string
+    setShowsDetails: (status: boolean) => void
 }
 
-export default function EditPackingList({updatePackingList, detailedPackingList, id}: EditPackingListProps) {
+export default function EditPackingList({updatePackingList, detailedPackingList, id, setShowsDetails}: EditPackingListProps) {
 
     const [newDestination, setNewDestination] = useState<string>(detailedPackingList.destination)
     const [newDateOfArrival, setNewDateOfArrival] = useState<string>(detailedPackingList.dateOfArrival)
@@ -19,8 +20,8 @@ export default function EditPackingList({updatePackingList, detailedPackingList,
             destination : newDestination,
             dateOfArrival : newDateOfArrival
         }
-        console.log(updatedList + "before")
         updatePackingList(id, updatedList)
+        setShowsDetails(false)
     }
 
     return (
@@ -46,7 +47,7 @@ export default function EditPackingList({updatePackingList, detailedPackingList,
                     onChange={event => setNewDateOfArrival(event.target.value)}
                 />
             </div>
-            <button type={"submit"}>pack my bag</button>
+            <button type={"submit"}>save changes</button>
         </form>
 )
 }

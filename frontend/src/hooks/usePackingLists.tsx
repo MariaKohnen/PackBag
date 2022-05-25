@@ -23,7 +23,6 @@ export default function usePackingLists() {
     }
 
     const updatePackingList = (id: string, editedPackingList: Omit<PackingList, "id">) => {
-        console.log(editedPackingList + "before to api")
         return putPackingList(id, editedPackingList)
             .then(updatedPackingList => {
                 setPackingLists(packingLists.map(list => list.id === updatedPackingList.id

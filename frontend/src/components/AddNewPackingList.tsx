@@ -14,7 +14,6 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
         event.preventDefault()
         if (!newDestination) {
             toast.error("Destination ist required.")
-            return
         }
         const newPackingList : Omit<PackingList, "id" | "dateOfArrival"> = {
             destination : newDestination
@@ -26,8 +25,14 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
     return (
         <div>
             <form className="add-packing-list" onSubmit={getOnSubmit}>
-                <input className="text-field" type="destination" placeholder="where do you want to go next?" value={newDestination} onChange={event => setNewDestination(event.target.value)}/>
-                <input className="button" type="submit" value={"add item"}/>
+                <input className="text-field"
+                       type="destination"
+                       placeholder="where do you want to go next?"
+                       value={newDestination}
+                       onChange={event => setNewDestination(event.target.value)}/>
+                <input className="button"
+                       type="submit"
+                       value={"add item"}/>
             </form>
 
         </div>
