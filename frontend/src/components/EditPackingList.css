@@ -1,15 +1,6 @@
-.edit-list-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-}
-
 .edit-list-container > div {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
 }
 
 .to-change > p {
@@ -35,11 +26,12 @@
 }
 
 .edit-list-container > button {
+    width: 100%;
     margin-top: 20px;
     padding-top: 10px;
     padding-bottom: 10px;
     background-color: #d7a36f;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     color: #253d3e;
     border: 0;
     border-radius: 10px;

@@ -1,5 +1,8 @@
-.items-overview-card {
-    width: auto;
-    height: auto;
+.items-overview {
+    width: 100%;
+    min-height: 400px;
     background-color: beige;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
 }

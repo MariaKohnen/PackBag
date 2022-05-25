@@ -8,7 +8,7 @@ type PackingItemOverviewProps = {
 export default function PackingItemOverview({actualPackingList}: PackingItemOverviewProps) {
 
     return (
-        <div className="items-overview-card">
+        <div className="items-overview">
             <p>{actualPackingList.destination}</p>
         </div>
     )
