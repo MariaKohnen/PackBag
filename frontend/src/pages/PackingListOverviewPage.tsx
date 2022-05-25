@@ -1,4 +1,4 @@
-import {HeaderOverview} from "../components/HeaderOverview";
+import {HeaderOverview} from "../components/general/HeaderOverview";
 import PackingListTile from "../components/PackingListTile";
 import "./PackingListOverviewPage.css";
 import AddNewPackingList from "../components/AddNewPackingList";

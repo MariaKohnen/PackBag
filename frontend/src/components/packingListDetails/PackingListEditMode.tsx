@@ -1,17 +1,17 @@
 import {AiOutlineLine} from "react-icons/ai";
 import React from "react";
 import EditPackingList from "./EditPackingList";
-import {PackingList} from "../model/PackingList";
+import {PackingList} from "../../model/PackingList";
 import "./PackingListEditMode.css";
 
 type PackingListEditModeProps = {
-    detailedPackingList: PackingList
     id: string
+    detailedPackingList: PackingList
     setShowsDetails: (status: boolean) => void
-    updateAndGetNewDetails : (id: string, editedPackingList: Omit<PackingList, "id">) => void
+    updateListAndGetNewDetails : (id: string, editedPackingList: Omit<PackingList, "id">) => void
 }
 
-export default function PackingListEditMode({detailedPackingList, id, setShowsDetails, updateAndGetNewDetails}: PackingListEditModeProps) {
+export default function PackingListEditMode({id, detailedPackingList, setShowsDetails, updateListAndGetNewDetails}: PackingListEditModeProps) {
     return (
         <div>
             <div className="list-details-header">
@@ -20,10 +20,10 @@ export default function PackingListEditMode({detailedPackingList, id, setShowsDe
             </div>
             <div>
                 {detailedPackingList && id && <EditPackingList
-                    updateAndGetNewDetails={updateAndGetNewDetails}
-                    detailedPackingList={detailedPackingList}
                     id={id}
-                    setShowsDetails={setShowsDetails}/>}
+                    detailedPackingList={detailedPackingList}
+                    setShowsDetails={setShowsDetails}
+                    updateListAndGetNewDetails={updateListAndGetNewDetails}/>}
             </div>
         </div>
     )
