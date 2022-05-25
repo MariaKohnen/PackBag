@@ -4,12 +4,12 @@ import "./EditPackingList.css";
 
 type EditPackingListProps = {
     detailedPackingList: PackingList
-    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
     id: string
     setShowsDetails: (status: boolean) => void
+    updateAndGetNewDetails : (id: string, editedPackingList: Omit<PackingList, "id">) => void
 }
 
-export default function EditPackingList({updatePackingList, detailedPackingList, id, setShowsDetails}: EditPackingListProps) {
+export default function EditPackingList({detailedPackingList, id, setShowsDetails, updateAndGetNewDetails}: EditPackingListProps) {
 
     const [newDestination, setNewDestination] = useState<string>(detailedPackingList.destination)
     const [newDateOfArrival, setNewDateOfArrival] = useState<string>(detailedPackingList.dateOfArrival)
@@ -20,7 +20,7 @@ export default function EditPackingList({updatePackingList, detailedPackingList,
             destination : newDestination,
             dateOfArrival : newDateOfArrival
         }
-        updatePackingList(id, updatedList)
+        updateAndGetNewDetails(id, updatedList)
         setShowsDetails(false)
     }
 

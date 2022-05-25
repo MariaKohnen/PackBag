@@ -13,15 +13,22 @@ type PackingListDetailsPageProps = {
 
 export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
 
-    const {detailedPackingList, getDetailedPackingListById} = useDetailedPackingList()
+    const {detailedPackingList, getDetailedPackingListById, getUpdatedDetails} = useDetailedPackingList()
     const {id} = useParams()
     const [showsDetails, setShowsDetails] = useState<boolean>(false);
+
+    const updateAndGetNewDetails = (idOfUpdatedList: string, editedPackingList: Omit<PackingList, "id">) => {
+        updatePackingList(idOfUpdatedList, editedPackingList)
+        getUpdatedDetails(idOfUpdatedList, editedPackingList)
+    }
 
     useEffect(() => {
         if (id) {
             getDetailedPackingListById(id)
         }//eslint-disable-next-line
-    }, [updatePackingList])
+    }, [])
+
+
 
     return (
         <IconContext.Provider value={{color: '#eaeadf'}}>
@@ -30,10 +37,10 @@ export default function PackingListDetailsPage({updatePackingList}: PackingListD
                     <div className="header-details-page">
                         {showsDetails ?
                             <PackingListEditMode
-                                updatePackingList={updatePackingList}
                                 detailedPackingList={detailedPackingList}
                                 id={id}
-                                setShowsDetails={setShowsDetails}/>
+                                setShowsDetails={setShowsDetails}
+                                updateAndGetNewDetails={updateAndGetNewDetails}/>
                             :
                             <PackingListDetailMode
                                 detailedPackingList={detailedPackingList}
