@@ -20,3 +20,7 @@ export function putPackingList(id : string, editedPackingList : Omit<PackingList
     return axios.put(`/api/packinglists/${id}`, editedPackingList)
         .then(response => response.data);
 }
+
+export function deletePackingListById(id: string) {
+    return axios.delete(`/api/packinglists/${id}`)
+}
