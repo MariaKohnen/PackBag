@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -112,4 +113,52 @@ class PackingListServiceTest {
 
     }
 
+    @Test
+    void updatePackingListById_whenIdIsValid_shouldReturnUpdatedPackingList() {
+        //GIVEN
+        String pathId = "123";
+        PackingListDto editedPackingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        when(packingListRepository.findById(pathId)).thenReturn(Optional.ofNullable(
+                PackingList.builder()
+                        .id("123")
+                        .destination("Bayreuth")
+                        .build()));
+        PackingList updatedPackingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
+                .id("123")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .destination("Tokyo")
+                .build());
+        //WHEN
+        PackingList actual = packingListService.updatePackingListById(pathId, editedPackingListDto);
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        assertEquals(expected, actual);
+        verify(packingListRepository).save(updatedPackingList);
+    }
+
+    @Test
+    void updatePackingListById_whenIdIsNotValid_shouldThrowException() {
+        //GIVEN
+        String pathId = "122";
+        PackingListDto editedPackingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .build();
+        when(packingListRepository.findById(pathId)).thenReturn(Optional.empty());
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingListById(pathId, editedPackingListDto));
+        verify(packingListRepository).findById(pathId);
+    }
 }

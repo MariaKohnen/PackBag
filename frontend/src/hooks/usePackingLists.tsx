@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
-import {getAllPackingLists, postPackingList} from "../service/api-service";
+import {getAllPackingLists, postPackingList, putPackingList} from "../service/api-service";
 
 
 export default function usePackingLists() {
@@ -13,12 +13,24 @@ export default function usePackingLists() {
             .catch((exception) => toast.error(exception + "Connection failed. Please try again."));
     }, []);
 
-    const addPackingList = (newPackingList : Omit<PackingList, "id" | "dateOfArrival">) => {
+    const addPackingList = (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => {
         postPackingList(newPackingList)
             .then(addedPackingList => setPackingLists([...packingLists, addedPackingList]))
-            .then(() => {toast.success("PackingList was added")})
+            .then(() => {
+                toast.success("PackingList was added")
+            })
             .catch((exception) => toast.error(exception + "Connection failed! Please try again later."))
     }
 
-    return {packingLists, addPackingList}
+    const updatePackingList = (id: string, editedPackingList: Omit<PackingList, "id">) => {
+        return putPackingList(id, editedPackingList)
+            .then(updatedPackingList => {
+                setPackingLists(packingLists.map(list => list.id === updatedPackingList.id
+                    ? updatedPackingList
+                    : list))
+                toast.success("Packing list: " + updatedPackingList.name + " was updated")
+                return updatedPackingList})
+            .catch(() => toast.error("Connection failed! Please retry later"))}
+
+return {packingLists, addPackingList, updatePackingList}
 }

@@ -1,0 +1,14 @@
+.list-details-header {
+    height: 150px;
+}
+
+.list-details-header button {
+    display: inline-block;
+    border: none;
+    background-color: #253d3e;
+    font-size: 1.8rem;
+}
+
+.list-details-header h2 {
+    display: inline-block;
+}

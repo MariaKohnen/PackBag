@@ -2,16 +2,14 @@ import {PackingList} from "../model/PackingList";
 import "./PackingItemOverview.css";
 
 type PackingItemOverviewProps = {
-    actualPackingList : PackingList;
+    actualPackingList: PackingList;
 }
 
-export default function PackingItemOverview({actualPackingList} : PackingItemOverviewProps) {
+export default function PackingItemOverview({actualPackingList}: PackingItemOverviewProps) {
 
     return (
-        <div className="items-overview-container">
-            <div className="items-overview-card">
-                <p>{actualPackingList.dateOfArrival}</p>
-            </div>
+        <div className="items-overview">
+            <p>{actualPackingList.destination}</p>
         </div>
     )
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -159,4 +160,70 @@ class PackingListControllerTest {
                 .expectStatus().isEqualTo(400);
     }
 
+    @Test
+    void updateExistingPackingList_whenIdIsValid_shouldReturnUpdatedPackingList() {
+        //GIVEN
+        PackingListDto existingPackingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .build();
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(existingPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //WHEN
+        assertNotNull(addedPackingList);
+        PackingListDto updatedPackingList = PackingListDto.builder()
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        PackingList actual = webTestClient.put()
+                .uri("/api/packinglists/" + addedPackingList.getId())
+                .bodyValue(updatedPackingList)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id(addedPackingList.getId())
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void updateExistingPackingList_whenIdIsNotValid_shouldThrowException() {
+        //GIVEN
+        PackingListDto existingPackingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .build();
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(existingPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //WHEN
+        assertNotNull(addedPackingList);
+        PackingListDto updatedPackingList = PackingListDto.builder()
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        String invalidId = "123";
+        webTestClient.put()
+                .uri("/api/packinglists/" + invalidId)
+                .bodyValue(updatedPackingList)
+                .exchange()
+                .expectStatus().isEqualTo(404);
+    }
 }

@@ -37,4 +37,12 @@ public class PackingListService {
         return packingListRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
     }
+
+    public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
+        PackingList updatedPackingList = packingListRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Shopping with id: " + id + " was not found!"));
+        updatedPackingList.setDestination(packingListDto.getDestination());
+        updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
+        return packingListRepository.save(updatedPackingList);
+    }
 }

@@ -1,29 +1,51 @@
 import useDetailedPackingList from "../hooks/useDetailedPackingList";
-import {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import "./PackingListDetailsPage.css";
-import PackingItemOverview from "../components/PackingItemOverview";
+import {PackingList} from "../model/PackingList";
+import {IconContext} from "react-icons";
+import PackingListEditMode from "../components/packingListDetails/PackingListEditMode";
+import PackingListDetailMode from "../components/packingListDetails/PackingListDetailMode";
 
-export default function PackingListDetailsPage() {
+type PackingListDetailsPageProps = {
+    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
+}
 
-    const {detailedPackingList, getDetailedPackingListById} = useDetailedPackingList()
+export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
+
+    const {detailedPackingList, getDetailedPackingListById, getUpdatedDetails} = useDetailedPackingList()
     const {id} = useParams()
+    const [showsDetails, setShowsDetails] = useState<boolean>(false);
+
+    const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id">) => {
+        updatePackingList(idOfEditedList, editedPackingList)
+        getUpdatedDetails(idOfEditedList, editedPackingList)
+    }
 
     useEffect(() => {
-        if(id) {
+        if (id) {
             getDetailedPackingListById(id)
         }//eslint-disable-next-line
-    },[id])
+    }, [])
 
     return (
-        <div className="details-page">
-            <div className="header-details-page">
-            {detailedPackingList && <p>{detailedPackingList.destination}</p>}
+        <IconContext.Provider value={{color: '#eaeadf'}}>
+            <div className="details-page">
+                {detailedPackingList && id &&
+                    <div className="header-details-page">
+                        {showsDetails ?
+                            <PackingListEditMode
+                                id={id}
+                                detailedPackingList={detailedPackingList}
+                                setShowsDetails={setShowsDetails}
+                                updateListAndGetNewDetails={updateListAndGetNewDetails}/>
+                            :
+                            <PackingListDetailMode
+                                detailedPackingList={detailedPackingList}
+                                setShowsDetails={setShowsDetails}/>
+                        }
+                    </div>}
             </div>
-            <div>
-                {detailedPackingList && <PackingItemOverview
-                    actualPackingList={detailedPackingList}/>}
-            </div>
-        </div>
+        </IconContext.Provider>
     )
 }
