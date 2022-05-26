@@ -18,9 +18,13 @@ export default function EditPackingList({id, detailedPackingList, setShowsDetail
 
     const updateActualList = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        const dateAsString = new Date(newDateOfArrival).toISOString().split('T')[0]
+        const date = new Date(dateAsString)
+        console.log("DateAsString: " + dateAsString)
+        console.log("Date: " + date)
         const editedPackingList: Omit<PackingList, "id"> = {
             destination: newDestination,
-            dateOfArrival: newDateOfArrival
+            dateOfArrival: date
         }
         updateListAndGetNewDetails(id, editedPackingList)
         setShowsDetails(false)
