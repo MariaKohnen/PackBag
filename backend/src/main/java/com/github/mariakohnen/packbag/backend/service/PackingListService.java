@@ -45,4 +45,9 @@ public class PackingListService {
         updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
         return packingListRepository.save(updatedPackingList);
     }
+
+    public void deletePackingListById(String id) throws NullPointerException {
+        packingListRepository.deleteById(id);
+    }
 }
+
