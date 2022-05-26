@@ -4,8 +4,8 @@ import {useParams} from "react-router-dom";
 import "./PackingListDetailsPage.css";
 import {PackingList} from "../model/PackingList";
 import {IconContext} from "react-icons";
-import PackingListEditMode from "../components/PackingListEditMode";
-import PackingListDetailMode from "../components/PackingListDetailMode";
+import PackingListEditMode from "../components/packingListDetails/PackingListEditMode";
+import PackingListDetailMode from "../components/packingListDetails/PackingListDetailMode";
 
 type PackingListDetailsPageProps = {
     updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
@@ -13,15 +13,20 @@ type PackingListDetailsPageProps = {
 
 export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
 
-    const {detailedPackingList, getDetailedPackingListById} = useDetailedPackingList()
+    const {detailedPackingList, getDetailedPackingListById, getUpdatedDetails} = useDetailedPackingList()
     const {id} = useParams()
     const [showsDetails, setShowsDetails] = useState<boolean>(false);
+
+    const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id">) => {
+        updatePackingList(idOfEditedList, editedPackingList)
+        getUpdatedDetails(idOfEditedList, editedPackingList)
+    }
 
     useEffect(() => {
         if (id) {
             getDetailedPackingListById(id)
         }//eslint-disable-next-line
-    }, [updatePackingList])
+    }, [])
 
     return (
         <IconContext.Provider value={{color: '#eaeadf'}}>
@@ -30,10 +35,10 @@ export default function PackingListDetailsPage({updatePackingList}: PackingListD
                     <div className="header-details-page">
                         {showsDetails ?
                             <PackingListEditMode
-                                updatePackingList={updatePackingList}
-                                detailedPackingList={detailedPackingList}
                                 id={id}
-                                setShowsDetails={setShowsDetails}/>
+                                detailedPackingList={detailedPackingList}
+                                setShowsDetails={setShowsDetails}
+                                updateListAndGetNewDetails={updateListAndGetNewDetails}/>
                             :
                             <PackingListDetailMode
                                 detailedPackingList={detailedPackingList}

@@ -1,7 +1,7 @@
 import {AiOutlinePlus} from "react-icons/ai";
 import React from "react";
-import PackingItemOverview from "./PackingItemOverview";
-import {PackingList} from "../model/PackingList";
+import PackingItemOverview from "../PackingItemOverview";
+import {PackingList} from "../../model/PackingList";
 import "./PackingListDetailMode.css";
 
 type PackingListDetailModeProps = {

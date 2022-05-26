@@ -3,7 +3,7 @@ import './App.css';
 import {HashRouter, Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 import PackingListDetailsPage from "./pages/PackingListDetailsPage";
-import NavigationBar from "./components/NavigationBar";
+import NavigationBar from "./components/general/NavigationBar";
 import usePackingLists from "./hooks/usePackingLists";
 
 export default function App() {
