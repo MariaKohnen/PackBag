@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +21,5 @@ public class PackingList {
     private String id;
     private String destination;
     private LocalDate dateOfArrival;
+    private List<PackingItem> packingItemList;
 }
