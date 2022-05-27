@@ -14,7 +14,7 @@ export default function PackingListOverviewPage({packingLists, addPackingList} :
     return (
         <div>
             <div>
-                <HeaderOverview/>
+                <HeaderOverview />
             </div>
                 <div>
                     <AddNewPackingList

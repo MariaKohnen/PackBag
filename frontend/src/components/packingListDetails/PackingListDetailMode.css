@@ -12,3 +12,10 @@
 .list-details-header h2 {
     display: inline-block;
 }
+
+.list-details-header p {
+    color: #eaeadf;
+    font-size: 0.9rem;
+    letter-spacing: 1.2px;
+    margin-top: 5px;
+}

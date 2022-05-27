@@ -1,0 +1,14 @@
+.date-picker-field {
+    height: 35px;
+    padding: 5px 0 5px 20px;
+    margin-bottom: 15px;
+    background-color: #2c4a4b;
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 13px 27px -5px, rgba(0, 0, 0, 0.3) 0 8px 16px -8px;
+    border-radius: 10px;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input {
+    color: #eaeadf !important;
+    padding-top: 6px;
+}
