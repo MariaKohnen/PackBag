@@ -14,7 +14,7 @@ type EditPackingListProps = {
 export default function EditPackingList({id, detailedPackingList, setShowsDetails, updateListAndGetNewDetails}: EditPackingListProps) {
 
     const [newDestination, setNewDestination] = useState<string>(detailedPackingList.destination)
-    const [newDateOfArrival, setNewDateOfArrival] = useState<string>(detailedPackingList.dateOfArrival)
+    const [newDateOfArrival, setNewDateOfArrival] = useState<Date>(detailedPackingList.dateOfArrival)
 
     const updateActualList = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
