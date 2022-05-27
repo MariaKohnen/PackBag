@@ -5,7 +5,7 @@
 }
 
 .add-packing-list .text-field {
-    padding: 5px 0 5px 40px;
+    padding: 10px 0 10px 40px;
     background-color: unset;
     border: 0;
     border-bottom: 1px solid #6a7a7a;
@@ -15,10 +15,11 @@
     background-position: 10px;
     background-repeat: no-repeat;
     color: #eaeadf;
+    outline: none;
 }
 
 .text-field:focus {
-    border: 2px solid #6a7a7a;
+    border: 1px solid #6a7a7a;
 }
 
 .add-packing-list .button {
