@@ -1,0 +1,29 @@
+.delete-alert {
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-alert h3 {
+    display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #eaeadf;
+}
+
+.alert-button {
+    width: 40%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.alert-button button {
+    background-color: unset;
+    border: none;
+    font-size: 1.4rem;
+    color: #eaeadf;
+    margin-left: auto;
+    margin-bottom: 20px;
+}

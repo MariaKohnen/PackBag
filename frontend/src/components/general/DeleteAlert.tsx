@@ -1,4 +1,5 @@
 import React from "react";
+import "./DeleteAlert.css";
 
 type DeleteAlertProps = {
     id: string
@@ -14,9 +15,14 @@ export default function DeleteAlert({id, deletePackingList, setPopUp}: DeleteAle
     }
 
     return (
-        <div className="delete-alert">
-            <button onClick={() => setPopUp(false)}>No</button>
-            <button onClick={confirmDelete}>Yes</button>
+        <div className="packing-list-tile">
+            <div className="delete-alert">
+                <h3>Do you really want to delete this list?</h3>
+                <div className="alert-button">
+                    <button onClick={() => setPopUp(false)}>No</button>
+                    <button onClick={confirmDelete}>Yes</button>
+                </div>
+            </div>
         </div>
     )
 }
