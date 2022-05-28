@@ -1,5 +1,5 @@
 import "./PackingItemOverview.css";
-import {ItemOverview} from "./packingItemDetails/ItemOverview";
+import {ItemCard} from "./packingItemDetails/ItemCard";
 import {PackingItem} from "../model/PackingItem";
 
 type PackingItemOverviewProps = {
@@ -10,7 +10,7 @@ export default function PackingItemOverview({actualItemList}: PackingItemOvervie
 
     return (
         <div className="items-overview">
-            <p>{actualItemList.map(item => <ItemOverview
+            <p>{actualItemList.map(item => <ItemCard
                 key={item.id}
                 packingItem={item} />)
                 .reverse()}</p>
