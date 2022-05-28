@@ -1,15 +1,19 @@
-import {PackingList} from "../model/PackingList";
 import "./PackingItemOverview.css";
+import {ItemOverview} from "./packingItemDetails/ItemOverview";
+import {PackingItem} from "../model/PackingItem";
 
 type PackingItemOverviewProps = {
-    actualPackingList: PackingList;
+    actualItemList: PackingItem[];
 }
 
-export default function PackingItemOverview({actualPackingList}: PackingItemOverviewProps) {
+export default function PackingItemOverview({actualItemList}: PackingItemOverviewProps) {
 
     return (
         <div className="items-overview">
-            <p>{actualPackingList.destination}</p>
+            <p>{actualItemList.map(item => <ItemOverview
+                key={item.id}
+                packingItem={item} />)
+                .reverse()}</p>
         </div>
     )
 }

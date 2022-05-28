@@ -20,10 +20,13 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                 <button onClick={() => setShowsDetails(true)}><AiOutlinePlus/></button>
                 <p>{detailedPackingList.dateOfArrival && formattedDate}</p>
             </div>
-            <div>
-                {detailedPackingList && <PackingItemOverview
-                    actualPackingList={detailedPackingList}/>}
-            </div>
+            {detailedPackingList && detailedPackingList.packingItemList ?
+                <div>
+                    <PackingItemOverview
+                        actualItemList={detailedPackingList.packingItemList}/>
+                </div>
+                : <div>No Items</div>
+            }
         </div>
     )
 }
