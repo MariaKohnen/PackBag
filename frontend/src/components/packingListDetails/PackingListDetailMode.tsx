@@ -1,6 +1,6 @@
 import {AiOutlinePlus} from "react-icons/ai";
 import React from "react";
-import PackingItemOverview from "../PackingItemOverview";
+import PackingItemOverview from "../packingItemDetails/PackingItemOverview";
 import {PackingList} from "../../model/PackingList";
 import "./PackingListDetailMode.css";
 
