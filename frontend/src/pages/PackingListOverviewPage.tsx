@@ -7,9 +7,10 @@ import {PackingList} from "../model/PackingList";
 type PackingListOverviewPageProps = {
     packingLists : PackingList[]
     addPackingList : (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => void
+    deletePackingList : (id: string) => void
 }
 
-export default function PackingListOverviewPage({packingLists, addPackingList} : PackingListOverviewPageProps) {
+export default function PackingListOverviewPage({packingLists, addPackingList, deletePackingList} : PackingListOverviewPageProps) {
 
     return (
         <div>
@@ -23,7 +24,8 @@ export default function PackingListOverviewPage({packingLists, addPackingList} :
                 <div className="packing-list-overview">
                     {packingLists.map(list => <PackingListTile
                         key={list.id}
-                        packingList={list}/>)
+                        packingList={list}
+                        deletePackingList={deletePackingList} />)
                         .reverse()}
             </div>
         </div>

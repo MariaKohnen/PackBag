@@ -30,3 +30,14 @@
 .packing-list-tile:nth-child(6){
     background-color: #e20002;
 }
+
+.delete-button button{
+    margin-bottom: 16px;
+    border: none;
+    background-color: unset;
+    font-size: 1.8rem;
+}
+
+.delete-button button:nth-child(odd) {
+    margin-top: 18px;
+}

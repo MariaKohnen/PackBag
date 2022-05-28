@@ -161,7 +161,7 @@ class PackingListControllerTest {
     }
 
     @Test
-    void updateExistingPackingList_whenIdIsValid_shouldReturnUpdatedPackingList() {
+    void updateExistingPackingListById_whenIdIsValid_shouldReturnUpdatedPackingList() {
         //GIVEN
         PackingListDto existingPackingListDto = PackingListDto.builder()
                 .destination("Bayreuth")
@@ -199,7 +199,7 @@ class PackingListControllerTest {
     }
 
     @Test
-    void updateExistingPackingList_whenIdIsNotValid_shouldThrowException() {
+    void updateExistingPackingListById_whenIdIsNotValid_shouldThrowException() {
         //GIVEN
         PackingListDto existingPackingListDto = PackingListDto.builder()
                 .destination("Bayreuth")
@@ -225,5 +225,30 @@ class PackingListControllerTest {
                 .bodyValue(updatedPackingList)
                 .exchange()
                 .expectStatus().isEqualTo(404);
+    }
+
+    @Test
+    void deletePackingListByID_whenIdIsValid() {
+        //GIVEN
+        PackingListDto existingPackingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-10-02"))
+                .build();
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(existingPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //WHEN
+        assertNotNull(addedPackingList);
+        assertNotNull(addedPackingList.getId());
+        webTestClient.delete()
+                .uri("/api/packinglists/" + addedPackingList.getId())
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+        //THEN
     }
 }

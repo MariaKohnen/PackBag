@@ -12,6 +12,7 @@
 .packing-list-overview div {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-start;
     border-radius: 20px;
 }
 

@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
-import {getAllPackingLists, postPackingList, putPackingList} from "../service/api-service";
+import {getAllPackingLists, postPackingList, putPackingList, deletePackingListById} from "../service/api-service";
 
 
 export default function usePackingLists() {
@@ -32,5 +32,11 @@ export default function usePackingLists() {
                 return updatedPackingList})
             .catch(() => toast.error("Connection failed! Please retry later"))}
 
-return {packingLists, addPackingList, updatePackingList}
+    const deletePackingList = (id: string) => {
+        return deletePackingListById(id)
+            .then(() => setPackingLists(packingLists.filter(packingList => packingList.id !== id)))
+            .catch(() => toast.error("Error while removing packing list. Please try again"))
+    }
+
+return {packingLists, addPackingList, updatePackingList, deletePackingList}
 }

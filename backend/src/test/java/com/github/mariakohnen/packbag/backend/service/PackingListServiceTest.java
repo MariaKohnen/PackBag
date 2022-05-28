@@ -161,4 +161,17 @@ class PackingListServiceTest {
         assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingListById(pathId, editedPackingListDto));
         verify(packingListRepository).findById(pathId);
     }
-}
+
+    @Test
+    void deletePackingListById_whenIdIsValid() {
+        //GIVEN
+        PackingList packingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        //WHEN
+        packingListService.deletePackingListById(packingList.getId());
+        //THEN
+        verify(packingListRepository).deleteById("123");
+    }}

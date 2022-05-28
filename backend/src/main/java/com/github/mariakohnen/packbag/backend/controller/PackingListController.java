@@ -20,12 +20,12 @@ public class PackingListController {
     }
 
     @GetMapping
-    public List<PackingList> getAllPackingLists () {
+    public List<PackingList> getAllPackingLists() {
         return packingListService.getAllPackingLists();
     }
 
     @GetMapping("{id}")
-    public PackingList getPackingListById (@PathVariable String id) {
+    public PackingList getPackingListById(@PathVariable String id) {
         return packingListService.getPackingListById(id);
     }
 
@@ -35,7 +35,12 @@ public class PackingListController {
     }
 
     @PutMapping("{id}")
-    public PackingList updateExistingPackingList(@PathVariable String id, @RequestBody PackingListDto packingListDto) {
+    public PackingList updateExistingPackingListById(@PathVariable String id, @RequestBody PackingListDto packingListDto) {
         return packingListService.updatePackingListById(id, packingListDto);
+    }
+
+    @DeleteMapping("{id}")
+    public void deletePackingListByID(@PathVariable String id) {
+        packingListService.deletePackingListById(id);
     }
 }
