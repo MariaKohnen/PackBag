@@ -13,12 +13,6 @@
     color: #eaeadf;
 }
 
-.alert-button {
-    width: 40%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
 .alert-button button {
     background-color: unset;
     border: none;
