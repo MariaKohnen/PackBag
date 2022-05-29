@@ -32,12 +32,10 @@
 }
 
 .delete-button button{
+    margin-top: 18px;
     margin-bottom: 16px;
     border: none;
     background-color: unset;
     font-size: 1.8rem;
 }
 
-.delete-button button:nth-child(odd) {
-    margin-top: 18px;
-}

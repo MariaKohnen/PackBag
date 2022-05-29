@@ -1,6 +1,6 @@
 .items-overview {
     width: 100%;
-    min-height: 400px;
+    min-height: 75vh;
     background-color: beige;
     display: flex;
     flex-direction: column;

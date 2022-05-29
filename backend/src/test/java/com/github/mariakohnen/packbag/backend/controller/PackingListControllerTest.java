@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,10 @@ class PackingListControllerTest {
         PackingList packingList1 = PackingList.builder()
                 .id("1")
                 .destination("Bayreuth")
+                .dateOfArrival(LocalDate.parse("2022-05-01"))
+                .packingItemList(List.of(PackingItem.builder()
+                        .name("swimwear")
+                        .build()))
                 .build();
         PackingList packingList2 = PackingList.builder()
                 .id("2")
@@ -53,6 +58,10 @@ class PackingListControllerTest {
         List<PackingList> expected = List.of((PackingList.builder()
                         .id("1")
                         .destination("Bayreuth")
+                        .dateOfArrival(LocalDate.parse("2022-05-01"))
+                        .packingItemList(List.of(PackingItem.builder()
+                                .name("swimwear")
+                                .build()))
                         .build()),
                 PackingList.builder()
                         .id("2")

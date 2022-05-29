@@ -1,6 +1,4 @@
 .packing-list-overview {
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 30px;
     display: grid;
     grid-gap: 10px;
@@ -9,10 +7,7 @@
     justify-content: stretch;
 }
 
-.packing-list-overview div {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+.packing-list-tile {
     border-radius: 20px;
 }
 
