@@ -1,6 +1,8 @@
 package com.github.mariakohnen.packbag.backend.service;
 
+import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,12 @@ import java.util.NoSuchElementException;
 public class PackingListService {
 
     private final PackingListRepository packingListRepository;
+    private final IdService idService;
 
     @Autowired
-    public PackingListService(PackingListRepository packingListRepository) {
+    public PackingListService(PackingListRepository packingListRepository, IdService idService) {
         this.packingListRepository = packingListRepository;
+        this.idService = idService;
     }
 
     public List<PackingList> getAllPackingLists() {
@@ -48,6 +52,19 @@ public class PackingListService {
 
     public void deletePackingListById(String id) throws NullPointerException {
         packingListRepository.deleteById(id);
+    }
+
+    public PackingList addNewPackingItemToList(String id, PackingItemDto packingItemDto) {
+        PackingList updatedPackingList = packingListRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Shopping with id: " + id + " was not found!"));
+        PackingItem newItem = PackingItem.builder()
+                .name(packingItemDto.getName())
+                .id(idService.generateId())
+                .build();
+        List<PackingItem> updatedListOfItems = updatedPackingList.getPackingItemList();
+        updatedListOfItems.add(newItem);
+        updatedPackingList.setPackingItemList(updatedListOfItems);
+        return packingListRepository.save(updatedPackingList);
     }
 }
 
