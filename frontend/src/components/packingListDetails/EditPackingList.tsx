@@ -20,7 +20,8 @@ export default function EditPackingList({id, detailedPackingList, setShowsDetail
         event.preventDefault()
         const editedPackingList: Omit<PackingList, "id"> = {
             destination: newDestination,
-            dateOfArrival: newDateOfArrival
+            dateOfArrival: newDateOfArrival,
+            packingItemList: detailedPackingList.packingItemList
         }
         updateListAndGetNewDetails(id, editedPackingList)
         setShowsDetails(false)

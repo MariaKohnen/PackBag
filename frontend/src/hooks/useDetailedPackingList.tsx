@@ -17,7 +17,8 @@ export default function useDetailedPackingList() {
         const updatedPackingList: PackingList = {
             id: idOfUpdatedList,
             destination : editedPackingList.destination,
-            dateOfArrival : editedPackingList.dateOfArrival
+            dateOfArrival : editedPackingList.dateOfArrival,
+            packingItemList : editedPackingList.packingItemList
         }
         setDetailedPackingList(updatedPackingList)
     }
