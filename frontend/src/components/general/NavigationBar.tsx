@@ -2,7 +2,7 @@ import {useState} from "react";
 import {IconContext} from "react-icons";
 import {Link} from "react-router-dom";
 import {AiOutlineLine, AiOutlinePlus} from "react-icons/ai";
-import "./NavigationBar.css";
+import "./styling/NavigationBar.css";
 import NavigationItems from "./NavigationItems";
 
 export default function NavigationBar() {

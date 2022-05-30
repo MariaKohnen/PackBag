@@ -1,5 +1,5 @@
 import React from "react";
-import "./DeleteAlert.css";
+import "./styling/DeleteAlert.css";
 
 type DeleteAlertProps = {
     id: string
