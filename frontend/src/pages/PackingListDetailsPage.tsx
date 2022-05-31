@@ -8,18 +8,18 @@ import PackingListEditMode from "../components/packingListDetails/PackingListEdi
 import PackingListDetailMode from "../components/packingListDetails/PackingListDetailMode";
 
 type PackingListDetailsPageProps = {
-    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => void
+    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => Promise<PackingList | void>
 }
 
 export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
 
-    const {detailedPackingList, getDetailedPackingListById, getUpdatedDetails} = useDetailedPackingList()
+    const {detailedPackingList, getDetailedPackingListById, setDetailedPackingList} = useDetailedPackingList()
     const {id} = useParams()
     const [showsDetails, setShowsDetails] = useState<boolean>(false);
 
     const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id">) => {
         updatePackingList(idOfEditedList, editedPackingList)
-        getUpdatedDetails(idOfEditedList, editedPackingList)
+            .then((response) => response && setDetailedPackingList(response))
     }
 
     useEffect(() => {
