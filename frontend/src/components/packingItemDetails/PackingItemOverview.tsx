@@ -1,4 +1,4 @@
-import "./PackingItemOverview.css";
+import "./styling/PackingItemOverview.css";
 import {ItemCard} from "./ItemCard";
 import {PackingItem} from "../../model/PackingItem";
 import AddItemToPackingList from "./AddItemToPackingList";

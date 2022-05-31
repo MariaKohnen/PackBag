@@ -45,8 +45,10 @@ public class PackingListService {
     public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
         PackingList updatedPackingList = packingListRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Shopping with id: " + id + " was not found!"));
+        List<PackingItem> updatedItemList = generateNewList(packingListDto.getPackingItemDto(), updatedPackingList.getPackingItemList());
         updatedPackingList.setDestination(packingListDto.getDestination());
         updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
+        updatedPackingList.setPackingItemList(updatedItemList);
         return packingListRepository.save(updatedPackingList);
     }
 
@@ -54,17 +56,16 @@ public class PackingListService {
         packingListRepository.deleteById(id);
     }
 
-    public PackingList addNewPackingItemToList(String id, PackingItemDto packingItemDto) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Shopping with id: " + id + " was not found!"));
+    public List<PackingItem> generateNewList(PackingItemDto packingItemDto, List<PackingItem> actualItemList) {
+        if (packingItemDto.getName() == null) {
+            throw new IllegalArgumentException("Name of the given packing item was not given.");
+        }
         PackingItem newItem = PackingItem.builder()
-                .name(packingItemDto.getName())
                 .id(idService.generateId())
+                .name(packingItemDto.getName())
                 .build();
-        List<PackingItem> updatedListOfItems = updatedPackingList.getPackingItemList();
-        updatedListOfItems.add(newItem);
-        updatedPackingList.setPackingItemList(updatedListOfItems);
-        return packingListRepository.save(updatedPackingList);
+        actualItemList.add(newItem);
+        return actualItemList;
     }
 }
 

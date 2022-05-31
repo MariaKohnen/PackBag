@@ -1,5 +1,6 @@
 package com.github.mariakohnen.packbag.backend.service;
 
+import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -17,8 +18,10 @@ import static org.mockito.Mockito.*;
 class PackingListServiceTest {
 
     private final PackingListRepository packingListRepository = mock(PackingListRepository.class);
+    private final IdService idService = mock(IdService.class);
 
-    private final PackingListService packingListService = new PackingListService(packingListRepository);
+    private final PackingListService packingListService = new PackingListService(packingListRepository, idService);
+
 
     @Test
     void getAllPackingLists() {
@@ -127,21 +130,33 @@ class PackingListServiceTest {
         PackingListDto editedPackingListDto = PackingListDto.builder()
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemDto(PackingItemDto.builder()
+                        .name("swimwear")
+                        .build())
+                .build();
+        PackingItem packingItem = PackingItem.builder()
+                .id("2")
+                .name("passport")
                 .build();
         when(packingListRepository.findById(pathId)).thenReturn(Optional.ofNullable(
                 PackingList.builder()
                         .id("123")
                         .destination("Bayreuth")
+                        .packingItemList(List.of(packingItem))
                         .build()));
+        when(idService.generateId()).thenReturn("1");
         PackingList updatedPackingList = PackingList.builder()
                 .id("123")
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(new PackingItem("1", "swimwear")))
                 .build();
+
         when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
                 .id("123")
-                .dateOfArrival(LocalDate.parse("2022-10-03"))
                 .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(new PackingItem("1", "swimwear"), packingItem))
                 .build());
         //WHEN
         PackingList actual = packingListService.updatePackingListById(pathId, editedPackingListDto);
@@ -150,6 +165,7 @@ class PackingListServiceTest {
                 .id("123")
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(new PackingItem("1", "swimwear"), packingItem))
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).save(updatedPackingList);
@@ -181,4 +197,21 @@ class PackingListServiceTest {
         packingListService.deletePackingListById(packingList.getId());
         //THEN
         verify(packingListRepository).deleteById("123");
-    }}
+    }
+
+    @Test
+    void generateNewList() {
+        //GIVEN
+        PackingItemDto packingListDto = PackingItemDto.builder()
+                .name("Tokyo")
+                .build();
+        List<PackingItem> packingItemList = List.of(new PackingItem("1", "swimwear"));
+        when(idService.generateId()).thenReturn("2");
+        //WHEN
+        List<PackingItem> actual = packingListService.generateNewList(packingListDto, packingItemList);
+        //THEN
+        List<PackingItem> expected = List.of(new PackingItem("1", "swimwear"), new PackingItem("2", "Tokyo"));
+        assertEquals(expected, actual);
+        verify(idService).generateId();
+    }
+}
