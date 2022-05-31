@@ -13,15 +13,5 @@ export default function useDetailedPackingList() {
             .catch((error) => toast.error(error))
     }
 
-    const getUpdatedDetails = (idOfUpdatedList: string, editedPackingList: Omit<PackingList, "id">) => {
-        const updatedPackingList: PackingList = {
-            id: idOfUpdatedList,
-            destination : editedPackingList.destination,
-            dateOfArrival : editedPackingList.dateOfArrival,
-            packingItemList : editedPackingList.packingItemList
-        }
-        setDetailedPackingList(updatedPackingList)
-    }
-
-    return {detailedPackingList, getDetailedPackingListById, getUpdatedDetails}
+    return {detailedPackingList, getDetailedPackingListById, setDetailedPackingList}
 }
