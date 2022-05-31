@@ -22,14 +22,13 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                 <button onClick={() => setShowsDetails(true)}><AiOutlinePlus/></button>
                 <p>{detailedPackingList.dateOfArrival && formattedDate}</p>
             </div>
-            {detailedPackingList && detailedPackingList.packingItemList ?
+            {detailedPackingList &&
                 <div>
                     <PackingItemOverview
                         actualItemList={detailedPackingList.packingItemList}
                         addItemToPackingList={addItemToPackingList}
                     id={detailedPackingList.id}/>
                 </div>
-                : <div>No Items</div>
             }
         </div>
     )
