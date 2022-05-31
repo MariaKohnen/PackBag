@@ -1,11 +1,13 @@
 package com.github.mariakohnen.packbag.backend.dto;
 
+import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +17,5 @@ public class PackingListDto {
 
     private String destination;
     private LocalDate dateOfArrival;
-    private PackingItemDto packingItemDto;
+    private List<PackingItem> packingItemList;
 }
