@@ -5,14 +5,18 @@ import AddItemToPackingList from "./AddItemToPackingList";
 
 type PackingItemOverviewProps = {
     actualItemList: PackingItem[];
+    addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
+    id: string
 }
 
-export default function PackingItemOverview({actualItemList}: PackingItemOverviewProps) {
+export default function PackingItemOverview({actualItemList, addItemToPackingList, id}: PackingItemOverviewProps) {
 
     return (
         <div>
             <div>
-                <AddItemToPackingList />
+                <AddItemToPackingList
+                    addItemToPackingList={addItemToPackingList}
+                    id={id}/>
             </div>
             <div className="items-overview">
                 <p>{actualItemList.map(item => <ItemCard
