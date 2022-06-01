@@ -6,7 +6,7 @@ import {
     postPackingList,
     putPackingList,
     deletePackingListById,
-    addItemAndUpdateList
+    addItemAndUpdateList, deletePackingItemById
 } from "../service/api-service";
 import {PackingItem} from "../model/PackingItem";
 
@@ -55,6 +55,10 @@ export default function usePackingLists() {
                 toast.success("Packing list: " + packingListWithItem.name + " was updated")
                 return packingListWithItem})
             .catch(() => toast.error("Connection failed! Please retry later"))
+    }
+
+    const deletePackingItem = (id: string, removeItemId: string) => {
+        return deletePackingItemById(id, removeItemId)
     }
 
 

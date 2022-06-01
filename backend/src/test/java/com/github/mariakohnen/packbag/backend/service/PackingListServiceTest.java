@@ -400,29 +400,34 @@ class PackingListServiceTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("1")
                                 .name("passport")
-                                .build(),
-                        PackingItem.builder()
-                                .id("2")
-                                .name("swimwear")
                                 .build()))
                 .build();
         when(packingListRepository.findById("123")).thenReturn(Optional.ofNullable(packingList));
-        //WHEN
         PackingList updatedPackingList = PackingList.builder()
                 .id("123")
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
-                .packingItemList(List.of(
-                        PackingItem.builder()
-                                .id("2")
-                                .name("swimwear")
-                                .build()))
+                .packingItemList(List.of())
                 .build();
+        when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of())
+                .build());
+        //WHEN
         assertNotNull(packingList);
         assertNotNull(packingList.getId());
-        packingListService.deleteItemFromPackingList(packingList.getId(), "1");
+        PackingList actual = packingListService.deleteItemFromPackingList(packingList.getId(), "1");
         //THEN
         verify(packingListRepository).save(updatedPackingList);
+        PackingList expected = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of())
+                .build();
+        assertEquals(expected, actual);
     }
 
     @Test

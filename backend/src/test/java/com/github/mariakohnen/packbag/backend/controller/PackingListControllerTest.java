@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -360,13 +361,23 @@ class PackingListControllerTest {
                 .returnResult()
                 .getResponseBody();
         String itemId = "1";
-        //WHEN //THEN
+        //WHEN
         assertNotNull(updatedList);
         assertNotNull(updatedList.getId());
-        webTestClient.delete()
+        PackingList actual = webTestClient.delete()
                 .uri("/api/packinglists/" + updatedList.getId() + "/packingitems/" + itemId)
                 .exchange()
-                .expectStatus().is2xxSuccessful();
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingList excepted = PackingList.builder()
+                .id(updatedList.getId())
+                .destination("Bayreuth")
+                .packingItemList(List.of())
+                .build();
+        assertEquals(excepted, actual);
     }
 
     @Test

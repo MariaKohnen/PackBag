@@ -80,7 +80,7 @@ public class PackingListService {
                 .build();
     }
 
-    public void deleteItemFromPackingList(String id, String itemId) {
+    public PackingList deleteItemFromPackingList(String id, String itemId) {
         PackingList updatedPackingList = packingListRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
@@ -88,7 +88,7 @@ public class PackingListService {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
             updatedItemList.removeIf(item -> item.getId().equals(itemId));
             updatedPackingList.setPackingItemList(updatedItemList);
-            packingListRepository.save(updatedPackingList);
+            return packingListRepository.save(updatedPackingList);
         } else throw new NoSuchElementException("There is no item with the id: " + itemId);
     }
 }

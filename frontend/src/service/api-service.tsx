@@ -32,5 +32,5 @@ export function deletePackingListById(id: string) {
 }
 
 export function deletePackingItemById(id: string, removeItemId: string) {
-    return axios.delete(`/api/packinglists/${id}/packingitems/${removeItemId}`)
+    return axios.put(`/api/packinglists/${id}/packingitems/${removeItemId}`)
 }
