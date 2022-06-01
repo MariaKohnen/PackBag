@@ -44,8 +44,7 @@ public class PackingListService {
     }
 
     public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with the id: " + id + " was not found, please try again!"));
+        PackingList updatedPackingList = getPackingListById(id);
         updatedPackingList.setDestination(packingListDto.getDestination());
         updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
         return packingListRepository.save(updatedPackingList);
@@ -56,8 +55,7 @@ public class PackingListService {
     }
 
     public PackingList addNewPackingItem(String id, CreatePackingItemDto createPackingItemDto) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " wasn't found!"));
+        PackingList updatedPackingList = getPackingListById(id);
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
