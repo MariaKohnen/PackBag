@@ -1,7 +1,7 @@
 .items-overview {
     width: 100%;
     min-height: 75vh;
-    background-color: beige;
+    background-color: #eaeadf;
     display: flex;
     flex-direction: column;
     border-radius: 20px;

@@ -1,12 +1,12 @@
 .item-card {
-    width: 80%;
-    margin-left: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
     padding: 10px 0 10px 0;
     display: flex;
     font-size: 0.9rem;
     letter-spacing: 1.2px;
     align-items: center;
-    border-bottom: 1px solid #6a7a7a;
+    border-bottom: 1px solid #adadab;
 }
 
 .item-card p {
