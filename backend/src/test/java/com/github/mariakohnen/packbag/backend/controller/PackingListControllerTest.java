@@ -332,4 +332,103 @@ class PackingListControllerTest {
         //THEN
     }
 
+    @Test
+    void deleteItemFromPackingList_whenIdOfListAndItemAreValid() {//GIVEN
+        PackingListDto packingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .build();
+        PackingList newPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        when(idService.generateId()).thenReturn("1");
+        assertNotNull(newPackingList);
+        assertNotNull(newPackingList.getId());
+        PackingList updatedList = webTestClient.put()
+                .uri("/api/packinglists/" + newPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        String itemId = "1";
+        //WHEN //THEN
+        assertNotNull(updatedList);
+        assertNotNull(updatedList.getId());
+        webTestClient.delete()
+                .uri("/api/packinglists/" + updatedList.getId() + "/packingitems/" + itemId)
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+    }
+
+    @Test
+    void deleteItemFromPackingList_whenIdOfListIsNotValid_ShouldThrowNoSuchElementException() {//GIVEN
+        PackingListDto packingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .build();
+        PackingList newPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        when(idService.generateId()).thenReturn("1");
+        assertNotNull(newPackingList);
+        assertNotNull(newPackingList.getId());
+        PackingList updatedList = webTestClient.put()
+                .uri("/api/packinglists/" + newPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        String itemId = "1";
+        String wrongListId = "2";
+        //WHEN //THEN
+        assertNotNull(updatedList);
+        assertNotNull(updatedList.getId());
+        webTestClient.delete()
+                .uri("/api/packinglists/" + wrongListId + "/packingitems/" + itemId)
+                .exchange()
+                .expectStatus().isEqualTo(404);
+
+    }
+
+    @Test
+    void deleteItemFromPackingList_whenListHasNoItems_ShouldThrowNoSuchElementException() {//GIVEN
+        PackingListDto packingListDto = PackingListDto.builder()
+                .destination("Bayreuth")
+                .build();
+        PackingList newPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        String itemId = "1";
+        //WHEN //THEN
+        assertNotNull(newPackingList);
+        assertNotNull(newPackingList.getId());
+        webTestClient.delete()
+                .uri("/api/packinglists/" + newPackingList.getId() + "/packingitems/" + itemId)
+                .exchange()
+                .expectStatus().isEqualTo(404);
+
+    }
 }

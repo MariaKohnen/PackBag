@@ -389,4 +389,60 @@ class PackingListServiceTest {
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.generateNewItem(packingListDto));
     }
+
+    @Test
+    void deleteItemFromPackingList_whenIdOfListAndItemAreValid() {
+        //GIVEN
+        PackingList packingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(PackingItem.builder()
+                                .id("1")
+                                .name("passport")
+                                .build(),
+                        PackingItem.builder()
+                                .id("2")
+                                .name("swimwear")
+                                .build()))
+                .build();
+        when(packingListRepository.findById("123")).thenReturn(Optional.ofNullable(packingList));
+        //WHEN
+        PackingList updatedPackingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("swimwear")
+                                .build()))
+                .build();
+        assertNotNull(packingList);
+        assertNotNull(packingList.getId());
+        packingListService.deleteItemFromPackingList(packingList.getId(), "1");
+        //THEN
+        verify(packingListRepository).save(updatedPackingList);
+    }
+
+    @Test
+    void deleteItemFromPackingList_whenIdOfListIsNotValid_ShouldThrowNoSuchElementException() {
+        //GIVEN
+        when(packingListRepository.findById("123")).thenReturn(Optional.empty());
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.deleteItemFromPackingList("123", "1"));
+    }
+
+    @Test
+    void deleteItemFromPackingList_whenListOfItemsIsNull_ShouldThrowNoSuchElementException() {
+        //GIVEN
+        PackingList packingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .build();
+        when(packingListRepository.findById("123")).thenReturn(Optional.ofNullable(packingList));
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.deleteItemFromPackingList("123", "1"));
+    }
 }

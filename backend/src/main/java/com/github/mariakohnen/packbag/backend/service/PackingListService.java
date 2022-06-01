@@ -86,10 +86,10 @@ public class PackingListService {
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
-            updatedItemList.removeIf(i -> i.getId().equals(itemId));
+            updatedItemList.removeIf(item -> item.getId().equals(itemId));
             updatedPackingList.setPackingItemList(updatedItemList);
             packingListRepository.save(updatedPackingList);
-        } else throw new NullPointerException("There is no item with the id: " + itemId);
+        } else throw new NoSuchElementException("There is no item with the id: " + itemId);
     }
 }
 
