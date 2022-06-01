@@ -7,6 +7,7 @@ import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -90,6 +91,19 @@ public class PackingListService {
             updatedPackingList.setPackingItemList(updatedItemList);
             return packingListRepository.save(updatedPackingList);
         } else throw new NoSuchElementException("There is no item with the id: " + itemId);
+    }
+
+    public PackingList updatePackingItem(String id, String itemId, CreatePackingItemDto createPackingItemDto) {
+        PackingList listToEdit = getPackingListById(id);
+        List<PackingItem> actualItemList = listToEdit.getPackingItemList();
+        if (actualItemList != null) {
+            for (PackingItem item : actualItemList) {
+                if (item.getId().equals(itemId)) {
+                    item.setName(createPackingItemDto.getName());
+                } else throw new NoSuchElementException("An item with the id: " + itemId + "can not be found!");
+            }
+        }
+        return packingListRepository.save(listToEdit);
     }
 }
 

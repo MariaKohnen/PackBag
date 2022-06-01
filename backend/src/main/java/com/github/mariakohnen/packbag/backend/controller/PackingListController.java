@@ -45,6 +45,11 @@ public class PackingListController {
         return packingListService.addNewPackingItem(id, createPackingItemDto);
     }
 
+    @PutMapping("/{id}/packingitems/{itemId}")
+    public PackingList updateExistingPackingItemOfList(@PathVariable String id, @PathVariable String itemId, @RequestBody CreatePackingItemDto createPackingItemDto) {
+        return packingListService.updatePackingItem(id, itemId, createPackingItemDto);
+    }
+
     @DeleteMapping("{id}")
     public void deletePackingListByID(@PathVariable String id) {
         packingListService.deletePackingListById(id);
