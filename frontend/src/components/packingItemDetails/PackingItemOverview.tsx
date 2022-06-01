@@ -7,9 +7,10 @@ type PackingItemOverviewProps = {
     actualItemList: PackingItem[] | undefined;
     addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
     id: string
+    deleteItem: (id: string, itemId: string) => void
 }
 
-export default function PackingItemOverview({actualItemList, addItemToPackingList, id}: PackingItemOverviewProps) {
+export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem}: PackingItemOverviewProps) {
 
     return (
         <div className="items-overview">
@@ -22,7 +23,9 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                 {actualItemList &&
                 <p>{actualItemList.map(item => <ItemCard
                     key={item.id}
-                    packingItem={item}/>)
+                    packingItem={item}
+                    deleteItem={deleteItem}
+                    id={id}/>)
                     .reverse()}</p>
                 }
             </div>
