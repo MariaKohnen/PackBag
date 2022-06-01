@@ -82,8 +82,7 @@ public class PackingListService {
     }
 
     public PackingList deleteItemFromPackingList(String id, String itemId) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
+        PackingList updatedPackingList = getPackingListById(id);
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);

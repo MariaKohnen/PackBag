@@ -334,7 +334,8 @@ class PackingListControllerTest {
     }
 
     @Test
-    void deleteItemFromPackingList_whenIdOfListAndItemAreValid() {//GIVEN
+    void deleteItemFromPackingList_whenIdOfListAndItemAreValid() {
+        //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .destination("Bayreuth")
                 .build();
@@ -381,7 +382,8 @@ class PackingListControllerTest {
     }
 
     @Test
-    void deleteItemFromPackingList_whenIdOfListIsNotValid_ShouldThrowNoSuchElementException() {//GIVEN
+    void deleteItemFromPackingList_whenIdOfListIsNotValid_ShouldThrowNoSuchElementException() {
+        //GIVEN
         PackingListDto packingListDto = PackingListDto.builder()
                 .destination("Bayreuth")
                 .build();
