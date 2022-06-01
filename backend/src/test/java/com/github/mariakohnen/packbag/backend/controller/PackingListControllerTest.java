@@ -1,19 +1,22 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
+import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
+import com.github.mariakohnen.packbag.backend.service.IdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PackingListControllerTest {
@@ -23,6 +26,9 @@ class PackingListControllerTest {
 
     @Autowired
     private PackingListRepository packingListRepository;
+
+    @MockBean
+    private IdService idService;
 
     @BeforeEach
     public void cleanUp() {
@@ -237,6 +243,71 @@ class PackingListControllerTest {
     }
 
     @Test
+    void addPackingItemToPackingList_whenNameIsGiveAndActualListIsNull_shouldReturnPackingList() {
+        //GIVEN
+        PackingListDto existingPackingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .build();
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(existingPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //WHEN
+        assertNotNull(addedPackingList);
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        when(idService.generateId()).thenReturn("1");
+        PackingList actual = webTestClient.put()
+                .uri("/api/packinglists/" + addedPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id(addedPackingList.getId())
+                .destination("Tokyo")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("1")
+                        .name("passport")
+                        .build()))
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void addPackingItemToPackingList_whenNameIsNotGiven_shouldThrowNoSuchElementException() {
+        //GIVEN
+        PackingListDto existingPackingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .build();
+        PackingList addedPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(existingPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //WHEN
+        assertNotNull(addedPackingList);
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .build();
+        webTestClient.put()
+                .uri("/api/packinglists/" + addedPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().isEqualTo(400);
+    }
+
+    @Test
     void deletePackingListByID_whenIdIsValid() {
         //GIVEN
         PackingListDto existingPackingListDto = PackingListDto.builder()
@@ -260,4 +331,5 @@ class PackingListControllerTest {
                 .expectStatus().is2xxSuccessful();
         //THEN
     }
+
 }

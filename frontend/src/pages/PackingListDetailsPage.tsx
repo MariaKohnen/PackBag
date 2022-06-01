@@ -6,12 +6,14 @@ import {PackingList} from "../model/PackingList";
 import {IconContext} from "react-icons";
 import PackingListEditMode from "../components/packingListDetails/PackingListEditMode";
 import PackingListDetailMode from "../components/packingListDetails/PackingListDetailMode";
+import {PackingItem} from "../model/PackingItem";
 
 type PackingListDetailsPageProps = {
     updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => Promise<PackingList | void>
+    addNewItem: (id: string, newPackingItem: Omit<PackingItem, "id">) => Promise<PackingList | void>
 }
 
-export default function PackingListDetailsPage({updatePackingList}: PackingListDetailsPageProps) {
+export default function PackingListDetailsPage({updatePackingList, addNewItem}: PackingListDetailsPageProps) {
 
     const {detailedPackingList, getDetailedPackingListById, setDetailedPackingList} = useDetailedPackingList()
     const {id} = useParams()
@@ -20,6 +22,11 @@ export default function PackingListDetailsPage({updatePackingList}: PackingListD
     const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id">) => {
         updatePackingList(idOfEditedList, editedPackingList)
             .then((response) => response && setDetailedPackingList(response))
+    }
+
+    const addItemToPackingList = (idOfList: string, newPackingItem : Omit<PackingItem, "id">) => {
+        addNewItem(idOfList, newPackingItem)
+            .then(response => response && setDetailedPackingList(response))
     }
 
     useEffect(() => {
@@ -42,7 +49,8 @@ export default function PackingListDetailsPage({updatePackingList}: PackingListD
                             :
                             <PackingListDetailMode
                                 detailedPackingList={detailedPackingList}
-                                setShowsDetails={setShowsDetails}/>
+                                setShowsDetails={setShowsDetails}
+                                addItemToPackingList={addItemToPackingList}/>
                         }
                     </div>}
             </div>

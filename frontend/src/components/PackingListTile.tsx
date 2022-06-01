@@ -30,7 +30,7 @@ export default function PackingListTile({packingList, deletePackingList}: packin
                     setPopUp={setPopUp}/>
                 :
                 <div className="packing-list-tile" onClick={() =>
-                    navigate(`/packinglist/${packingList.id}`)}>
+                    navigate(`/packinglist/${packingList.id}/packingitems`)}>
                     <p>{packingList.destination}</p>
                     <div className="delete-button">
                         <button onClick={handleDelete}><AiOutlineLine/></button>

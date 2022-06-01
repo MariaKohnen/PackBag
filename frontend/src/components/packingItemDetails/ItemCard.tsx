@@ -1,7 +1,7 @@
 import { IconContext } from "react-icons";
 import {PackingItem} from "../../model/PackingItem";
 import {BsCircle} from "react-icons/bs";
-import "./ItemCard.css";
+import "./styling/ItemCard.css";
 
 type ItemOverviewProps = {
     packingItem: PackingItem

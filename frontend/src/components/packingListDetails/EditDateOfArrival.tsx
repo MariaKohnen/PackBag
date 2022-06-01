@@ -3,7 +3,7 @@ import {Stack} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import "./EditDateOfArrival.css";
+import "./styling/EditDateOfArrival.css";
 
 type EditDateOfArrivalProps = {
     newDateOfArrival : Date

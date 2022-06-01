@@ -2,7 +2,6 @@ import {AiOutlineLine} from "react-icons/ai";
 import React from "react";
 import EditPackingList from "./EditPackingList";
 import {PackingList} from "../../model/PackingList";
-import "./PackingListEditMode.css";
 
 type PackingListEditModeProps = {
     id: string

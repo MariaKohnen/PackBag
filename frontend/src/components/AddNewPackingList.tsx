@@ -13,7 +13,7 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
     const getOnSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newDestination) {
-            toast.error("Destination ist required.")
+            toast.error("Destination is required.")
         }
         const newPackingList : Omit<PackingList, "id" | "dateOfArrival"> = {
             destination : newDestination

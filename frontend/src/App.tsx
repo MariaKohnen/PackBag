@@ -8,7 +8,7 @@ import usePackingLists from "./hooks/usePackingLists";
 
 export default function App() {
 
-    const {packingLists, addPackingList, updatePackingList, deletePackingList} = usePackingLists();
+    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem} = usePackingLists();
 
     return (
         <HashRouter>
@@ -19,9 +19,10 @@ export default function App() {
                            packingLists={packingLists}
                            addPackingList={addPackingList}
                            deletePackingList={deletePackingList} />}/>
-                    <Route path={`/packinglist/:id`}
+                    <Route path={`/packinglist/:id/packingitems`}
                            element={<PackingListDetailsPage
-                           updatePackingList={updatePackingList} />}/>
+                           updatePackingList={updatePackingList}
+                           addNewItem={addNewItem} />}/>
                 </Routes>
                 <NavigationBar />
             </div>

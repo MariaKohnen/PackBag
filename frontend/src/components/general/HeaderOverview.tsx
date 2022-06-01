@@ -1,4 +1,4 @@
-import "./HeaderOverview.css"
+import "./styling/HeaderOverview.css"
 
 export function HeaderOverview() {
     return (

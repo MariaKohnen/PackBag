@@ -1,5 +1,6 @@
 import axios from "axios";
 import {PackingList} from "../model/PackingList";
+import {PackingItem} from "../model/PackingItem";
 
 export function getAllPackingLists() {
     return axios.get<PackingList[]>("/api/packinglists")
@@ -18,6 +19,11 @@ export function postPackingList(newPackingList : Omit<PackingList, "id" | "dateO
 
 export function putPackingList(id : string, editedPackingList : Omit<PackingList, "id">) {
     return axios.put(`/api/packinglists/${id}`, editedPackingList)
+        .then(response => response.data);
+}
+
+export function addItemAndUpdateList(id: string, newPackingItem: Omit<PackingItem, "id">) {
+    return axios.put(`/api/packinglists/${id}/packingitems`, newPackingItem)
         .then(response => response.data);
 }
 

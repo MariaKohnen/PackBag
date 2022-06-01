@@ -1,6 +1,6 @@
 import {NavigationBarData} from "./NavigationBarData";
 import {Link} from "react-router-dom";
-import "./NavigationItems.css";
+import "./styling/NavigationItems.css";
 
 export default function NavigationItems() {
     return (

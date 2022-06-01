@@ -1,6 +1,6 @@
 import {PackingList} from "../../model/PackingList";
 import {FormEvent, useState} from "react";
-import "./EditPackingList.css";
+import "./styling/EditPackingList.css";
 import EditDestination from "./EditDestination";
 import EditDateOfArrival from "./EditDateOfArrival";
 
