@@ -36,7 +36,8 @@ export default function usePackingLists() {
                     ? updatedPackingList
                     : list))
                 toast.success("Packing list: " + updatedPackingList.name + " was updated")
-                return updatedPackingList})
+                return updatedPackingList
+            })
             .catch(() => toast.error("Connection failed! Please retry later"))
     }
 
@@ -52,15 +53,21 @@ export default function usePackingLists() {
                 setPackingLists(packingLists.map(list => list.id === packingListWithItem.id
                     ? packingListWithItem
                     : list))
-                toast.success("Packing list: " + packingListWithItem.name + " was updated")
-                return packingListWithItem})
+                return packingListWithItem
+            })
             .catch(() => toast.error("Connection failed! Please retry later"))
     }
 
     const deletePackingItem = (id: string, removeItemId: string) => {
         return deletePackingItemById(id, removeItemId)
+            .then(packingListWithoutItem => {
+                setPackingLists(packingLists.map(list => list.id === packingListWithoutItem.id
+                    ? packingListWithoutItem
+                    : list))
+                return packingListWithoutItem
+            })
+            .catch(() => toast.error("Error while removing item from packing list. Please try again."))
     }
 
-
-return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem}
+return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem}
 }
