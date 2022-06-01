@@ -9,9 +9,10 @@ type PackingListDetailModeProps = {
     detailedPackingList: PackingList
     setShowsDetails: (status: boolean) => void
     addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
+    deleteItem: (id: string, itemId: string) => void
 }
 
-export default function PackingListDetailMode({detailedPackingList, setShowsDetails, addItemToPackingList}: PackingListDetailModeProps) {
+export default function PackingListDetailMode({detailedPackingList, setShowsDetails, addItemToPackingList, deleteItem}: PackingListDetailModeProps) {
 
     const formattedDate = new Date(detailedPackingList.dateOfArrival).toLocaleDateString();
 
@@ -27,7 +28,8 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                     <PackingItemOverview
                         actualItemList={detailedPackingList.packingItemList}
                         addItemToPackingList={addItemToPackingList}
-                    id={detailedPackingList.id}/>
+                        id={detailedPackingList.id}
+                        deleteItem={deleteItem} />
                 </div>
             }
         </div>

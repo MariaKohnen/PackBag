@@ -39,7 +39,7 @@ public class PackingListService {
 
     public PackingList getPackingListById(String id) {
         return packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
+                .orElseThrow(() -> new NoSuchElementException("A Packing list with id: " + id + " could not be found!"));
     }
 
     public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
@@ -56,7 +56,7 @@ public class PackingListService {
 
     public PackingList addNewPackingItem(String id, CreatePackingItemDto createPackingItemDto) {
         PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " was not found!"));
+                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " wasn't found!"));
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
@@ -78,6 +78,17 @@ public class PackingListService {
                 .id(idService.generateId())
                 .name(createPackingItemDto.getName())
                 .build();
+    }
+
+    public PackingList deleteItemFromPackingList(String id, String itemId) {
+        PackingList updatedPackingList = getPackingListById(id);
+        List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
+        if (actualItemList != null) {
+            List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
+            updatedItemList.removeIf(item -> item.getId().equals(itemId));
+            updatedPackingList.setPackingItemList(updatedItemList);
+            return packingListRepository.save(updatedPackingList);
+        } else throw new NoSuchElementException("There is no item with the id: " + itemId);
     }
 }
 

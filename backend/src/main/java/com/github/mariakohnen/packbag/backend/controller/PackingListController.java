@@ -49,4 +49,9 @@ public class PackingListController {
     public void deletePackingListByID(@PathVariable String id) {
         packingListService.deletePackingListById(id);
     }
+
+    @DeleteMapping("/{id}/packingitems/{itemId}")
+    public PackingList deleteItemFromPackingList(@PathVariable String id, @PathVariable String itemId) {
+        return packingListService.deleteItemFromPackingList(id, itemId);
+    }
 }

@@ -1,14 +1,23 @@
 .item-card {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding: 10px 0 10px 0;
     display: flex;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     letter-spacing: 1.2px;
-    align-items: center;
     border-bottom: 1px solid #adadab;
+    flex-wrap: nowrap;
 }
 
 .item-card p {
     margin: 0 0 0 10px;
+    flex-grow: 3;
+    font-size: 0.9rem;
+    color: #5a6b6c;
+}
+
+.item-card button {
+    background-color: unset;
+    border: none;
+    font-size: 1.1rem;
 }
