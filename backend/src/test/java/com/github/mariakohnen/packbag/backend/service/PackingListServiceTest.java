@@ -450,4 +450,86 @@ class PackingListServiceTest {
         //WHEN //THEN
         assertThrows(NoSuchElementException.class, () -> packingListService.deleteItemFromPackingList("123", "1"));
     }
+
+    @Test
+    void updatePackingItem_whenIdOfListAndItemIsValid_ShouldReturnUpdatedList() {
+        //GIVEN
+        String listId = "123";
+        String itemId = "2";
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        PackingList existingPackingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("swimwear")
+                                .build()))
+                .build();
+        when(packingListRepository.findById(existingPackingList.getId())).thenReturn(Optional.of(existingPackingList));
+        PackingList updatedPackingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("passport")
+                                .build()))
+                .build();
+        when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("passport")
+                                .build()))
+                .build());
+        //WHEN
+        PackingList actual = packingListService.updatePackingItem(listId, itemId, itemToUpdate);
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("passport")
+                                .build()))
+                .build();
+        assertEquals(expected, actual);
+        verify(packingListRepository).findById(listId);
+        verify(packingListRepository).save(updatedPackingList);
+    }
+
+    @Test
+    void updatePackingItem_whenIdOfItemIsNotValid_ShouldThrowNoSuchElementException() {
+        //GIVEN
+        String listId = "123";
+        String itemId = "1";
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        PackingList existingPackingList = PackingList.builder()
+                .id("123")
+                .destination("Tokyo")
+                .dateOfArrival(LocalDate.parse("2022-10-03"))
+                .packingItemList(List.of(
+                        PackingItem.builder()
+                                .id("2")
+                                .name("swimwear")
+                                .build()))
+                .build();
+        assertNotNull(existingPackingList);
+        when(packingListRepository.findById(existingPackingList.getId())).thenReturn(Optional.of(existingPackingList));
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingItem(listId, itemId, itemToUpdate));
+        verify(packingListRepository).findById(listId);
+    }
 }
