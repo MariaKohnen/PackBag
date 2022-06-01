@@ -19,9 +19,10 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                     addItemToPackingList={addItemToPackingList}
                     id={id}/>
             </div>
-            <div>
+            <div className="item-container">
+                <p>your packing list</p>
                 {actualItemList &&
-                <p>{actualItemList.map(item => <ItemCard
+                <p className="category-text">{actualItemList.map(item => <ItemCard
                     key={item.id}
                     packingItem={item}
                     deleteItem={deleteItem}

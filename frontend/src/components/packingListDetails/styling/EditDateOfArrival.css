@@ -8,7 +8,7 @@
     border-radius: 10px;
 }
 
-.css-1x51dt5-MuiInputBase-input-MuiInput-input {
-    color: #eaeadf !important;
+.MuiInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl {
+    color: #eaeadf;
     padding-top: 6px;
 }
