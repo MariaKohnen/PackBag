@@ -444,4 +444,101 @@ class PackingListControllerTest {
                 .expectStatus().isEqualTo(404);
 
     }
+
+    @Test
+    void updateExistingPackingItemOfList_whenIdOfListAndItemIsValid_shouldReturnUpdatedList() {
+        //GIVEN
+        PackingListDto packingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .build();
+        PackingList newPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        when(idService.generateId()).thenReturn("1");
+        assertNotNull(newPackingList);
+        assertNotNull(newPackingList.getId());
+        PackingList updatedList = webTestClient.put()
+                .uri("/api/packinglists/" + newPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .name("swimwear")
+                .build();
+        String itemId = "1";
+        //WHEN
+        assertNotNull(updatedList);
+        assertNotNull(updatedList.getId());
+        PackingList actual = webTestClient.put()
+                .uri("/api/packinglists/" + updatedList.getId() + "/packingitems/" + itemId)
+                .bodyValue(itemToUpdate)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingList excepted = PackingList.builder()
+                .id(updatedList.getId())
+                .destination("Tokyo")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("1")
+                        .name("swimwear")
+                        .build()))
+                .build();
+        assertEquals(excepted, actual);
+    }
+
+    @Test
+    void updateExistingPackingItemOfList_whenIdIsNotValid_shouldThrowNoSuchElementException() {
+        //GIVEN
+        PackingListDto packingListDto = PackingListDto.builder()
+                .destination("Tokyo")
+                .build();
+        PackingList newPackingList = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(packingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+                .name("passport")
+                .build();
+        when(idService.generateId()).thenReturn("1");
+        assertNotNull(newPackingList);
+        assertNotNull(newPackingList.getId());
+        PackingList updatedList = webTestClient.put()
+                .uri("/api/packinglists/" + newPackingList.getId() + "/packingitems")
+                .bodyValue(newPackingItem)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .name("swimwear")
+                .build();
+        String itemId = "2";
+        //WHEN //THEN
+        assertNotNull(updatedList);
+        assertNotNull(updatedList.getId());
+        webTestClient.put()
+                .uri("/api/packinglists/" + updatedList.getId() + "/packingitems/" + itemId)
+                .bodyValue(itemToUpdate)
+                .exchange()
+                .expectStatus().isEqualTo(404);
+    }
 }
