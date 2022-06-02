@@ -1,15 +1,8 @@
 import {useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
-import {
-    getAllPackingLists,
-    postPackingList,
-    putPackingList,
-    deletePackingListById,
-    addItemAndUpdateList, deletePackingItemById, updateItemOfList
-} from "../service/api-service";
+import {getAllPackingLists, postPackingList, putPackingList, deletePackingListById, addItemAndUpdateList, deletePackingItemById, updateItemOfList} from "../service/api-service";
 import {PackingItem} from "../model/PackingItem";
-
 
 export default function usePackingLists() {
     const [packingLists, setPackingLists] = useState<PackingList[]>([]);
@@ -80,5 +73,5 @@ export default function usePackingLists() {
             .catch(() => toast.error("Error while removing item from packing list. Please try again."))
     }
 
-return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updateItemOfList}
+return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem}
 }

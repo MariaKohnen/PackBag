@@ -97,12 +97,9 @@ public class PackingListService {
         PackingList listToEdit = getPackingListById(id);
         List<PackingItem> actualItemList = listToEdit.getPackingItemList();
         if (actualItemList != null) {
-            for (PackingItem item : actualItemList) {
-                if (item.getId().equals(itemId)) {
-                    item.setName(createPackingItemDto.getName());
-                } else throw new NoSuchElementException("An item with the id: " + itemId + "can not be found!");
+            PackingItem itemToUpdate = actualItemList.stream().filter(item -> itemId.equals(item.getId())).findFirst().orElseThrow(() -> new NoSuchElementException ("m"));
+            itemToUpdate.setName(createPackingItemDto.getName());
             }
-        }
         return packingListRepository.save(listToEdit);
     }
 }

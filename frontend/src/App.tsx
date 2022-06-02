@@ -5,11 +5,10 @@ import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 import PackingListDetailsPage from "./pages/PackingListDetailsPage";
 import NavigationBar from "./components/general/NavigationBar";
 import usePackingLists from "./hooks/usePackingLists";
-import {updateItemOfList} from "./service/api-service";
 
 export default function App() {
 
-    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updateItemOfList} = usePackingLists();
+    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem} = usePackingLists();
 
     return (
         <HashRouter>
@@ -17,17 +16,17 @@ export default function App() {
                 <Routes>
                     <Route path="/"
                            element={<PackingListOverviewPage
-                           packingLists={packingLists}
-                           addPackingList={addPackingList}
-                           deletePackingList={deletePackingList} />}/>
-                    <Route path={`/packinglist/:id/packingitems`}
+                               packingLists={packingLists}
+                               addPackingList={addPackingList}
+                               deletePackingList={deletePackingList}/>}/>
+                    <Route path={`/packinglist/:id/*`}
                            element={<PackingListDetailsPage
-                           updatePackingList={updatePackingList}
-                           addNewItem={addNewItem}
-                           deletePackingItem={deletePackingItem}
-                           updatePackingItem={updateItemOfList}/>}/>
+                               updatePackingList={updatePackingList}
+                               addNewItem={addNewItem}
+                               deletePackingItem={deletePackingItem}
+                               updatePackingItem={updatePackingItem}/>} />
                 </Routes>
-                <NavigationBar />
+                <NavigationBar/>
             </div>
         </HashRouter>
     )

@@ -2,6 +2,8 @@ import "./styling/PackingItemOverview.css";
 import {ItemCard} from "./ItemCard";
 import {PackingItem} from "../../model/PackingItem";
 import AddItemToPackingList from "./AddItemToPackingList";
+import EditPackingItem from "./EditPackingItem";
+import {Routes, Route} from "react-router-dom";
 
 type PackingItemOverviewProps = {
     actualItemList: PackingItem[] | undefined;
@@ -15,22 +17,30 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
 
     return (
         <div className="items-overview">
-            <div>
-                <AddItemToPackingList
-                    addItemToPackingList={addItemToPackingList}
-                    id={id}/>
-            </div>
-            <div className="item-container">
-                <p>your packing list</p>
-                {actualItemList &&
-                <p className="category-text">{actualItemList.map(item => <ItemCard
-                    key={item.id}
-                    packingItem={item}
-                    deleteItem={deleteItem}
-                    id={id}/>)
-                    .reverse()}</p>
-                }
-            </div>
+            <Routes>
+                <Route path={`packingitems/:itemId`} element={<EditPackingItem
+                    updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
+                    id={id}/>}/>
+                <Route index element={
+                    <div>
+                        <div>
+                            <AddItemToPackingList
+                            addItemToPackingList={addItemToPackingList}
+                            id={id}/>
+                        </div>
+                        <div className="item-container">
+                            <p>your packing list</p>
+                            {actualItemList &&
+                                <p className="category-text">{actualItemList.map(item => <ItemCard
+                                    key={item.id}
+                                    packingItem={item}
+                                    deleteItem={deleteItem}
+                                    id={id}/>)
+                                    .reverse()}</p>}
+                        </div>
+                    </div>}
+                />
+            </Routes>
         </div>
     )
 }
