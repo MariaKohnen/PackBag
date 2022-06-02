@@ -14,11 +14,13 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
     const {itemId} = useParams()
     const navigate = useNavigate()
     const [newName, setNewName] = useState<string>("")
+    const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newName) {
             toast.error("Please enter a name or return!")
+            navigate(-1)
             return
         }
         const editedItemDto: Omit<PackingItem, "id"> = {
@@ -34,9 +36,10 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                 type={"text"}
                 value={newName}
                 placeholder="change name of item"
+                onInput={() => setButtonText("confirm")}
                 onChange={event => setNewName(event.target.value)}
             />
-        <button type={"submit"}>save changes</button>
+        <button type={"submit"}>{buttonText}</button>
         </form>
     )
 }
