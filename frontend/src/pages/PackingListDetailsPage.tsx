@@ -12,9 +12,10 @@ type PackingListDetailsPageProps = {
     updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => Promise<PackingList | void>
     addNewItem: (id: string, newPackingItem: Omit<PackingItem, "id">) => Promise<PackingList | void>
     deletePackingItem: (id: string, itemId: string) => Promise<PackingList>
+    updatePackingItem: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => Promise<PackingList>
 }
 
-export default function PackingListDetailsPage({updatePackingList, addNewItem, deletePackingItem}: PackingListDetailsPageProps) {
+export default function PackingListDetailsPage({updatePackingList, addNewItem, deletePackingItem, updatePackingItem}: PackingListDetailsPageProps) {
 
     const {detailedPackingList, getDetailedPackingListById, setDetailedPackingList} = useDetailedPackingList()
     const {id} = useParams()
@@ -27,6 +28,11 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
 
     const addItemToPackingList = (idOfList: string, newPackingItem : Omit<PackingItem, "id">) => {
         addNewItem(idOfList, newPackingItem)
+            .then(response => response && setDetailedPackingList(response))
+    }
+
+    const updateItemAndGetUpdatedList = (listId: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => {
+        updatePackingItem(listId, itemId, updatedPackingItem)
             .then(response => response && setDetailedPackingList(response))
     }
 
@@ -57,7 +63,8 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
                                 detailedPackingList={detailedPackingList}
                                 setShowsDetails={setShowsDetails}
                                 addItemToPackingList={addItemToPackingList}
-                                deleteItem={deleteItemGetUpdatedList} />
+                                deleteItem={deleteItemGetUpdatedList}
+                                updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}/>
                         }
                     </div>}
             </div>

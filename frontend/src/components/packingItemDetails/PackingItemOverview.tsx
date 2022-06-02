@@ -8,9 +8,10 @@ type PackingItemOverviewProps = {
     addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
     id: string
     deleteItem: (id: string, itemId: string) => void
+    updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
 }
 
-export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem}: PackingItemOverviewProps) {
+export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem, updateItemAndGetUpdatedList}: PackingItemOverviewProps) {
 
     return (
         <div className="items-overview">

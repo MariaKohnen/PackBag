@@ -12,6 +12,7 @@ type ItemOverviewProps = {
 
 export function ItemCard({packingItem, deleteItem, id}: ItemOverviewProps) {
 
+
     const confirmDelete = () => {
         deleteItem(id, packingItem.id)
     }
