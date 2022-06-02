@@ -532,4 +532,15 @@ class PackingListServiceTest {
         assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingItem(listId, itemId, itemToUpdate));
         verify(packingListRepository).findById(listId);
     }
+
+    @Test
+    void updatePackingItem_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
+        //GIVEN
+        String listId = "123";
+        String itemId = "1";
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .build();
+        //WHEN //THEN
+        assertThrows(IllegalArgumentException.class, () -> packingListService.updatePackingItem(listId, itemId, itemToUpdate));
+    }
 }

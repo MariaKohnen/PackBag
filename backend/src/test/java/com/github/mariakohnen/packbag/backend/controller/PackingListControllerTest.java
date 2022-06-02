@@ -541,4 +541,19 @@ class PackingListControllerTest {
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
+
+    @Test
+    void updateExistingPackingItemOfList_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
+        //GIVEN
+        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+                .build();
+        String listId = "123";
+        String itemId = "2";
+        //WHEN //THEN
+        webTestClient.put()
+                .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .bodyValue(itemToUpdate)
+                .exchange()
+                .expectStatus().isEqualTo(400);
+    }
 }
