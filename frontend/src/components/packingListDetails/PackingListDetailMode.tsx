@@ -25,7 +25,6 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                 <p>{detailedPackingList.dateOfArrival && formattedDate}</p>
             </div>
             {detailedPackingList &&
-                <div>
                     <PackingItemOverview
                         actualItemList={detailedPackingList.packingItemList}
                         addItemToPackingList={addItemToPackingList}
@@ -33,7 +32,6 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                         deleteItem={deleteItem}
                         updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
                     />
-                </div>
             }
         </div>
     )

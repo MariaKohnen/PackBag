@@ -2,6 +2,7 @@ import {FormEvent, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {PackingItem} from "../../model/PackingItem";
 import {toast} from "react-toastify";
+import "./styling/EditPackingItem.css";
 
 type EditPackingItemProps = {
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
@@ -27,9 +28,9 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
             navigate(-1)}
 
     return (
-        <form onSubmit={handleClick}>
+        <form className="edit-item-container" onSubmit={handleClick}>
             <input
-                className="input-field"
+                className="item-input-field"
                 type={"text"}
                 value={newName}
                 placeholder="change name of item"

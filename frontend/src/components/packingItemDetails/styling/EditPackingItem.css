@@ -1,0 +1,28 @@
+.edit-item-container {
+    margin: 30px 10px 0 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-item-container > input {
+    height: 35px;
+    padding: 5px 0 5px 20px;
+    margin-bottom: 15px;
+    background-color: #ffffff;
+    border: none;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    color: #182626;
+}
+
+.edit-item-container > button {
+    width: 100%;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #d7a36f;
+    font-size: 1.1rem;
+    color: #253d3e;
+    border: 0;
+    border-radius: 10px;
+}
