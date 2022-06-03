@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreatePackingItemDto {
+public class NewPackingItemDto {
 
     String name;
 }

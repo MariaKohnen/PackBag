@@ -1,6 +1,6 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
-import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -42,13 +42,13 @@ public class PackingListController {
     }
 
     @PutMapping("/{id}/packingitems")
-    public PackingList addPackingItemToPackingList(@PathVariable String id, @RequestBody CreatePackingItemDto createPackingItemDto) {
-        return packingListService.addNewPackingItem(id, createPackingItemDto);
+    public PackingList addPackingItemToPackingList(@PathVariable String id, @RequestBody NewPackingItemDto newPackingItemDto) {
+        return packingListService.addNewPackingItem(id, newPackingItemDto);
     }
 
     @PutMapping("/{id}/packingitems/{itemId}")
-    public PackingList updateExistingPackingItemOfList(@PathVariable String id, @PathVariable String itemId, @RequestBody CreatePackingItemDto createPackingItemDto) {
-        return packingListService.updatePackingItem(id, itemId, createPackingItemDto);
+    public PackingList updateExistingPackingItemOfList(@PathVariable String id, @PathVariable String itemId, @RequestBody NewPackingItemDto newPackingItemDto) {
+        return packingListService.updatePackingItem(id, itemId, newPackingItemDto);
     }
 
     @DeleteMapping("{id}")

@@ -1,6 +1,6 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
-import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
@@ -260,7 +260,7 @@ class PackingListControllerTest {
                 .getResponseBody();
         //WHEN
         assertNotNull(addedPackingList);
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         when(idService.generateId()).thenReturn("1");
@@ -300,7 +300,7 @@ class PackingListControllerTest {
                 .getResponseBody();
         //WHEN
         assertNotNull(addedPackingList);
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .build();
         webTestClient.put()
                 .uri("/api/packinglists/" + addedPackingList.getId() + "/packingitems")
@@ -348,7 +348,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         when(idService.generateId()).thenReturn("1");
@@ -396,7 +396,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         when(idService.generateId()).thenReturn("1");
@@ -460,7 +460,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         when(idService.generateId()).thenReturn("1");
@@ -474,7 +474,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .name("swimwear")
                 .build();
         String itemId = "1";
@@ -515,7 +515,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto newPackingItem = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItem = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         when(idService.generateId()).thenReturn("1");
@@ -529,7 +529,7 @@ class PackingListControllerTest {
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .name("swimwear")
                 .build();
         String itemId = "2";
@@ -546,7 +546,7 @@ class PackingListControllerTest {
     @Test
     void updateExistingPackingItemOfList_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
         //GIVEN
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .build();
         String listId = "123";
         String itemId = "2";

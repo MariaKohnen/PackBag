@@ -1,8 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
-import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -225,7 +224,7 @@ class PackingListServiceTest {
     void addNewPackingItem_whenNameIsGivenAndActualListIsNotNull_ShouldReturnUpdatedPackingListWithAllItems() {
         //GIVEN
         String pathId = "123";
-        CreatePackingItemDto createPackingItemDto = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItemDto = NewPackingItemDto.builder()
                 .name("swimwear")
                 .build();
         when(idService.generateId()).thenReturn("2");
@@ -269,7 +268,7 @@ class PackingListServiceTest {
                                 .build()))
                 .build());
         //WHEN
-        PackingList actual = packingListService.addNewPackingItem(pathId, createPackingItemDto);
+        PackingList actual = packingListService.addNewPackingItem(pathId, newPackingItemDto);
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
@@ -293,7 +292,7 @@ class PackingListServiceTest {
     void addNewPackingItem_whenNameIsGivenAndActualListIsNull_ShouldReturnUpdatedPackingListWithAllItems() {
         //GIVEN
         String pathId = "123";
-        CreatePackingItemDto createPackingItemDto = CreatePackingItemDto.builder()
+        NewPackingItemDto newPackingItemDto = NewPackingItemDto.builder()
                 .name("swimwear")
                 .build();
         when(idService.generateId()).thenReturn("2");
@@ -327,7 +326,7 @@ class PackingListServiceTest {
                                 .build()))
                 .build());
         //WHEN
-        PackingList actual = packingListService.addNewPackingItem(pathId, createPackingItemDto);
+        PackingList actual = packingListService.addNewPackingItem(pathId, newPackingItemDto);
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
@@ -348,7 +347,7 @@ class PackingListServiceTest {
     void addNewPackingItem_whenNameIsNull_ShouldThrowIllegalArgumentException() {
         //GIVEN
         String pathId = "123";
-        CreatePackingItemDto createPackingItemDto = CreatePackingItemDto.builder()
+        NewPackingItemDto createPackingItemDto = NewPackingItemDto.builder()
                 .build();
 
         when(packingListRepository.findById(pathId)).thenReturn(Optional.ofNullable(
@@ -365,7 +364,7 @@ class PackingListServiceTest {
     @Test
     void generateNewItem_whenNameIsGiven_ShouldReturnPackingItem() {
         //GIVEN
-        CreatePackingItemDto packingListDto = CreatePackingItemDto.builder()
+        NewPackingItemDto packingListDto = NewPackingItemDto.builder()
                 .name("Tokyo")
                 .build();
         when(idService.generateId()).thenReturn("2");
@@ -383,7 +382,7 @@ class PackingListServiceTest {
     @Test
     void generateNewItem_whenNameIsNotGiven_ShouldThrowIllegalArgumentException() {
         //GIVEN
-        CreatePackingItemDto packingListDto = CreatePackingItemDto.builder()
+        NewPackingItemDto packingListDto = NewPackingItemDto.builder()
                 .name(null)
                 .build();
         //WHEN//THEN
@@ -456,7 +455,7 @@ class PackingListServiceTest {
         //GIVEN
         String listId = "123";
         String itemId = "2";
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         PackingList existingPackingList = PackingList.builder()
@@ -513,7 +512,7 @@ class PackingListServiceTest {
         //GIVEN
         String listId = "123";
         String itemId = "1";
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .name("passport")
                 .build();
         PackingList existingPackingList = PackingList.builder()
@@ -538,7 +537,7 @@ class PackingListServiceTest {
         //GIVEN
         String listId = "123";
         String itemId = "1";
-        CreatePackingItemDto itemToUpdate = CreatePackingItemDto.builder()
+        NewPackingItemDto itemToUpdate = NewPackingItemDto.builder()
                 .build();
         //WHEN //THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.updatePackingItem(listId, itemId, itemToUpdate));
