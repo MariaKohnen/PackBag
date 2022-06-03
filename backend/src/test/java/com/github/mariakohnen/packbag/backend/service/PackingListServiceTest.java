@@ -2,7 +2,6 @@ package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -33,7 +32,7 @@ class PackingListServiceTest {
             .dateOfArrival(LocalDate.parse("2022-09-24"))
             .build();
 
-    PackingList existingList = PackingList.builder()
+    PackingList packingListWithOneItem = PackingList.builder()
             .id("1")
             .dateOfArrival(LocalDate.parse("2022-09-03"))
             .destination("Kyoto")
@@ -43,7 +42,7 @@ class PackingListServiceTest {
                     .build()))
             .build();
 
-    PackingList existingListWithItemList = PackingList.builder()
+    PackingList packingListWithTwoItems = PackingList.builder()
             .id("1")
             .dateOfArrival(LocalDate.parse("2022-09-03"))
             .destination("Kyoto")
@@ -77,7 +76,7 @@ class PackingListServiceTest {
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
                 .destination("Nagasaki")
                 .build();
-        when(packingListRepository.findAll()).thenReturn(List.of(existingList, packingList2));
+        when(packingListRepository.findAll()).thenReturn(List.of(packingListWithOneItem, packingList2));
         //WHEN
         List<PackingList> actual = packingListService.getAllPackingLists();
         //THEN
@@ -102,7 +101,7 @@ class PackingListServiceTest {
     @Test
     void getPackingListById_whenIdIsValid_shouldReturnPackingList() {
         //GIVEN
-        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem));
         //WHEN
         PackingList actual = packingListService.getPackingListById("1");
         //THEN
@@ -161,7 +160,7 @@ class PackingListServiceTest {
     @Test
     void updatePackingListById_whenIdIsValid_shouldReturnUpdatedPackingList() {
         //GIVEN
-        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem));
         PackingList updatedPackingList = PackingList.builder()
                 .id("1")
                 .dateOfArrival(LocalDate.parse("2022-09-24"))
@@ -210,7 +209,7 @@ class PackingListServiceTest {
     @Test
     void deletePackingListById_whenIdIsValid() {
         //WHEN
-        packingListService.deletePackingListById(existingList.getId());
+        packingListService.deletePackingListById(packingListWithOneItem.getId());
         //THEN
         verify(packingListRepository).deleteById("1");
     }
@@ -220,7 +219,7 @@ class PackingListServiceTest {
         //GIVEN
         when(idService.generateId()).thenReturn("02");
 
-        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem));
 
         PackingList updatedPackingList = PackingList.builder()
                 .id("1")
@@ -236,7 +235,7 @@ class PackingListServiceTest {
                                 .build()))
                 .build();
 
-        when(packingListRepository.save(updatedPackingList)).thenReturn(existingListWithItemList);
+        when(packingListRepository.save(updatedPackingList)).thenReturn(packingListWithTwoItems);
         //WHEN
         PackingList actual = packingListService.addNewPackingItem(listId, newPackingItemDto);
         //THEN
@@ -270,7 +269,7 @@ class PackingListServiceTest {
                         .dateOfArrival(LocalDate.parse("2022-09-03"))
                         .build()));
 
-        when(packingListRepository.save(existingList)).thenReturn(PackingList.builder()
+        when(packingListRepository.save(packingListWithOneItem)).thenReturn(PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
                 .dateOfArrival(LocalDate.parse("2022-09-03"))
@@ -294,7 +293,7 @@ class PackingListServiceTest {
                                 .build()))
                 .build();
         assertEquals(expected, actual);
-        verify(packingListRepository).save(existingList);
+        verify(packingListRepository).save(packingListWithOneItem);
         verify(idService).generateId();
     }
 
@@ -303,7 +302,7 @@ class PackingListServiceTest {
         //GIVEN
         NewPackingItemDto emptyItem = NewPackingItemDto.builder()
                 .build();
-        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem));
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingItem(listId, emptyItem));
     }
@@ -335,8 +334,8 @@ class PackingListServiceTest {
     @Test
     void deleteItemFromPackingList_whenIdOfListAndItemAreValid() {
         //GIVEN
-        when(packingListRepository.findById("1")).thenReturn(Optional.ofNullable(existingListWithItemList));
-        when(packingListRepository.save(existingList)).thenReturn(PackingList.builder()
+        when(packingListRepository.findById("1")).thenReturn(Optional.ofNullable(packingListWithTwoItems));
+        when(packingListRepository.save(packingListWithOneItem)).thenReturn(PackingList.builder()
                 .id("01")
                 .destination("Kyoto")
                 .dateOfArrival(LocalDate.parse("2022-09-03"))
@@ -346,10 +345,10 @@ class PackingListServiceTest {
                         .build()))
                 .build());
         //WHEN
-        assertNotNull(existingList);
+        assertNotNull(packingListWithOneItem);
         PackingList actual = packingListService.deleteItemFromPackingList(listId, "02");
         //THEN
-        verify(packingListRepository).save(existingList);
+        verify(packingListRepository).save(packingListWithOneItem);
         PackingList expected = PackingList.builder()
                 .id("01")
                 .destination("Kyoto")
@@ -386,7 +385,7 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenIdOfListAndItemIsValid_ShouldReturnUpdatedList() {
         //GIVEN
-        when(packingListRepository.findById(listId)).thenReturn(Optional.of(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.of(packingListWithOneItem));
         PackingList updatedPackingList = PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
@@ -428,7 +427,7 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenIdOfItemIsNotValid_ShouldThrowNoSuchElementException() {
         //GIVEN
-        when(packingListRepository.findById(listId)).thenReturn(Optional.of(existingList));
+        when(packingListRepository.findById(listId)).thenReturn(Optional.of(packingListWithOneItem));
         //WHEN //THEN
         assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingItem(listId, "02", newPackingItemDto));
         verify(packingListRepository).findById(listId);
