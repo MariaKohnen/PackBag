@@ -92,11 +92,15 @@ public class PackingListService {
 
     public PackingList updatePackingItem(String id, String itemId, CreatePackingItemDto createPackingItemDto) {
         if (createPackingItemDto.getName() == null) {
-            throw new IllegalArgumentException("Name of the given item was null.");
+            throw new IllegalArgumentException("The item was not updated. Name of the given item was null.");
         }
         PackingList listToEdit = getPackingListById(id);
         List<PackingItem> actualItemList = listToEdit.getPackingItemList();
-        PackingItem itemToUpdate = actualItemList.stream().filter(item -> itemId.equals(item.getId())).findFirst().orElseThrow(() -> new NoSuchElementException("m"));
+        PackingItem itemToUpdate = actualItemList
+                .stream()
+                .filter(item -> itemId.equals(item.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
         itemToUpdate.setName(createPackingItemDto.getName());
         return packingListRepository.save(listToEdit);
     }
