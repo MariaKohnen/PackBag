@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -144,7 +145,16 @@ class PackingListServiceTest {
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(emptyList));
+    }
 
+    @Test
+    void addNewPackingList_whenNameIsAnEmptyString_shouldThrowException() {
+        //GIVEN
+        NewPackingListDto itemWithEmptyString = NewPackingListDto.builder()
+                .destination("   ")
+                .build();
+        //WHEN//THEN
+        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(itemWithEmptyString));
     }
 
     @Test

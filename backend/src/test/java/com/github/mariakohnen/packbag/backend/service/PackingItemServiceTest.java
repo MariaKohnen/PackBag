@@ -121,6 +121,17 @@ class PackingItemServiceTest extends PackingListServiceTest{
     }
 
     @Test
+    void addNewPackingItem_whenNameIsAnEmptyString_ShouldThrowIllegalArgumentException() {
+        //GIVEN
+        NewPackingItemDto itemWithEmptyString = NewPackingItemDto.builder()
+                .name("    ")
+                .build();
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem));
+        //WHEN//THEN
+        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingItem(listId, itemWithEmptyString));
+    }
+
+    @Test
     void generateNewItem_whenNameIsGiven_ShouldReturnPackingItem() {
         //GIVEN
         when(idService.generateId()).thenReturn("01");
