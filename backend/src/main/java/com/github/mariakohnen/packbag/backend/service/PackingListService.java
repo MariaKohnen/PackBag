@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -28,12 +29,12 @@ public class PackingListService {
         return packingListRepository.findAll();
     }
 
-    public PackingList addNewPackingList(PackingListDto packingListDto) {
-        if (packingListDto.getDestination() == null) {
+    public PackingList addNewPackingList(NewPackingListDto newPackingListDto) {
+        if (newPackingListDto.getDestination() == null) {
             throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
         PackingList newPackingList = PackingList.builder()
-                .destination(packingListDto.getDestination())
+                .destination(newPackingListDto.getDestination())
                 .build();
         return packingListRepository.insert(newPackingList);
     }

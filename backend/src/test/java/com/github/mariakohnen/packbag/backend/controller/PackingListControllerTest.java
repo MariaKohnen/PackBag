@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -139,13 +140,13 @@ class PackingListControllerTest {
     @Test
     void postNewPackingList_whenListIsNotEmpty_shouldReturnNewPackingList() {
         //GIVEN
-        PackingListDto packingListDto1 = PackingListDto.builder()
+        NewPackingListDto newPackingListDto = NewPackingListDto.builder()
                 .destination("Bayreuth")
                 .build();
         //WHEN
         PackingList actual = webTestClient.post()
                 .uri("/api/packinglists")
-                .bodyValue(packingListDto1)
+                .bodyValue(newPackingListDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -165,13 +166,12 @@ class PackingListControllerTest {
     @Test
     void postNewPackingList_whenNameIsNotGiven_shouldReturnException() {
         //GIVEN
-        PackingListDto packingListDto1 = PackingListDto.builder()
-                .destination(null)
+        NewPackingListDto newPackingListDto = NewPackingListDto.builder()
                 .build();
         //WHEN//THEN
         webTestClient.post()
                 .uri("/api/packinglists")
-                .bodyValue(packingListDto1)
+                .bodyValue(newPackingListDto)
                 .exchange()
                 .expectStatus().isEqualTo(400);
     }

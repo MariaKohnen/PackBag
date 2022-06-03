@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -91,7 +92,7 @@ class PackingListServiceTest {
     @Test
     void addNewPackingList_whenNameIsGiven_shouldReturnNewPackingList() {
         //GIVEN
-        PackingListDto packingListDto = PackingListDto.builder()
+        NewPackingListDto newPackingListDto = NewPackingListDto.builder()
                 .destination("Bayreuth")
                 .build();
         PackingList packingListToAdd = PackingList.builder()
@@ -102,7 +103,7 @@ class PackingListServiceTest {
                 .destination("Bayreuth")
                 .build());
         //WHEN
-        PackingList actual = packingListService.addNewPackingList(packingListDto);
+        PackingList actual = packingListService.addNewPackingList(newPackingListDto);
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
@@ -115,11 +116,10 @@ class PackingListServiceTest {
     @Test
     void addNewPackingList_whenNameNull_shouldThrowException() {
         //GIVEN
-        PackingListDto packingListDto = PackingListDto.builder()
-                .destination(null)
+        NewPackingListDto newPackingListDto = NewPackingListDto.builder()
                 .build();
         //WHEN//THEN
-        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(packingListDto));
+        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(newPackingListDto));
 
     }
 

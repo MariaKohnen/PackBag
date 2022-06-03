@@ -1,6 +1,7 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.service.PackingListService;
@@ -31,8 +32,8 @@ public class PackingListController {
     }
 
     @PostMapping
-    public PackingList postNewPackingList(@RequestBody PackingListDto packingListDto) {
-        return packingListService.addNewPackingList(packingListDto);
+    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto) {
+        return packingListService.addNewPackingList(newPackingListDto);
     }
 
     @PutMapping("{id}")
