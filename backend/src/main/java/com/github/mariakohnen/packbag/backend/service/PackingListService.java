@@ -2,7 +2,7 @@ package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
@@ -44,10 +44,10 @@ public class PackingListService {
                 .orElseThrow(() -> new NoSuchElementException("A Packing list with id: " + id + " could not be found!"));
     }
 
-    public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
+    public PackingList updatePackingListById(String id, UpdatePackingListDto updatePackingListDto) {
         PackingList updatedPackingList = getPackingListById(id);
-        updatedPackingList.setDestination(packingListDto.getDestination());
-        updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
+        updatedPackingList.setDestination(updatePackingListDto.getDestination());
+        updatedPackingList.setDateOfArrival(updatePackingListDto.getDateOfArrival());
         return packingListRepository.save(updatedPackingList);
     }
 

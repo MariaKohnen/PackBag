@@ -2,7 +2,7 @@ package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.service.PackingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,8 @@ public class PackingListController {
     }
 
     @PutMapping("{id}")
-    public PackingList updateExistingPackingListById(@PathVariable String id, @RequestBody PackingListDto packingListDto) {
-        return packingListService.updatePackingListById(id, packingListDto);
+    public PackingList updateExistingPackingListById(@PathVariable String id, @RequestBody UpdatePackingListDto updatePackingListDto) {
+        return packingListService.updatePackingListById(id, updatePackingListDto);
     }
 
     @PutMapping("/{id}/packingitems")

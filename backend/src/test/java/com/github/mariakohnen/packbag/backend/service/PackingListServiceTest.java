@@ -3,6 +3,7 @@ package com.github.mariakohnen.packbag.backend.service;
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
@@ -135,10 +136,9 @@ class PackingListServiceTest {
                         .id("2")
                         .name("passport")
                         .build());
-        PackingListDto editedPackingListDto = PackingListDto.builder()
+        UpdatePackingListDto updatePackingListDto = UpdatePackingListDto.builder()
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
-                .packingItemList(packingItemList)
                 .build();
         when(packingListRepository.findById(pathId)).thenReturn(Optional.ofNullable(
                 PackingList.builder()
@@ -174,7 +174,7 @@ class PackingListServiceTest {
                                 .build()))
                 .build());
         //WHEN
-        PackingList actual = packingListService.updatePackingListById(pathId, editedPackingListDto);
+        PackingList actual = packingListService.updatePackingListById(pathId, updatePackingListDto);
         //THEN
         PackingList expected = PackingList.builder()
                 .id("123")
@@ -197,13 +197,13 @@ class PackingListServiceTest {
     void updatePackingListById_whenIdIsNotValid_shouldThrowNoSuchElementException() {
         //GIVEN
         String pathId = "122";
-        PackingListDto editedPackingListDto = PackingListDto.builder()
+        UpdatePackingListDto updatePackingListDto = UpdatePackingListDto.builder()
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-02"))
                 .build();
         when(packingListRepository.findById(pathId)).thenReturn(Optional.empty());
         //WHEN //THEN
-        assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingListById(pathId, editedPackingListDto));
+        assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingListById(pathId, updatePackingListDto));
         verify(packingListRepository).findById(pathId);
     }
 

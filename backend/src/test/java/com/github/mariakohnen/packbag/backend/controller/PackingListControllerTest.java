@@ -3,6 +3,7 @@ package com.github.mariakohnen.packbag.backend.controller;
 import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
@@ -193,13 +194,13 @@ class PackingListControllerTest {
                 .getResponseBody();
         //WHEN
         assertNotNull(addedPackingList);
-        PackingListDto updatedPackingList = PackingListDto.builder()
+        UpdatePackingListDto updatePackingListDto = UpdatePackingListDto.builder()
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
                 .build();
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + addedPackingList.getId())
-                .bodyValue(updatedPackingList)
+                .bodyValue(updatePackingListDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -231,14 +232,14 @@ class PackingListControllerTest {
                 .getResponseBody();
         //WHEN
         assertNotNull(addedPackingList);
-        PackingListDto updatedPackingList = PackingListDto.builder()
+        UpdatePackingListDto updatePackingListDto = UpdatePackingListDto.builder()
                 .destination("Tokyo")
                 .dateOfArrival(LocalDate.parse("2022-10-03"))
                 .build();
         String invalidId = "123";
         webTestClient.put()
                 .uri("/api/packinglists/" + invalidId)
-                .bodyValue(updatedPackingList)
+                .bodyValue(updatePackingListDto)
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
