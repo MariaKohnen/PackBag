@@ -14,6 +14,7 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
         event.preventDefault()
         if (!newDestination) {
             toast.error("Destination is required.")
+            return
         }
         const newPackingList : Omit<PackingList, "id" | "dateOfArrival"> = {
             destination : newDestination
