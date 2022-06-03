@@ -7,6 +7,7 @@ import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -43,8 +44,7 @@ public class PackingListService {
     }
 
     public PackingList updatePackingListById(String id, PackingListDto packingListDto) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with the id: " + id + " was not found, please try again!"));
+        PackingList updatedPackingList = getPackingListById(id);
         updatedPackingList.setDestination(packingListDto.getDestination());
         updatedPackingList.setDateOfArrival(packingListDto.getDateOfArrival());
         return packingListRepository.save(updatedPackingList);
@@ -55,8 +55,7 @@ public class PackingListService {
     }
 
     public PackingList addNewPackingItem(String id, CreatePackingItemDto createPackingItemDto) {
-        PackingList updatedPackingList = packingListRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Packing list with id: " + id + " wasn't found!"));
+        PackingList updatedPackingList = getPackingListById(id);
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
@@ -89,6 +88,21 @@ public class PackingListService {
             updatedPackingList.setPackingItemList(updatedItemList);
             return packingListRepository.save(updatedPackingList);
         } else throw new NoSuchElementException("There is no item with the id: " + itemId);
+    }
+
+    public PackingList updatePackingItem(String id, String itemId, CreatePackingItemDto createPackingItemDto) {
+        if (createPackingItemDto.getName() == null) {
+            throw new IllegalArgumentException("The item was not updated. Name of the given item was null.");
+        }
+        PackingList listToEdit = getPackingListById(id);
+        List<PackingItem> actualItemList = listToEdit.getPackingItemList();
+        PackingItem itemToUpdate = actualItemList
+                .stream()
+                .filter(item -> itemId.equals(item.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
+        itemToUpdate.setName(createPackingItemDto.getName());
+        return packingListRepository.save(listToEdit);
     }
 }
 

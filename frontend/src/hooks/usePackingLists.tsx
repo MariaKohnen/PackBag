@@ -1,15 +1,8 @@
 import {useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
-import {
-    getAllPackingLists,
-    postPackingList,
-    putPackingList,
-    deletePackingListById,
-    addItemAndUpdateList, deletePackingItemById
-} from "../service/api-service";
+import {getAllPackingLists, postPackingList, putPackingList, deletePackingListById, addItemAndUpdateList, deletePackingItemById, updateItemOfList} from "../service/api-service";
 import {PackingItem} from "../model/PackingItem";
-
 
 export default function usePackingLists() {
     const [packingLists, setPackingLists] = useState<PackingList[]>([]);
@@ -58,6 +51,17 @@ export default function usePackingLists() {
             .catch(() => toast.error("Connection failed! Please retry later"))
     }
 
+    const updatePackingItem = (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => {
+        return updateItemOfList(id, itemId, updatedPackingItem)
+            .then(packingListWithUpdatedItem => {
+                setPackingLists(packingLists.map(list => list.id === packingListWithUpdatedItem.id
+                    ? packingListWithUpdatedItem
+                    : list))
+                return packingListWithUpdatedItem
+            })
+            .catch(() => toast.error("Connection failed! Please retry later"))
+    }
+
     const deletePackingItem = (id: string, removeItemId: string) => {
         return deletePackingItemById(id, removeItemId)
             .then(packingListWithoutItem => {
@@ -69,5 +73,5 @@ export default function usePackingLists() {
             .catch(() => toast.error("Error while removing item from packing list. Please try again."))
     }
 
-return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem}
+return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem}
 }

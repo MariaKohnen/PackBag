@@ -10,9 +10,10 @@ type PackingListDetailModeProps = {
     setShowsDetails: (status: boolean) => void
     addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
     deleteItem: (id: string, itemId: string) => void
+    updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
 }
 
-export default function PackingListDetailMode({detailedPackingList, setShowsDetails, addItemToPackingList, deleteItem}: PackingListDetailModeProps) {
+export default function PackingListDetailMode({detailedPackingList, setShowsDetails, addItemToPackingList, deleteItem, updateItemAndGetUpdatedList}: PackingListDetailModeProps) {
 
     const formattedDate = new Date(detailedPackingList.dateOfArrival).toLocaleDateString();
 
@@ -24,13 +25,13 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
                 <p>{detailedPackingList.dateOfArrival && formattedDate}</p>
             </div>
             {detailedPackingList &&
-                <div>
                     <PackingItemOverview
                         actualItemList={detailedPackingList.packingItemList}
                         addItemToPackingList={addItemToPackingList}
                         id={detailedPackingList.id}
-                        deleteItem={deleteItem} />
-                </div>
+                        deleteItem={deleteItem}
+                        updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
+                    />
             }
         </div>
     )

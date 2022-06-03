@@ -15,10 +15,6 @@
     flex-grow: 2;
 }
 
-.text-field:focus {
-    border-bottom: 1px solid #6a7a7a;
-}
-
 .add-packing-item .button {
     background-color: unset;
     border: 0;
