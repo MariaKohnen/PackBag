@@ -30,7 +30,7 @@ public class PackingListService {
     }
 
     public PackingList addNewPackingList(NewPackingListDto newPackingListDto) {
-        if (newPackingListDto.getDestination() == null) {
+        if (newPackingListDto.getDestination() == null || newPackingListDto.getDestination().trim().equals("")) {
             throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
         PackingList newPackingList = PackingList.builder()
@@ -71,7 +71,7 @@ public class PackingListService {
     }
 
     public PackingItem generateNewItem(NewPackingItemDto newPackingItemDto) {
-        if (newPackingItemDto.getName() == null) {
+        if (newPackingItemDto.getName() == null || newPackingItemDto.getName().trim().equals("")) {
             throw new IllegalArgumentException("Name of the given packing item was not given.");
         }
         return PackingItem.builder()
