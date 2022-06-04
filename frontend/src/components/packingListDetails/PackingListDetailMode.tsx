@@ -4,6 +4,7 @@ import PackingItemOverview from "../packingItemDetails/PackingItemOverview";
 import {PackingList} from "../../model/PackingList";
 import "./styling/PackingListDetailMode.css";
 import {PackingItem} from "../../model/PackingItem";
+import ReturnButton from "../general/ReturnButton";
 
 type PackingListDetailModeProps = {
     detailedPackingList: PackingList
@@ -19,6 +20,7 @@ export default function PackingListDetailMode({detailedPackingList, setShowsDeta
 
     return (
         <div>
+            <ReturnButton />
             <div className="list-details-header">
                 <h2>{detailedPackingList.destination}</h2>
                 <button onClick={() => setShowsDetails(true)}><AiOutlinePlus/></button>
