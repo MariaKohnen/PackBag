@@ -18,7 +18,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (!newName) {
+        if (!newName.trim()) {
             toast.error("Please enter a name or return!")
             navigate(-1)
             return

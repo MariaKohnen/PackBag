@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 class PackingListServiceTest {
 
     final PackingListRepository packingListRepository = mock(PackingListRepository.class);
+
     final IdService idService = mock(IdService.class);
 
     final PackingListService packingListService = new PackingListService(packingListRepository, idService);
@@ -30,8 +31,7 @@ class PackingListServiceTest {
 
     @AfterEach
     public void verifyInteractions() {
-        verifyNoMoreInteractions(packingListRepository);
-        verifyNoMoreInteractions(idService);
+        verifyNoMoreInteractions(packingListRepository, idService);
     }
 
     @Test
@@ -41,9 +41,7 @@ class PackingListServiceTest {
         //WHEN
         List<PackingList> actual = packingListService.getAllPackingLists();
         //THEN
-        verify(packingListRepository).findAll();
-        List<PackingList> expected = List.of((packingListWithOneItem()),
-                packingListWithoutItem());
+        List<PackingList> expected = List.of((packingListWithOneItem()), packingListWithoutItem());
         assertEquals(expected, actual);
         verify(packingListRepository).findAll();
     }
@@ -56,8 +54,8 @@ class PackingListServiceTest {
         PackingList actual = packingListService.getPackingListById(listId);
         //THEN
         PackingList expected = packingListWithOneItem();
-        verify(packingListRepository).findById(listId);
         assertEquals(expected, actual);
+        verify(packingListRepository).findById(listId);
     }
 
     @Test
@@ -86,8 +84,8 @@ class PackingListServiceTest {
                 .id("1")
                 .destination("Kyoto")
                 .build();
-        verify(packingListRepository).insert(packingListToAdd);
         assertEquals(expected, actual);
+        verify(packingListRepository).insert(packingListToAdd);
     }
 
     @Test

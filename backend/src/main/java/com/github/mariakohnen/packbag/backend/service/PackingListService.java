@@ -47,7 +47,7 @@ public class PackingListService {
     public PackingList updatePackingListById(String id, UpdatePackingListDto updatePackingListDto) {
         PackingList updatedPackingList = getPackingListById(id);
         if (updatePackingListDto.getDestination() == null || updatePackingListDto.getDestination().trim().equals("")) {
-            throw new IllegalArgumentException("Packing list with id: " +id + " was not updated, because new name was not given.");
+            throw new IllegalArgumentException("Packing list with id: " + id + " was not updated, because new name was not given.");
         } else {
             updatedPackingList.setDestination(updatePackingListDto.getDestination());
             updatedPackingList.setDateOfArrival(updatePackingListDto.getDateOfArrival());
