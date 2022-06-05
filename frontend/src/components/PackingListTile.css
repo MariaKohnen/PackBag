@@ -31,9 +31,12 @@
     background-color: #e20002;
 }
 
-.delete-button button{
+.packing-list-tile button{
+    display: inline;
+    height: 80%;
+    padding: 0;
+    margin-left: 10px;
     margin-top: 18px;
-    margin-bottom: 16px;
     border: none;
     background-color: unset;
     font-size: 1.8rem;

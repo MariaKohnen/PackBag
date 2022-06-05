@@ -18,7 +18,7 @@ export default function DeleteAlert({id, deletePackingList, setPopUp}: DeleteAle
         <div className="packing-list-tile">
             <div className="delete-alert">
                 <h3>Do you really want to delete this list?</h3>
-                <div className="alert-button">
+                <div className="alert-buttons">
                     <button onClick={() => setPopUp(false)}>No</button>
                     <button onClick={confirmDelete}>Yes</button>
                 </div>

@@ -32,9 +32,7 @@ export default function PackingListTile({packingList, deletePackingList}: packin
                 <div className="packing-list-tile" onClick={() =>
                     navigate(`/packinglist/${packingList.id}`)}>
                     <p>{packingList.destination}</p>
-                    <div className="delete-button">
                         <button onClick={handleDelete}><AiOutlineLine/></button>
-                    </div>
                 </div>}
         </IconContext.Provider>
     )

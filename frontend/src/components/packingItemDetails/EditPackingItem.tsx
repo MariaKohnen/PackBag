@@ -36,8 +36,11 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                 type={"text"}
                 value={newName}
                 placeholder="change name of item"
-                onInput={() => setButtonText("confirm")}
-                onChange={event => setNewName(event.target.value)}
+                onChange={event => {setNewName(event.target.value)
+                    event.target.value.trim()?
+                        setButtonText("confirm")
+                        :setButtonText("go back")
+                }}
             />
         <button type={"submit"}>{buttonText}</button>
         </form>

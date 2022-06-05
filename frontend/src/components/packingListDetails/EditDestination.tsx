@@ -16,8 +16,11 @@ export default function EditDestination({detailedPackingList, newDestination, se
                 type={"text"}
                 value={newDestination}
                 placeholder={detailedPackingList.destination}
-                onInput={() => setButtonText("confirm")}
-                onChange={event => setNewDestination(event.target.value)}
+                onChange={event => { setNewDestination(event.target.value)
+                    event.target.value.trim()?
+                        setButtonText("confirm")
+                        :setButtonText("go back")
+                }}
             />
         </div>
     )
