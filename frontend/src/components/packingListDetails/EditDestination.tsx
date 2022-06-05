@@ -10,7 +10,7 @@ type EditDestinationProps = {
 export default function EditDestination({detailedPackingList, newDestination, setNewDestination, setButtonText}: EditDestinationProps) {
     return (
         <div className="to-change">
-            <p>Where do you want to go?</p>
+            <p>Do you want to change Destination?</p>
             <input
                 className="input-field"
                 type={"text"}
