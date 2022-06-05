@@ -31,11 +31,11 @@
     background-color: #e20002;
 }
 
-.packing-list-tile button{
+.packing-list-tile > button{
     display: inline;
     height: 80%;
     padding: 0;
-    margin-left: 10px;
+    margin-left: 75%;
     margin-top: 18px;
     border: none;
     background-color: unset;

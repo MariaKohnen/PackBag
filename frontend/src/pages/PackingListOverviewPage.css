@@ -1,5 +1,6 @@
 .packing-list-overview {
     margin-top: 30px;
+    margin-bottom: 30px;
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(2, 1fr);

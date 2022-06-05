@@ -1,9 +1,10 @@
 import {IconContext} from "react-icons";
 import {PackingItem} from "../../model/PackingItem";
-import {BsCircle, BsDashCircle} from "react-icons/bs";
+import {BsCircle} from "react-icons/bs";
 import "./styling/ItemCard.css";
 import React, {MouseEventHandler} from "react";
 import {useNavigate} from "react-router-dom";
+import {AiOutlineCloseCircle} from "react-icons/ai";
 
 type ItemOverviewProps = {
     packingItem: PackingItem
@@ -32,7 +33,7 @@ export function ItemCard({packingItem, deleteItem, id}: ItemOverviewProps) {
             </IconContext.Provider>
             <p>{packingItem.name}</p>
             <IconContext.Provider value={{color: '#6a7a7a'}}>
-                <button onClick={confirmDelete}><BsDashCircle/></button>
+                <button className="delete-button" onClick={confirmDelete}><AiOutlineCloseCircle /></button>
             </IconContext.Provider>
         </div>
     )
