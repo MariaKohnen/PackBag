@@ -1,7 +1,8 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
-import com.github.mariakohnen.packbag.backend.dto.CreatePackingItemDto;
-import com.github.mariakohnen.packbag.backend.dto.PackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.service.PackingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,23 +32,23 @@ public class PackingListController {
     }
 
     @PostMapping
-    public PackingList postNewPackingList(@RequestBody PackingListDto packingListDto) {
-        return packingListService.addNewPackingList(packingListDto);
+    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto) {
+        return packingListService.addNewPackingList(newPackingListDto);
     }
 
     @PutMapping("{id}")
-    public PackingList updateExistingPackingListById(@PathVariable String id, @RequestBody PackingListDto packingListDto) {
-        return packingListService.updatePackingListById(id, packingListDto);
+    public PackingList updateExistingPackingListById(@PathVariable String id, @RequestBody UpdatePackingListDto updatePackingListDto) {
+        return packingListService.updatePackingListById(id, updatePackingListDto);
     }
 
     @PutMapping("/{id}/packingitems")
-    public PackingList addPackingItemToPackingList(@PathVariable String id, @RequestBody CreatePackingItemDto createPackingItemDto) {
-        return packingListService.addNewPackingItem(id, createPackingItemDto);
+    public PackingList addPackingItemToPackingList(@PathVariable String id, @RequestBody NewPackingItemDto newPackingItemDto) {
+        return packingListService.addNewPackingItem(id, newPackingItemDto);
     }
 
     @PutMapping("/{id}/packingitems/{itemId}")
-    public PackingList updateExistingPackingItemOfList(@PathVariable String id, @PathVariable String itemId, @RequestBody CreatePackingItemDto createPackingItemDto) {
-        return packingListService.updatePackingItem(id, itemId, createPackingItemDto);
+    public PackingList updateExistingPackingItemOfList(@PathVariable String id, @PathVariable String itemId, @RequestBody NewPackingItemDto newPackingItemDto) {
+        return packingListService.updatePackingItem(id, itemId, newPackingItemDto);
     }
 
     @DeleteMapping("{id}")

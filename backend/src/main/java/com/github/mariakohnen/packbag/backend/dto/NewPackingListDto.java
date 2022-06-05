@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CreatePackingItemDto {
+public class NewPackingListDto {
 
-    String name;
+    private String destination;
 }

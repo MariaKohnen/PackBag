@@ -10,15 +10,16 @@ type AddItemToPackingListProps = {
     id: string
 }
 
-
 export default function AddItemToPackingList({addItemToPackingList, id}: AddItemToPackingListProps) {
 
-    const [newName, setNewName] = useState<string> ("")
+    const [newName, setNewName] = useState('')
 
     const getOnSubmit = (event : FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (!newName) {
+        if (!newName.trim()) {
             toast.error("Name of Item is required.")
+            setNewName('')
+            return
         }
         const newPackingItem : Omit<PackingItem, "id"> = {
             name : newName

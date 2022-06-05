@@ -4,9 +4,10 @@ type EditDestinationProps = {
     detailedPackingList : PackingList
     newDestination : string
     setNewDestination: (newDestination : string) => void
+    setButtonText: (buttonText: string) => void
 }
 
-export default function EditDestination({detailedPackingList, newDestination, setNewDestination}: EditDestinationProps) {
+export default function EditDestination({detailedPackingList, newDestination, setNewDestination, setButtonText}: EditDestinationProps) {
     return (
         <div className="to-change">
             <p>Where do you want to go?</p>
@@ -15,6 +16,7 @@ export default function EditDestination({detailedPackingList, newDestination, se
                 type={"text"}
                 value={newDestination}
                 placeholder={detailedPackingList.destination}
+                onInput={() => setButtonText("confirm")}
                 onChange={event => setNewDestination(event.target.value)}
             />
         </div>
