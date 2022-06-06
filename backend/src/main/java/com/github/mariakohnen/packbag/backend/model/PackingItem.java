@@ -13,4 +13,5 @@ public class PackingItem {
 
     private String id;
     private String name;
+    private String status;
 }

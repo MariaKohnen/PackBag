@@ -2,6 +2,7 @@ package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -231,7 +232,16 @@ class PackingListControllerTest {
     @Test
     void getPackingItemById_whenIdIsValid_shouldReturnItem() {
         //GIVEN
-        PackingList listById = packingListRepository.insert(packingListWithTwoItems());
+        PackingList listById = packingListRepository.insert(PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("DONE")
+                        .build()))
+                .build());
         //WHEN
         assertNotNull(listById);
         PackingItem actual = webTestClient.get()
@@ -245,6 +255,7 @@ class PackingListControllerTest {
         PackingItem expected = PackingItem.builder()
                 .id("01")
                 .name("passport")
+                .status("DONE")
                 .build();
         assertEquals(expected, actual);
     }
@@ -359,7 +370,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
-                .bodyValue(newPackingItemDto())
+                .bodyValue(updatePackingItemDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -373,6 +384,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
+                                .status("DONE")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
@@ -391,7 +403,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + invalidItemId)
-                .bodyValue(newPackingItemDto())
+                .bodyValue(updatePackingItemDto())
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -459,6 +471,13 @@ class PackingListControllerTest {
     private NewPackingItemDto newPackingItemDto2() {
         return NewPackingItemDto.builder()
                 .name("passport")
+                .build();
+    }
+
+    public UpdatePackingItemDto updatePackingItemDto() {
+        return UpdatePackingItemDto.builder()
+                .name("swimwear")
+                .status("DONE")
                 .build();
     }
 }

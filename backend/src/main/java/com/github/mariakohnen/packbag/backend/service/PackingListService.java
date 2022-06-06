@@ -2,6 +2,7 @@ package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -95,8 +96,8 @@ public class PackingListService {
         } else throw new NoSuchElementException("There is no item with the id: " + itemId);
     }
 
-    public PackingList updatePackingItem(String id, String itemId, NewPackingItemDto newPackingItemDto) {
-        if (newPackingItemDto.getName() == null) {
+    public PackingList updatePackingItem(String id, String itemId, UpdatePackingItemDto updatePackingItemDto) {
+        if (updatePackingItemDto.getName() == null) {
             throw new IllegalArgumentException("The item was not updated. Name of the given item was null.");
         }
         PackingList listToEdit = getPackingListById(id);
@@ -106,7 +107,8 @@ public class PackingListService {
                 .filter(item -> itemId.equals(item.getId()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
-        itemToUpdate.setName(newPackingItemDto.getName());
+        itemToUpdate.setName(updatePackingItemDto.getName());
+        itemToUpdate.setStatus(updatePackingItemDto.getStatus());
         return packingListRepository.save(listToEdit);
     }
 

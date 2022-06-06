@@ -2,6 +2,7 @@ package com.github.mariakohnen.packbag.backend.service;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -328,6 +329,7 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
+                                .status("DONE")
                                 .build()))
                 .build();
         when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
@@ -338,10 +340,11 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
+                                .status("DONE")
                                 .build()))
                 .build());
         //WHEN
-        PackingList actual = packingListService.updatePackingItem(listId, itemId, newPackingItemDto());
+        PackingList actual = packingListService.updatePackingItem(listId, itemId, updatePackingItemDto());
         //THEN
         PackingList expected = PackingList.builder()
                 .id("1")
@@ -351,6 +354,7 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
+                                .status("DONE")
                                 .build()))
                 .build();
         assertEquals(expected, actual);
@@ -361,8 +365,9 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenIdOfItemIsNotValid_ShouldThrowNoSuchElementException() {
         //GIVEN
-        NewPackingItemDto updatedItemDto = NewPackingItemDto.builder()
+        UpdatePackingItemDto updatedItemDto = UpdatePackingItemDto.builder()
                 .name("swimwear")
+                .status("DONE")
                 .build();
         when(packingListRepository.findById(listId)).thenReturn(Optional.of(packingListWithOneItem()));
         //WHEN //THEN
@@ -374,7 +379,7 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
         //GIVEN
-        NewPackingItemDto emptyItem = NewPackingItemDto.builder()
+        UpdatePackingItemDto emptyItem = UpdatePackingItemDto.builder()
                 .build();
         //WHEN //THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.updatePackingItem(listId, itemId, emptyItem));
@@ -450,6 +455,13 @@ class PackingListServiceTest {
     public NewPackingItemDto newPackingItemDto2() {
         return NewPackingItemDto.builder()
                 .name("passport")
+                .build();
+    }
+
+    public UpdatePackingItemDto updatePackingItemDto() {
+        return UpdatePackingItemDto.builder()
+                .name("swimwear")
+                .status("DONE")
                 .build();
     }
 }
