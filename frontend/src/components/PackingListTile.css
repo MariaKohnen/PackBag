@@ -1,3 +1,7 @@
+.packing-list-tile {
+    position: relative;
+}
+
 .packing-list-tile p {
     margin-left: 10px;
     margin-right: 10px;
@@ -32,11 +36,10 @@
 }
 
 .packing-list-tile > button{
-    display: inline;
-    height: 80%;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     padding: 0;
-    margin-left: 75%;
-    margin-top: 18px;
     border: none;
     background-color: unset;
     font-size: 1.8rem;
