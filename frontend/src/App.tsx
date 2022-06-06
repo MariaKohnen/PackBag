@@ -5,6 +5,8 @@ import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 import PackingListDetailsPage from "./pages/PackingListDetailsPage";
 import NavigationBar from "./components/general/NavigationBar";
 import usePackingLists from "./hooks/usePackingLists";
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
 
@@ -13,6 +15,18 @@ export default function App() {
     return (
         <HashRouter>
             <div className="App">
+                <ToastContainer
+                    className="error-warning"
+                    position="top-center"
+                    autoClose={1500}
+                    hideProgressBar={true}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                />
                 <Routes>
                     <Route path="/"
                            element={<PackingListOverviewPage

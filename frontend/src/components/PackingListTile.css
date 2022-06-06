@@ -1,3 +1,7 @@
+.packing-list-tile {
+    position: relative;
+}
+
 .packing-list-tile p {
     margin-left: 10px;
     margin-right: 10px;
@@ -31,9 +35,11 @@
     background-color: #e20002;
 }
 
-.delete-button button{
-    margin-top: 18px;
-    margin-bottom: 16px;
+.packing-list-tile > button{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 0;
     border: none;
     background-color: unset;
     font-size: 1.8rem;

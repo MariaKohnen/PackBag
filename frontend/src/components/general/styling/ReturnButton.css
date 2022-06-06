@@ -1,0 +1,13 @@
+.return-button-container {
+    margin-left: -30px;
+    display: inline;
+    position: fixed;
+    top: 50%;
+}
+
+.return-button-container button {
+    padding: 0;
+    background-color: unset;
+    border: none;
+    font-size: 2rem;
+}

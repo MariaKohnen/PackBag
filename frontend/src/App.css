@@ -2,3 +2,10 @@
   margin-left: 30px;
   margin-right: 30px;
 }
+
+.Toastify {
+  --toastify-color-light: #253d3e;
+  --toastify-icon-color-error: #d7a36f;
+  --toastify-text-color-light: #eaeadf;
+  --toastify-toast-min-height: 20vh;
+}

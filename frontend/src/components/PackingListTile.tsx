@@ -1,10 +1,10 @@
 import {PackingList} from "../model/PackingList";
 import "./PackingListTile.css"
 import {useNavigate} from "react-router-dom";
-import {AiOutlineLine} from "react-icons/ai";
 import React, {MouseEventHandler, useState} from "react";
 import {IconContext} from "react-icons";
 import DeleteAlert from "./general/DeleteAlert";
+import {AiOutlineCloseCircle} from "react-icons/ai";
 
 type packingListTileProps = {
     packingList: PackingList;
@@ -32,9 +32,7 @@ export default function PackingListTile({packingList, deletePackingList}: packin
                 <div className="packing-list-tile" onClick={() =>
                     navigate(`/packinglist/${packingList.id}`)}>
                     <p>{packingList.destination}</p>
-                    <div className="delete-button">
-                        <button onClick={handleDelete}><AiOutlineLine/></button>
-                    </div>
+                        <button onClick={handleDelete}><AiOutlineCloseCircle /></button>
                 </div>}
         </IconContext.Provider>
     )

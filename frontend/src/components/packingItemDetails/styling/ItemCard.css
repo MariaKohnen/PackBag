@@ -26,3 +26,7 @@
     border: none;
     font-size: 1.1rem;
 }
+
+.item-card .delete-button {
+    font-size: 1.2rem;
+}

@@ -10,14 +10,17 @@ type EditDestinationProps = {
 export default function EditDestination({detailedPackingList, newDestination, setNewDestination, setButtonText}: EditDestinationProps) {
     return (
         <div className="to-change">
-            <p>Where do you want to go?</p>
+            <p>Do you want to change Destination?</p>
             <input
                 className="input-field"
                 type={"text"}
                 value={newDestination}
                 placeholder={detailedPackingList.destination}
-                onInput={() => setButtonText("confirm")}
-                onChange={event => setNewDestination(event.target.value)}
+                onChange={event => { setNewDestination(event.target.value)
+                    event.target.value.trim()?
+                        setButtonText("confirm")
+                        :setButtonText("go back")
+                }}
             />
         </div>
     )

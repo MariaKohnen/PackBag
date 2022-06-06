@@ -34,7 +34,7 @@ export default function AddNewPackingList({addPackingList} : AddPackingListProp)
                        onChange={event => setNewDestination(event.target.value)}/>
                 <input className="button"
                        type="submit"
-                       value={"add item"}/>
+                       value={"add destination"}/>
             </form>
 
         </div>

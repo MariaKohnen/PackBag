@@ -21,9 +21,9 @@ export default function EditPackingList({id, detailedPackingList, setShowsDetail
     const updateActualList = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newDestination.trim()) {
-            toast.error("Destination is required.")
-            setNewDestination(detailedPackingList.destination)
+            toast.error("The list was not updated. Please enter a destination")
             setButtonText("go back")
+            setShowsDetails(false)
             return
         }
         const editedPackingList: Omit<PackingList, "id"> = {
