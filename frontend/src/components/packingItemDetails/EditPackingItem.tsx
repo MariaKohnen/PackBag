@@ -5,26 +5,12 @@ import {toast} from "react-toastify";
 import "./styling/EditPackingItem.css";
 import useDetailedPackingItem from "../../hooks/useDetailedPackingItem";
 import Dropdown from "./Dropdown";
+import {StatusData} from "../../data/StatusData";
 
 type EditPackingItemProps = {
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
     id: string
 }
-
-export const status = [
-    {
-        id: 1,
-        value: "OPEN",
-    },
-    {
-        id: 2,
-        value: "TODO",
-    },
-    {
-        id: 3,
-        value: "PACKED",
-    },
-];
 
 export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditPackingItemProps) {
 
@@ -32,15 +18,15 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     const {itemId} = useParams()
     const navigate = useNavigate()
-    const [newName, setNewName] = useState<string>('')
+    const [newName, setNewName] = useState<string>(detailedPackingItem? detailedPackingItem.name : '')
     const [selection, setSelection] = useState<{ id: number, value: string }>();
     const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        console.log(newName)
         if (!newName.trim()) {
             toast.error("The item was not updated, the name was not given!")
-            navigate(-1)
             return
         }
         if (detailedPackingItem) {
@@ -48,7 +34,6 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
             name: newName,
             status : getStatusOfItem(detailedPackingItem)
         }
-        console.log(editedItemDto)
             itemId && updateItemAndGetUpdatedList(id, itemId, editedItemDto)
             navigate(-1)}}
 
@@ -66,6 +51,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     return (
         <form className="edit-item-container" onSubmit={handleClick}>
+            <p>Change name of the given item:</p>
             <input
                 className="item-input-field"
                 type={"text"}
@@ -77,7 +63,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                         :setButtonText("go back")
                 }}
             />
-            <Dropdown status={status} selection={selection} setSelection={setSelection}/>
+            <Dropdown status={StatusData} selection={selection} setSelection={setSelection}/>
         <button type={"submit"}>{buttonText}</button>
         </form>
     )

@@ -1,8 +1,9 @@
 import {useState} from "react";
 import "./styling/Dropdown.css";
+import {GrDown, GrUp} from "react-icons/gr";
 
 type DropdownProps = {
-    status: { id: number, value: string }[]
+    status: { id: number, value: string, icon: JSX.Element }[]
     selection: { id: number, value: string } | undefined
     setSelection: (status : { id: number, value: string }) => void
 }
@@ -15,12 +16,13 @@ export default function Dropdown({status, selection, setSelection}: DropdownProp
     const handleOnClick = (item: { id: number, value: string }) => {
         if (status.map(current => current.id === item.id)) {
             setSelection(item);
+            toggle();
         } else return
     }
 
     return (
         <div className="dd-wrapper">
-            <p>Set a state:</p>
+            <p>Choose a state for item:</p>
             <div
                 className="dd-header"
                 tabIndex={0}
@@ -29,13 +31,14 @@ export default function Dropdown({status, selection, setSelection}: DropdownProp
                 <div className="dd-header-title">
                     <p>{selection && selection.value}</p>
                 </div>
-                <div className="dd-header-action"><p>{open ? "Close" : "Open"}</p></div>
+                <div className="dd-header-action"><p>{open ? < GrUp /> : <GrDown />}</p></div>
             </div>
             {open && (
                 <ul className="dd-list">
                     {status.map(item => (
                             <li className="dd-list-item" key={item.id}>
                                 <button type="button" onClick={() => handleOnClick(item)}>
+                                    {item.icon}
                                     <span>{item.value}</span>
                                 </button>
                             </li>

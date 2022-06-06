@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+.edit-item-container p {
+    font-weight: lighter;
+}
+
 .edit-item-container > input {
     height: 35px;
     padding: 5px 0 5px 20px;
