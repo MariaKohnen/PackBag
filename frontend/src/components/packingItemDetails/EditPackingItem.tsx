@@ -19,12 +19,11 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
     const {itemId} = useParams()
     const navigate = useNavigate()
     const [newName, setNewName] = useState<string>('')
-    const [newStatus, setNewStatus] = useState<{ id: number, value: string }>();
+    const [newStatus, setNewStatus] = useState<{ id: number, value: string, icon: JSX.Element }>();
     const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        console.log(newName)
         if (!newName.trim()) {
             toast.error("The item was not updated, the name was not given!")
             return
@@ -44,9 +43,12 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
     }
 
     useEffect( () => {
+        if(detailedPackingItem) {
+            const actualStatus = StatusData.find(status => status.value === detailedPackingItem.status)
+            actualStatus && setNewStatus(actualStatus)
         detailedPackingItem?
             setNewName(detailedPackingItem.name)
-            :setNewName('')
+            :setNewName('')}
     }, [detailedPackingItem])
 
     useEffect(() => {

@@ -5,6 +5,7 @@ import "./styling/ItemCard.css";
 import React, {MouseEventHandler} from "react";
 import {useNavigate} from "react-router-dom";
 import {AiOutlineCloseCircle} from "react-icons/ai";
+import {StatusData} from "../../data/StatusData";
 
 type ItemOverviewProps = {
     packingItem: PackingItem
@@ -25,15 +26,22 @@ export function ItemCard({packingItem, deleteItem, id}: ItemOverviewProps) {
         navigate(`/packinglist/${id}/packingitems/${packingItem.id}`)
     }
 
+    const getStatusButton = (actualPackingItem: PackingItem) => {
+        const actualStatus = StatusData.find(status => status.value === actualPackingItem.status)
+        return actualStatus ?
+            actualStatus.icon
+            : <BsCircle/>
+    }
+
     return (
         <div className="item-card"
              onClick={handleClick}>
             <IconContext.Provider value={{color: '#d7a36f'}}>
-                <button><BsCircle/></button>
+                <button>{getStatusButton(packingItem)}</button>
             </IconContext.Provider>
             <p>{packingItem.name}</p>
             <IconContext.Provider value={{color: '#6a7a7a'}}>
-                <button className="delete-button" onClick={confirmDelete}><AiOutlineCloseCircle /></button>
+                <button className="delete-button" onClick={confirmDelete}><AiOutlineCloseCircle/></button>
             </IconContext.Provider>
         </div>
     )

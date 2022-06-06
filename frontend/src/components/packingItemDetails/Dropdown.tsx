@@ -5,7 +5,7 @@ import {GrDown, GrUp} from "react-icons/gr";
 type DropdownProps = {
     status: { id: number, value: string, icon: JSX.Element }[]
     newStatus: { id: number, value: string } | undefined
-    setNewStatus: (status : { id: number, value: string }) => void
+    setNewStatus: (status : { id: number, value: string, icon: JSX.Element }) => void
 }
 
 export default function Dropdown({status, newStatus, setNewStatus}: DropdownProps) {
@@ -13,7 +13,7 @@ export default function Dropdown({status, newStatus, setNewStatus}: DropdownProp
 
     const toggle = () => setOpen(!open);
 
-    const handleOnClick = (item: { id: number, value: string }) => {
+    const handleOnClick = (item: { id: number, value: string, icon: JSX.Element }) => {
         if (status.map(current => current.id === item.id)) {
             setNewStatus(item);
             toggle();
