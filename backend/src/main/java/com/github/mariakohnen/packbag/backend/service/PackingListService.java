@@ -109,5 +109,15 @@ public class PackingListService {
         itemToUpdate.setName(newPackingItemDto.getName());
         return packingListRepository.save(listToEdit);
     }
+
+    public PackingItem getPackingItemById(String id, String itemId) {
+        PackingList updatedPackingList = getPackingListById(id);
+        List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
+        return actualItemList
+                .stream()
+                .filter(item -> itemId.equals(item.getId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
+    }
 }
 

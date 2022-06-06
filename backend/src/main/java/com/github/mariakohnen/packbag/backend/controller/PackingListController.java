@@ -3,6 +3,7 @@ package com.github.mariakohnen.packbag.backend.controller;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
+import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.service.PackingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class PackingListController {
     @GetMapping("{id}")
     public PackingList getPackingListById(@PathVariable String id) {
         return packingListService.getPackingListById(id);
+    }
+
+    @GetMapping("/{id}/packingitems/{itemId}")
+    public PackingItem getPackingItemById(@PathVariable String id, @PathVariable String itemId) {
+        return packingListService.getPackingItemById(id, itemId);
     }
 
     @PostMapping
