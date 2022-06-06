@@ -229,6 +229,39 @@ class PackingListControllerTest {
     }
 
     @Test
+    void getPackingItemById_whenIdIsValid_shouldReturnItem() {
+        //GIVEN
+        PackingList listById = packingListRepository.insert(packingListWithTwoItems());
+        //WHEN
+        assertNotNull(listById);
+        PackingItem actual = webTestClient.get()
+                .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingItem.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingItem expected = PackingItem.builder()
+                .id("01")
+                .name("passport")
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPackingItemById_whenIdIsNotValid_shouldThrowNoSuchElementException() {
+        //GIVEN
+        PackingList listById = packingListRepository.insert(packingListWithTwoItems());
+        //WHEN //THEN
+        assertNotNull(listById);
+        webTestClient.get()
+                .uri("/api/packinglists/" + listId + "/packingitems/" + invalidId)
+                .exchange()
+                .expectStatus().isEqualTo(404);
+    }
+
+    @Test
     void addPackingItemToPackingList_whenNameIsGiveAndActualListIsNull_shouldReturnPackingList() {
         //GIVEN
         PackingList packingList = PackingList.builder()
@@ -428,5 +461,4 @@ class PackingListControllerTest {
                 .name("passport")
                 .build();
     }
-
 }

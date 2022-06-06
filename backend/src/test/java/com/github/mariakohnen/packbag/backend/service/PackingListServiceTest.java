@@ -178,6 +178,30 @@ class PackingListServiceTest {
     }
 
     @Test
+    void getPackingItemById_whenIdIsValid_shouldReturnItem() {
+        //GIVEN
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithTwoItems()));
+        //WHEN
+        PackingItem actual = packingListService.getPackingItemById(listId, itemId);
+        //THEN
+        PackingItem expected = PackingItem.builder()
+                .id("01")
+                .name("passport")
+                .build();
+        assertEquals(expected, actual);
+        verify(packingListRepository).findById(listId);
+    }
+
+    @Test
+    void getPackingItemById_whenIdIsNotValid_shouldThrowNoSuchElementException() {
+        //GIVEN
+        when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithTwoItems()));
+        //WHEN //THEN
+        assertThrows(NoSuchElementException.class, () -> packingListService.getPackingItemById(listId, invalidId));
+        verify(packingListRepository).findById(listId);
+    }
+
+    @Test
     void addNewPackingItem_whenNameIsGivenAndActualListIsNotNull_ShouldReturnUpdatedPackingListWithAllItems() {
         //GIVEN
         when(idService.generateId()).thenReturn("02");
