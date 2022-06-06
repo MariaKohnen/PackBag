@@ -4,11 +4,27 @@ import {PackingItem} from "../../model/PackingItem";
 import {toast} from "react-toastify";
 import "./styling/EditPackingItem.css";
 import useDetailedPackingItem from "../../hooks/useDetailedPackingItem";
+import Dropdown from "./Dropdown";
 
 type EditPackingItemProps = {
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
     id: string
 }
+
+export const status = [
+    {
+        id: 1,
+        value: "OPEN",
+    },
+    {
+        id: 2,
+        value: "TODO",
+    },
+    {
+        id: 3,
+        value: "PACKED",
+    },
+];
 
 export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditPackingItemProps) {
 
@@ -16,7 +32,8 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     const {itemId} = useParams()
     const navigate = useNavigate()
-    const [newName, setNewName] = useState<string>("")
+    const [newName, setNewName] = useState<string>('')
+    const [selection, setSelection] = useState<{ id: number, value: string }>();
     const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
@@ -26,11 +43,20 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
             navigate(-1)
             return
         }
-        const editedItemDto: Omit<PackingItem, "id"> = {
-            name: newName
+        if (detailedPackingItem) {
+            const editedItemDto: Omit<PackingItem, "id"> = {
+            name: newName,
+            status : getStatusOfItem(detailedPackingItem)
         }
+        console.log(editedItemDto)
             itemId && updateItemAndGetUpdatedList(id, itemId, editedItemDto)
-            navigate(-1)}
+            navigate(-1)}}
+
+    const getStatusOfItem = (packingList: PackingItem): string => {
+         return selection ?
+            selection.value :
+            packingList.status
+    }
 
     useEffect(() => {
         if (itemId) {
@@ -51,6 +77,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                         :setButtonText("go back")
                 }}
             />
+            <Dropdown status={status} selection={selection} setSelection={setSelection}/>
         <button type={"submit"}>{buttonText}</button>
         </form>
     )
