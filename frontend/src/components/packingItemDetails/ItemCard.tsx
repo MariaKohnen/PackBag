@@ -1,11 +1,11 @@
 import {IconContext} from "react-icons";
 import {PackingItem} from "../../model/PackingItem";
-import {BsCircle} from "react-icons/bs";
 import "./styling/ItemCard.css";
 import React, {MouseEventHandler} from "react";
 import {useNavigate} from "react-router-dom";
 import {AiOutlineCloseCircle} from "react-icons/ai";
 import {StatusData} from "../../data/StatusData";
+import {GrRadial} from "react-icons/gr";
 
 type ItemOverviewProps = {
     packingItem: PackingItem
@@ -30,7 +30,7 @@ export function ItemCard({packingItem, deleteItem, id}: ItemOverviewProps) {
         const actualStatus = StatusData.find(status => status.value === actualPackingItem.status)
         return actualStatus ?
             actualStatus.icon
-            : <BsCircle/>
+            : <GrRadial />
     }
 
     return (

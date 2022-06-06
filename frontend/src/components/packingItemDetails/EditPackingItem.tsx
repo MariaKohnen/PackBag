@@ -71,6 +71,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                         :setButtonText("go back")
                 }}
             />
+            <p>Choose a state for item:</p>
             <Dropdown status={StatusData} newStatus={newStatus} setNewStatus={setNewStatus}/>
         <button type={"submit"}>{buttonText}</button>
         </form>

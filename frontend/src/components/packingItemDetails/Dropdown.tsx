@@ -5,7 +5,7 @@ import {GrDown, GrUp} from "react-icons/gr";
 type DropdownProps = {
     status: { id: number, value: string, icon: JSX.Element }[]
     newStatus: { id: number, value: string } | undefined
-    setNewStatus: (status : { id: number, value: string, icon: JSX.Element }) => void
+    setNewStatus: (status: { id: number, value: string, icon: JSX.Element }) => void
 }
 
 export default function Dropdown({status, newStatus, setNewStatus}: DropdownProps) {
@@ -22,16 +22,17 @@ export default function Dropdown({status, newStatus, setNewStatus}: DropdownProp
 
     return (
         <div className="dd-wrapper">
-            <p>Choose a state for item:</p>
-            <div
-                className="dd-header"
-                tabIndex={0}
-                role="button"
-                onClick={() => toggle()}>
+            <div className="dd-header"
+                 role="button"
+                 onClick={() => toggle()}>
                 <div className="dd-header-title">
-                    <p>{newStatus && newStatus.value}</p>
+                    {newStatus && newStatus.value}
                 </div>
-                <div className="dd-header-action"><p>{open ? < GrUp /> : <GrDown />}</p></div>
+                <div className="dd-header-action">
+                    {open ?
+                        < GrUp/>
+                        : <GrDown/>}
+                </div>
             </div>
             {open && (
                 <ul className="dd-list">
@@ -39,13 +40,10 @@ export default function Dropdown({status, newStatus, setNewStatus}: DropdownProp
                             <li className="dd-list-item" key={item.id}>
                                 <button type="button" onClick={() => handleOnClick(item)}>
                                     {item.icon}
-                                    <span>{item.value}</span>
+                                    {item.value}
                                 </button>
-                            </li>
-                        )
-                    )}
-                </ul>
-            )}
+                            </li>))}
+                </ul>)}
         </div>
     )
 }

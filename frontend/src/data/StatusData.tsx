@@ -5,17 +5,17 @@ export const StatusData =
     [
         {
             id: 1,
-            value: "OPEN",
+            value: "Open",
             icon: <GrRadial />
         },
         {
             id: 2,
-            value: "TODO",
+            value: "To be done",
             icon: <GrCircleAlert />
         },
         {
             id: 3,
-            value: "PACKED",
+            value: "Packed",
             icon: <GrStatusGood />
         },
     ];
