@@ -18,8 +18,8 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     const {itemId} = useParams()
     const navigate = useNavigate()
-    const [newName, setNewName] = useState<string>(detailedPackingItem? detailedPackingItem.name : '')
-    const [selection, setSelection] = useState<{ id: number, value: string }>();
+    const [newName, setNewName] = useState<string>('')
+    const [newStatus, setNewStatus] = useState<{ id: number, value: string }>();
     const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
@@ -38,10 +38,16 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
             navigate(-1)}}
 
     const getStatusOfItem = (packingList: PackingItem): string => {
-         return selection ?
-            selection.value :
+         return newStatus ?
+            newStatus.value :
             packingList.status
     }
+
+    useEffect( () => {
+        detailedPackingItem?
+            setNewName(detailedPackingItem.name)
+            :setNewName('')
+    }, [detailedPackingItem])
 
     useEffect(() => {
         if (itemId) {
@@ -63,7 +69,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                         :setButtonText("go back")
                 }}
             />
-            <Dropdown status={StatusData} selection={selection} setSelection={setSelection}/>
+            <Dropdown status={StatusData} newStatus={newStatus} setNewStatus={setNewStatus}/>
         <button type={"submit"}>{buttonText}</button>
         </form>
     )

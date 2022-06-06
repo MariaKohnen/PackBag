@@ -4,18 +4,18 @@ import {GrDown, GrUp} from "react-icons/gr";
 
 type DropdownProps = {
     status: { id: number, value: string, icon: JSX.Element }[]
-    selection: { id: number, value: string } | undefined
-    setSelection: (status : { id: number, value: string }) => void
+    newStatus: { id: number, value: string } | undefined
+    setNewStatus: (status : { id: number, value: string }) => void
 }
 
-export default function Dropdown({status, selection, setSelection}: DropdownProps) {
+export default function Dropdown({status, newStatus, setNewStatus}: DropdownProps) {
     const [open, setOpen] = useState<boolean>(false);
 
     const toggle = () => setOpen(!open);
 
     const handleOnClick = (item: { id: number, value: string }) => {
         if (status.map(current => current.id === item.id)) {
-            setSelection(item);
+            setNewStatus(item);
             toggle();
         } else return
     }
@@ -29,7 +29,7 @@ export default function Dropdown({status, selection, setSelection}: DropdownProp
                 role="button"
                 onClick={() => toggle()}>
                 <div className="dd-header-title">
-                    <p>{selection && selection.value}</p>
+                    <p>{newStatus && newStatus.value}</p>
                 </div>
                 <div className="dd-header-action"><p>{open ? < GrUp /> : <GrDown />}</p></div>
             </div>
