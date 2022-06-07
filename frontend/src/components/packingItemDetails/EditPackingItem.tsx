@@ -34,7 +34,8 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
         if (detailedPackingItem) {
             const editedItemDto: Omit<PackingItem, "id"> = {
             name: newName,
-            status : getStatusOfItem(detailedPackingItem)
+            status : getStatusOfItem(detailedPackingItem),
+            category : newCategory
         }
             itemId && updateItemAndGetUpdatedList(id, itemId, editedItemDto)
             navigate(-1)}}
@@ -49,6 +50,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
         if(detailedPackingItem) {
             const actualStatus = StatusData.find(status => status.value === detailedPackingItem.status)
             actualStatus && setNewStatus(actualStatus)
+            setNewCategory(detailedPackingItem.status)
         detailedPackingItem?
             setNewName(detailedPackingItem.name)
             :setNewName('')}

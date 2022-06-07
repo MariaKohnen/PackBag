@@ -7,7 +7,7 @@ import {Routes, Route} from "react-router-dom";
 
 type PackingItemOverviewProps = {
     actualItemList: PackingItem[] | undefined;
-    addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
+    addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id" | "category">) => void
     id: string
     deleteItem: (id: string, itemId: string) => void
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
