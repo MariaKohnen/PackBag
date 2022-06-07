@@ -110,6 +110,7 @@ public class PackingListService {
                 .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
         itemToUpdate.setName(updatePackingItemDto.getName());
         itemToUpdate.setStatus(updatePackingItemDto.getStatus());
+        itemToUpdate.setCategory(updatePackingItemDto.getCategory());
         return packingListRepository.save(listToEdit);
     }
 
