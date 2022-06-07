@@ -1,9 +1,10 @@
 import "./styling/PackingItemOverview.css";
-import {ItemCard} from "./ItemCard";
 import {PackingItem} from "../../model/PackingItem";
 import AddItemToPackingList from "./AddItemToPackingList";
 import EditPackingItem from "./EditPackingItem";
 import {Routes, Route} from "react-router-dom";
+import {ItemCategoryCard} from "./ItemCategoryCard";
+import {useEffect, useState} from "react";
 
 type PackingItemOverviewProps = {
     actualItemList: PackingItem[] | undefined;
@@ -15,6 +16,21 @@ type PackingItemOverviewProps = {
 
 export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem, updateItemAndGetUpdatedList}: PackingItemOverviewProps) {
 
+    const [categorizedItems, setCategorizedItems] = useState<Map<string, PackingItem[]>>(new Map())
+
+    useEffect(() => {
+        const itemsByCategory = new Map<string, PackingItem[]>()
+        actualItemList?.forEach(item => {
+            let packingItemsOfCurrentCategory = itemsByCategory.get(item.category)
+            if (!packingItemsOfCurrentCategory) {
+                packingItemsOfCurrentCategory = []
+                itemsByCategory.set(item.category, packingItemsOfCurrentCategory)
+            }
+            packingItemsOfCurrentCategory.push(item)
+        })
+        setCategorizedItems(itemsByCategory)
+    }, [actualItemList])
+
     return (
         <div className="items-overview">
             <Routes>
@@ -25,21 +41,20 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                     <div>
                         <div>
                             <AddItemToPackingList
-                            addItemToPackingList={addItemToPackingList}
-                            id={id}/>
+                                addItemToPackingList={addItemToPackingList}
+                                id={id}/>
                         </div>
                         <div className="item-container">
                             <p>your packing list</p>
-                            {actualItemList &&
-                                <p className="category-text">{actualItemList.map(item => <ItemCard
-                                    key={item.id}
-                                    packingItem={item}
+                            {Array.from(categorizedItems?.keys()).map(key =>
+                                <ItemCategoryCard
+                                    key={key}
+                                    category={key}
+                                    filteredItems={categorizedItems?.get(key)!}
                                     deleteItem={deleteItem}
-                                    id={id}/>)
-                                    .reverse()}</p>}
+                                    id={id}/>)}
                         </div>
-                    </div>}
-                />
+                    </div>}/>
             </Routes>
         </div>
     )

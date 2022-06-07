@@ -50,7 +50,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
         if(detailedPackingItem) {
             const actualStatus = StatusData.find(status => status.value === detailedPackingItem.status)
             actualStatus && setNewStatus(actualStatus)
-            setNewCategory(detailedPackingItem.status)
+            setNewCategory(detailedPackingItem.category)
         detailedPackingItem?
             setNewName(detailedPackingItem.name)
             :setNewName('')}
