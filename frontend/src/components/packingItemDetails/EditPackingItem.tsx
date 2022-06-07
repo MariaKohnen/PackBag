@@ -60,19 +60,20 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
     return (
         <form className="edit-item-container" onSubmit={handleClick}>
             <p>Change name of the given item:</p>
-            <input
-                className="item-input-field"
+            <input className="item-input-field"
                 type={"text"}
                 value={newName}
                 placeholder={detailedPackingItem && detailedPackingItem.name}
                 onChange={event => {setNewName(event.target.value)
                     event.target.value.trim()?
                         setButtonText("confirm")
-                        :setButtonText("go back")
-                }}
+                        :setButtonText("go back")}}
             />
             <p>Choose a state for item:</p>
-            <Dropdown status={StatusData} newStatus={newStatus} setNewStatus={setNewStatus}/>
+            <Dropdown status={StatusData}
+                      newStatus={newStatus}
+                      setNewStatus={setNewStatus}
+                      setButtonText={setButtonText}/>
         <button type={"submit"}>{buttonText}</button>
         </form>
     )

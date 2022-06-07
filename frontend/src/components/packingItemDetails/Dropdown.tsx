@@ -6,9 +6,10 @@ type DropdownProps = {
     status: { id: number, value: string, icon: JSX.Element }[]
     newStatus: { id: number, value: string } | undefined
     setNewStatus: (status: { id: number, value: string, icon: JSX.Element }) => void
+    setButtonText: (buttonText: string) => void
 }
 
-export default function Dropdown({status, newStatus, setNewStatus}: DropdownProps) {
+export default function Dropdown({status, newStatus, setNewStatus, setButtonText}: DropdownProps) {
     const [open, setOpen] = useState<boolean>(false);
 
     const toggle = () => setOpen(!open);
@@ -16,6 +17,7 @@ export default function Dropdown({status, newStatus, setNewStatus}: DropdownProp
     const handleOnClick = (item: { id: number, value: string, icon: JSX.Element }) => {
         if (status.map(current => current.id === item.id)) {
             setNewStatus(item);
+            setButtonText("confirm")
             toggle();
         } else return
     }
