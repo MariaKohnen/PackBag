@@ -124,6 +124,7 @@ class PackingListServiceTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -188,6 +189,7 @@ class PackingListServiceTest {
         PackingItem expected = PackingItem.builder()
                 .id("01")
                 .name("passport")
+                .status("Open")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
@@ -271,6 +273,7 @@ class PackingListServiceTest {
         PackingItem expected = PackingItem.builder()
                 .id("01")
                 .name("swimwear")
+                .status("Open")
                 .build();
         assertEquals(expected, actual);
         verify(idService).generateId();
@@ -414,6 +417,7 @@ class PackingListServiceTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
     }
@@ -426,10 +430,12 @@ class PackingListServiceTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("passport")
+                                .status("Open")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
+                                .status("Open")
                                 .build()))
                 .build();
     }
@@ -442,6 +448,7 @@ class PackingListServiceTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
     }
@@ -449,12 +456,14 @@ class PackingListServiceTest {
     public NewPackingItemDto newPackingItemDto() {
         return NewPackingItemDto.builder()
                 .name("swimwear")
+                .status("Open")
                 .build();
     }
 
     public NewPackingItemDto newPackingItemDto2() {
         return NewPackingItemDto.builder()
                 .name("passport")
+                .status("Open")
                 .build();
     }
 

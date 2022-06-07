@@ -82,6 +82,7 @@ public class PackingListService {
         return PackingItem.builder()
                 .id(idService.generateId())
                 .name(newPackingItemDto.getName())
+                .status(newPackingItemDto.getStatus())
                 .build();
     }
 

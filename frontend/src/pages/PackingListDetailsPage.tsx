@@ -10,7 +10,7 @@ import {PackingItem} from "../model/PackingItem";
 
 type PackingListDetailsPageProps = {
     updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => Promise<PackingList | void>
-    addNewItem: (id: string, newPackingItem: Omit<PackingItem, "id" | "status">) => Promise<PackingList | void>
+    addNewItem: (id: string, newPackingItem: Omit<PackingItem, "id">) => Promise<PackingList | void>
     deletePackingItem: (id: string, itemId: string) => Promise<PackingList>
     updatePackingItem: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => Promise<PackingList>
 }
@@ -26,7 +26,7 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
             .then((response) => response && setDetailedPackingList(response))
     }
 
-    const addItemToPackingList = (idOfList: string, newPackingItem : Omit<PackingItem, "id" | "status">) => {
+    const addItemToPackingList = (idOfList: string, newPackingItem : Omit<PackingItem, "id">) => {
         addNewItem(idOfList, newPackingItem)
             .then(response => response && setDetailedPackingList(response))
     }

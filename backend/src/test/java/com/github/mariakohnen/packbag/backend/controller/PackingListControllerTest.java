@@ -67,6 +67,7 @@ class PackingListControllerTest {
                         .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("passport")
+                                .status("Open")
                                 .build()))
                         .build(),
                 PackingList.builder()
@@ -165,6 +166,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -442,6 +444,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
     }
@@ -454,6 +457,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("passport")
+                                .status("Open")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
@@ -465,12 +469,14 @@ class PackingListControllerTest {
     private NewPackingItemDto newPackingItemDto() {
         return NewPackingItemDto.builder()
                 .name("swimwear")
+                .status("Open")
                 .build();
     }
 
     private NewPackingItemDto newPackingItemDto2() {
         return NewPackingItemDto.builder()
                 .name("passport")
+                .status("Open")
                 .build();
     }
 
