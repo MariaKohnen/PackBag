@@ -4,8 +4,10 @@ import {PackingItem} from "../../model/PackingItem";
 import {toast} from "react-toastify";
 import "./styling/EditPackingItem.css";
 import useDetailedPackingItem from "../../hooks/useDetailedPackingItem";
-import Dropdown from "./Dropdown";
+import StatusDropdown from "./StatusDropdown";
 import {StatusData} from "../../data/StatusData";
+import CategoryDropdown from "./CategoryDropdown";
+import {CategoryData} from "../../data/CategoryData";
 
 type EditPackingItemProps = {
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
@@ -19,7 +21,8 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
     const {itemId} = useParams()
     const navigate = useNavigate()
     const [newName, setNewName] = useState<string>('')
-    const [newStatus, setNewStatus] = useState<{ id: number, value: string, icon: JSX.Element }>();
+    const [newStatus, setNewStatus] = useState<{ id: number, value: string, icon: JSX.Element }>()
+    const [newCategory, setNewCategory] = useState<string>('')
     const [buttonText, setButtonText] = useState<string>("go back")
 
     const handleClick  = (event: FormEvent<HTMLFormElement>) => {
@@ -59,7 +62,7 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     return (
         <form className="edit-item-container" onSubmit={handleClick}>
-            <p>Change name of the given item:</p>
+            <p>Change the name:</p>
             <input className="item-input-field"
                 type={"text"}
                 value={newName}
@@ -69,11 +72,17 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                         setButtonText("confirm")
                         :setButtonText("go back")}}
             />
-            <p>Choose a state for item:</p>
-            <Dropdown status={StatusData}
-                      newStatus={newStatus}
-                      setNewStatus={setNewStatus}
-                      setButtonText={setButtonText}/>
+            <p>Choose a status:</p>
+            <StatusDropdown status={StatusData}
+                            newStatus={newStatus}
+                            setNewStatus={setNewStatus}
+                            setButtonText={setButtonText}/>
+            <p>Choose a category:</p>
+            <CategoryDropdown
+                categories={CategoryData}
+                newCategory={newCategory}
+                setNewCategory={setNewCategory}
+                setButtonText={setButtonText} />
         <button type={"submit"}>{buttonText}</button>
         </form>
     )
