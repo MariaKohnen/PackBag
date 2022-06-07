@@ -22,3 +22,7 @@
     padding-top: 5px;
     border-top: 1.5px solid #6a7a7a;
 }
+
+.item-card circle, .item-card path {
+stroke: #d7a36f;
+}

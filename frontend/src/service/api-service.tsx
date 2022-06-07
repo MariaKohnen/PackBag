@@ -12,6 +12,11 @@ export function getPackingListById(id : string) {
         .then(response => response.data)
 }
 
+export function getPackingItemById(id: string, itemId: string) {
+    return axios.get<PackingItem>(`/api/packinglists/${id}/packingitems/${itemId}`)
+        .then(response => response.data)
+}
+
 export function postPackingList(newPackingList : Omit<PackingList, "id" | "dateOfArrival">) {
     return axios.post("/api/packinglists", newPackingList)
         .then(response => response.data);

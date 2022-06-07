@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NewPackingItemDto {
 
-    String name;
+    private String name;
+    private String status;
 }

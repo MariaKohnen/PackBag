@@ -16,7 +16,6 @@ export default function App() {
         <HashRouter>
             <div className="App">
                 <ToastContainer
-                    className="error-warning"
                     position="top-center"
                     autoClose={1500}
                     hideProgressBar={true}

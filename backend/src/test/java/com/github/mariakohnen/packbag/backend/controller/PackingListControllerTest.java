@@ -2,6 +2,7 @@ package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
+import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -66,6 +67,7 @@ class PackingListControllerTest {
                         .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("passport")
+                                .status("Open")
                                 .build()))
                         .build(),
                 PackingList.builder()
@@ -164,6 +166,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -226,6 +229,49 @@ class PackingListControllerTest {
                 .uri("/api/packinglists/" + listId)
                 .exchange()
                 .expectStatus().is2xxSuccessful();
+    }
+
+    @Test
+    void getPackingItemById_whenIdIsValid_shouldReturnItem() {
+        //GIVEN
+        PackingList listById = packingListRepository.insert(PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("DONE")
+                        .build()))
+                .build());
+        //WHEN
+        assertNotNull(listById);
+        PackingItem actual = webTestClient.get()
+                .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingItem.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        PackingItem expected = PackingItem.builder()
+                .id("01")
+                .name("passport")
+                .status("DONE")
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPackingItemById_whenIdIsNotValid_shouldThrowNoSuchElementException() {
+        //GIVEN
+        PackingList listById = packingListRepository.insert(packingListWithTwoItems());
+        //WHEN //THEN
+        assertNotNull(listById);
+        webTestClient.get()
+                .uri("/api/packinglists/" + listId + "/packingitems/" + invalidId)
+                .exchange()
+                .expectStatus().isEqualTo(404);
     }
 
     @Test
@@ -326,7 +372,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
-                .bodyValue(newPackingItemDto())
+                .bodyValue(updatePackingItemDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -340,6 +386,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
+                                .status("DONE")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
@@ -358,7 +405,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + invalidItemId)
-                .bodyValue(newPackingItemDto())
+                .bodyValue(updatePackingItemDto())
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -397,6 +444,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
+                        .status("Open")
                         .build()))
                 .build();
     }
@@ -409,6 +457,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("passport")
+                                .status("Open")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
@@ -420,13 +469,21 @@ class PackingListControllerTest {
     private NewPackingItemDto newPackingItemDto() {
         return NewPackingItemDto.builder()
                 .name("swimwear")
+                .status("Open")
                 .build();
     }
 
     private NewPackingItemDto newPackingItemDto2() {
         return NewPackingItemDto.builder()
                 .name("passport")
+                .status("Open")
                 .build();
     }
 
+    public UpdatePackingItemDto updatePackingItemDto() {
+        return UpdatePackingItemDto.builder()
+                .name("swimwear")
+                .status("DONE")
+                .build();
+    }
 }

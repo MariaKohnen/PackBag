@@ -1,4 +1,4 @@
-import {NavigationBarData} from "./NavigationBarData";
+import {NavigationBarData} from "../../data/NavigationBarData";
 import {Link} from "react-router-dom";
 import "./styling/NavigationItems.css";
 

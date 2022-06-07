@@ -1,4 +1,4 @@
-package com.github.mariakohnen.packbag.backend.model;
+package com.github.mariakohnen.packbag.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PackingItem {
+public class UpdatePackingItemDto {
 
-    private String id;
     private String name;
     private String status;
 }
