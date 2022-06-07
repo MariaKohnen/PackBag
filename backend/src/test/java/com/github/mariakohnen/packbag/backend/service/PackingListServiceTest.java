@@ -125,6 +125,7 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("clothing")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -190,6 +191,7 @@ class PackingListServiceTest {
                 .id("01")
                 .name("passport")
                 .status("Open")
+                .category("clothing")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
@@ -211,14 +213,15 @@ class PackingListServiceTest {
 
         when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem()));
 
-        when(packingListRepository.save(packingListWithTwoItems())).thenReturn(packingListWithTwoItems());
+        when(packingListRepository.save(packingListWithOneItemWithAndOneWithoutCategory()))
+                .thenReturn(packingListWithOneItemWithAndOneWithoutCategory());
         //WHEN
         PackingList actual = packingListService.addNewPackingItem(listId, newPackingItemDto());
         //THEN
-        PackingList expected = packingListWithTwoItems();
+        PackingList expected = packingListWithOneItemWithAndOneWithoutCategory();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
-        verify(packingListRepository).save(packingListWithTwoItems());
+        verify(packingListRepository).save(packingListWithOneItemWithAndOneWithoutCategory());
         verify(idService).generateId();
     }
 
@@ -228,15 +231,34 @@ class PackingListServiceTest {
         when(idService.generateId()).thenReturn("01");
 
         when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithoutItem()));
+        PackingList listWithNewItem = PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("Open")
+                        .build()))
+                .build();
 
-        when(packingListRepository.save(packingListWithOneItem())).thenReturn(packingListWithOneItem());
+        when(packingListRepository.save(listWithNewItem)).thenReturn(listWithNewItem);
         //WHEN
         PackingList actual = packingListService.addNewPackingItem(listId, newPackingItemDto2());
         //THEN
-        PackingList expected = packingListWithOneItem();
+        PackingList expected = PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("Open")
+                        .build()))
+                .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
-        verify(packingListRepository).save(packingListWithOneItem());
+        verify(packingListRepository).save(listWithNewItem);
         verify(idService).generateId();
     }
 
@@ -333,6 +355,7 @@ class PackingListServiceTest {
                                 .id("01")
                                 .name("swimwear")
                                 .status("DONE")
+                                .category("documents")
                                 .build()))
                 .build();
         when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
@@ -344,6 +367,7 @@ class PackingListServiceTest {
                                 .id("01")
                                 .name("swimwear")
                                 .status("DONE")
+                                .category("documents")
                                 .build()))
                 .build());
         //WHEN
@@ -358,6 +382,7 @@ class PackingListServiceTest {
                                 .id("01")
                                 .name("swimwear")
                                 .status("DONE")
+                                .category("documents")
                                 .build()))
                 .build();
         assertEquals(expected, actual);
@@ -418,6 +443,7 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("clothing")
                         .build()))
                 .build();
     }
@@ -431,6 +457,27 @@ class PackingListServiceTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("clothing")
+                                .build(),
+                        PackingItem.builder()
+                                .id("02")
+                                .name("swimwear")
+                                .status("Open")
+                                .category("clothing")
+                                .build()))
+                .build();
+    }
+
+    public PackingList packingListWithOneItemWithAndOneWithoutCategory() {
+        return PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                                .id("01")
+                                .name("passport")
+                                .status("Open")
+                                .category("clothing")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
@@ -449,6 +496,7 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("clothing")
                         .build()))
                 .build();
     }
@@ -471,6 +519,7 @@ class PackingListServiceTest {
         return UpdatePackingItemDto.builder()
                 .name("swimwear")
                 .status("DONE")
+                .category("documents")
                 .build();
     }
 }

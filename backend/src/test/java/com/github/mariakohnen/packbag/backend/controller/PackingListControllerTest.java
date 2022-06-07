@@ -68,6 +68,7 @@ class PackingListControllerTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("clothing")
                                 .build()))
                         .build(),
                 PackingList.builder()
@@ -167,6 +168,7 @@ class PackingListControllerTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("clothing")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -296,7 +298,16 @@ class PackingListControllerTest {
                 .returnResult()
                 .getResponseBody();
         //THEN
-        PackingList expected = packingListWithOneItem();
+        PackingList expected = PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("Open")
+                        .build()))
+                .build();
         assertEquals(expected, actual);
         verify(idService).generateId();
     }
@@ -387,10 +398,12 @@ class PackingListControllerTest {
                                 .id("01")
                                 .name("swimwear")
                                 .status("DONE")
+                                .category("documents")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
+                                .category("clothing")
                                 .build()))
                 .build();
         assertEquals(excepted, actual);
@@ -445,6 +458,7 @@ class PackingListControllerTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("clothing")
                         .build()))
                 .build();
     }
@@ -458,18 +472,13 @@ class PackingListControllerTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("clothing")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
+                                .category("clothing")
                                 .build()))
-                .build();
-    }
-
-    private NewPackingItemDto newPackingItemDto() {
-        return NewPackingItemDto.builder()
-                .name("swimwear")
-                .status("Open")
                 .build();
     }
 
@@ -484,6 +493,7 @@ class PackingListControllerTest {
         return UpdatePackingItemDto.builder()
                 .name("swimwear")
                 .status("DONE")
+                .category("documents")
                 .build();
     }
 }
