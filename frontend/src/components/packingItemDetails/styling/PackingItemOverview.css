@@ -9,7 +9,21 @@
 }
 
 .item-container {
-    margin: 30px 20px 0 20px;
+    margin: 15px 20px 0 20px;
+}
+
+.item-container-header {
+    width: 100%;
+}
+
+.item-container-header button {
+    float: right;
+    background: unset;
+    border: none;
+    font-weight: bolder;
+    font-size: 0.9rem;
+    color: #414e4f;
+    letter-spacing: 1px;
 }
 
 .category-text {
@@ -18,5 +32,5 @@
 }
 
 .item-card circle, .item-card path {
-stroke: #d7a36f;
+    stroke: #d7a36f;
 }

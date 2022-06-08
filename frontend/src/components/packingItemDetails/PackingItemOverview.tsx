@@ -5,6 +5,8 @@ import EditPackingItem from "./EditPackingItem";
 import {Routes, Route} from "react-router-dom";
 import {ItemCategoryCard} from "./ItemCategoryCard";
 import {useEffect, useState} from "react";
+import {ItemCard} from "./ItemCard";
+import ItemFilter from "./ItemFilter";
 
 type PackingItemOverviewProps = {
     actualItemList: PackingItem[] | undefined;
@@ -17,6 +19,8 @@ type PackingItemOverviewProps = {
 export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem, updateItemAndGetUpdatedList}: PackingItemOverviewProps) {
 
     const [categorizedItems, setCategorizedItems] = useState<Map<string, PackingItem[]>>(new Map())
+    const [filteredItems, setFilteredItems] = useState<PackingItem[] | undefined>()
+    const [filterText, setFilterText] = useState<string>()
 
     useEffect(() => {
         const itemsByCategory = new Map<string, PackingItem[]>()
@@ -31,6 +35,10 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
         setCategorizedItems(itemsByCategory)
     }, [actualItemList])
 
+    const handleResetFilter = () => {
+        setFilteredItems(undefined)
+    }
+
     return (
         <div className="items-overview">
             <Routes>
@@ -39,20 +47,39 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                     id={id}/>}/>
                 <Route index element={
                     <div>
-                        <div>
-                            <AddItemToPackingList
-                                addItemToPackingList={addItemToPackingList}
-                                id={id}/>
-                        </div>
-                        <div className="item-container">
-                            {Array.from(categorizedItems?.keys()).map(key =>
-                                <ItemCategoryCard
-                                    key={key}
-                                    category={key}
-                                    filteredItems={categorizedItems?.get(key)!}
-                                    deleteItem={deleteItem}
-                                    id={id}/>)}
-                        </div>
+                        <AddItemToPackingList
+                            addItemToPackingList={addItemToPackingList}
+                            id={id}/>
+
+                        <ItemFilter
+                            actualItemList={actualItemList}
+                            setFilter={setFilteredItems}
+                            filteredItems={filteredItems}
+                            setFilterText={setFilterText}/>
+
+                        {filteredItems ?
+                            <div className="item-container">
+                                <div className="item-container-header">
+                                    <p>Filter: {filterText} <button onClick={handleResetFilter}>reset</button></p>
+                                </div>
+                                {filteredItems && filteredItems.map(item =>
+                                    <ItemCard
+                                        key={item.id}
+                                        packingItem={item}
+                                        deleteItem={deleteItem}
+                                        id={id}/>)
+                                    .reverse()}
+                            </div>
+                            : <div className="item-container">
+                                {Array.from(categorizedItems?.keys()).map(key =>
+                                    <ItemCategoryCard
+                                        key={key}
+                                        category={key}
+                                        filteredItems={categorizedItems?.get(key)!}
+                                        deleteItem={deleteItem}
+                                        id={id}/>)}
+                            </div>
+                        }
                     </div>}/>
             </Routes>
         </div>

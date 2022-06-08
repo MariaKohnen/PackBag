@@ -34,13 +34,13 @@ export default function AddItemToPackingList({addItemToPackingList, id}: AddItem
         <div>
             <IconContext.Provider value={{color: '#a87f4f'}}>
             <form className="add-packing-item" onSubmit={getOnSubmit}>
+                <button className="button"
+                        type="submit"><AiOutlinePlus/></button>
                 <input className="text-field"
                        type="name"
                        placeholder="add a new item to your list"
                        value={newName}
                        onChange={event => setNewName(event.target.value)}/>
-                <button className="button"
-                       type="submit"><AiOutlinePlus/></button>
             </form>
             </IconContext.Provider>
         </div>
