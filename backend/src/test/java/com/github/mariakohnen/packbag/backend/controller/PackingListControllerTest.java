@@ -242,7 +242,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
-                        .status("DONE")
+                        .status("Done")
                         .build()))
                 .build());
         //WHEN
@@ -258,7 +258,7 @@ class PackingListControllerTest {
         PackingItem expected = PackingItem.builder()
                 .id("01")
                 .name("passport")
-                .status("DONE")
+                .status("Done")
                 .build();
         assertEquals(expected, actual);
     }

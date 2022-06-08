@@ -376,7 +376,7 @@ class PackingListServiceTest {
         //GIVEN
         PackingItemDto updatedItemDto = PackingItemDto.builder()
                 .name("swimwear")
-                .status("DONE")
+                .status("Done")
                 .build();
         when(packingListRepository.findById(listId)).thenReturn(Optional.of(packingListWithOneItem()));
         //WHEN //THEN
