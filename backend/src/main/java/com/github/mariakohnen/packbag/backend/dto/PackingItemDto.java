@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UpdatePackingItemDto {
+public class PackingItemDto {
 
     private String name;
     private String status;
