@@ -36,7 +36,7 @@ export default function usePackingLists() {
             .catch(() => toast.error("Error while removing packing list. Please try again"))
     }
 
-    const addNewItem = (id: string, newPackingItem: Omit<PackingItem, "id" | "category">) => {
+    const addNewItem = (id: string, newPackingItem: Omit<PackingItem, "id">) => {
         return addItemAndUpdateList(id, newPackingItem)
             .then(packingListWithItem => {
                 setPackingLists(packingLists.map(list => list.id === packingListWithItem.id

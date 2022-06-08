@@ -13,4 +13,5 @@ public class NewPackingItemDto {
 
     private String name;
     private String status;
+    private String category;
 }

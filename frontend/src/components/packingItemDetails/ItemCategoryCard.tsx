@@ -12,9 +12,7 @@ type ItemOverviewProps = {
 export function ItemCategoryCard({filteredItems, deleteItem, id, category}: ItemOverviewProps) {
     return (
         <div className="item-category-card">
-            <p id={category}>{category ?
-                category
-                : "no category"}</p>
+            <p id={category}>{category}</p>
             {filteredItems && filteredItems.map(item =>
                 <ItemCard
                     key={item.id}

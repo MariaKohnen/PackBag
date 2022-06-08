@@ -9,7 +9,7 @@ import ReturnButton from "../general/ReturnButton";
 type PackingListDetailModeProps = {
     detailedPackingList: PackingList
     setShowsDetails: (status: boolean) => void
-    addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id" | "category">) => void
+    addItemToPackingList: (id: string, newPackingItem: Omit<PackingItem, "id">) => void
     deleteItem: (id: string, itemId: string) => void
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
 }

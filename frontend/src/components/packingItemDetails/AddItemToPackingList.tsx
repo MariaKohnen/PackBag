@@ -6,7 +6,7 @@ import {AiOutlinePlus} from "react-icons/ai";
 import { IconContext } from "react-icons";
 
 type AddItemToPackingListProps = {
-    addItemToPackingList : (id: string, newPackingItem: Omit<PackingItem, "id" | "category">) => void
+    addItemToPackingList : (id: string, newPackingItem: Omit<PackingItem, "id">) => void
     id: string
 }
 
@@ -21,9 +21,10 @@ export default function AddItemToPackingList({addItemToPackingList, id}: AddItem
             setNewName('')
             return
         }
-        const newPackingItem : Omit<PackingItem, "id" | "category"> = {
+        const newPackingItem : Omit<PackingItem, "id"> = {
             name : newName,
-            status : "Open"
+            status : "Open",
+            category : "no category"
         }
         addItemToPackingList(id, newPackingItem)
         setNewName("")

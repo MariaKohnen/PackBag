@@ -3,5 +3,6 @@ export const CategoryData =
     [
         "clothing",
         "cosmetic",
-        "documents"
+        "documents",
+        "no category"
     ];

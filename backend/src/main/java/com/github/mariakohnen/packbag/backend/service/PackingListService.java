@@ -83,6 +83,7 @@ public class PackingListService {
                 .id(idService.generateId())
                 .name(newPackingItemDto.getName())
                 .status(newPackingItemDto.getStatus())
+                .category(newPackingItemDto.getCategory())
                 .build();
     }
 
@@ -124,4 +125,3 @@ public class PackingListService {
                 .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
     }
 }
-
