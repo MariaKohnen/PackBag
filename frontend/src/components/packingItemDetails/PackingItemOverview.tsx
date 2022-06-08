@@ -45,7 +45,6 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                                 id={id}/>
                         </div>
                         <div className="item-container">
-                            <p>your packing list</p>
                             {Array.from(categorizedItems?.keys()).map(key =>
                                 <ItemCategoryCard
                                     key={key}

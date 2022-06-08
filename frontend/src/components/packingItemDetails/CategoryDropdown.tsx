@@ -16,7 +16,7 @@ export default function CategoryDropdown({categories, newCategory, setNewCategor
 
     const handleOnClick = (item: string) => {
         if (categories.map(current => current === item)) {
-            setNewCategory(item);
+            setNewCategory(item)
             setButtonText("confirm")
             toggle();
         } else return
