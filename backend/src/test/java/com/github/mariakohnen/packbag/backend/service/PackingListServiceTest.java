@@ -1,8 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
-import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -125,6 +124,7 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("no category")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -190,6 +190,7 @@ class PackingListServiceTest {
                 .id("01")
                 .name("passport")
                 .status("Open")
+                .category("no category")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
@@ -211,14 +212,15 @@ class PackingListServiceTest {
 
         when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem()));
 
-        when(packingListRepository.save(packingListWithTwoItems())).thenReturn(packingListWithTwoItems());
+        when(packingListRepository.save(packingListWithOneItemWithAndOneWithoutCategory()))
+                .thenReturn(packingListWithOneItemWithAndOneWithoutCategory());
         //WHEN
-        PackingList actual = packingListService.addNewPackingItem(listId, newPackingItemDto());
+        PackingList actual = packingListService.addNewPackingItem(listId, packingItemDto());
         //THEN
-        PackingList expected = packingListWithTwoItems();
+        PackingList expected = packingListWithOneItemWithAndOneWithoutCategory();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
-        verify(packingListRepository).save(packingListWithTwoItems());
+        verify(packingListRepository).save(packingListWithOneItemWithAndOneWithoutCategory());
         verify(idService).generateId();
     }
 
@@ -231,7 +233,7 @@ class PackingListServiceTest {
 
         when(packingListRepository.save(packingListWithOneItem())).thenReturn(packingListWithOneItem());
         //WHEN
-        PackingList actual = packingListService.addNewPackingItem(listId, newPackingItemDto2());
+        PackingList actual = packingListService.addNewPackingItem(listId, packingItemDto2());
         //THEN
         PackingList expected = packingListWithOneItem();
         assertEquals(expected, actual);
@@ -243,7 +245,7 @@ class PackingListServiceTest {
     @Test
     void addNewPackingItem_whenNameIsNull_ShouldThrowIllegalArgumentException() {
         //GIVEN
-        NewPackingItemDto emptyItem = NewPackingItemDto.builder()
+        PackingItemDto emptyItem = PackingItemDto.builder()
                 .build();
         when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem()));
         //WHEN//THEN
@@ -254,7 +256,7 @@ class PackingListServiceTest {
     @Test
     void addNewPackingItem_whenNameIsAnEmptyString_ShouldThrowIllegalArgumentException() {
         //GIVEN
-        NewPackingItemDto itemWithEmptyString = NewPackingItemDto.builder()
+        PackingItemDto itemWithEmptyString = PackingItemDto.builder()
                 .name("    ")
                 .build();
         when(packingListRepository.findById(listId)).thenReturn(Optional.ofNullable(packingListWithOneItem()));
@@ -266,14 +268,15 @@ class PackingListServiceTest {
     @Test
     void generateNewItem_whenNameIsGiven_ShouldReturnPackingItem() {
         //GIVEN
-        when(idService.generateId()).thenReturn("01");
+        when(idService.generateId()).thenReturn("02");
         //WHEN
-        PackingItem actual = packingListService.generateNewItem(newPackingItemDto());
+        PackingItem actual = packingListService.generateNewItem(packingItemDto2());
         //THEN
         PackingItem expected = PackingItem.builder()
-                .id("01")
-                .name("swimwear")
+                .id("02")
+                .name("passport")
                 .status("Open")
+                .category("no category")
                 .build();
         assertEquals(expected, actual);
         verify(idService).generateId();
@@ -282,7 +285,7 @@ class PackingListServiceTest {
     @Test
     void generateNewItem_whenNameIsNotGiven_ShouldThrowIllegalArgumentException() {
         //GIVEN
-        NewPackingItemDto emptyItem = NewPackingItemDto.builder()
+        PackingItemDto emptyItem = PackingItemDto.builder()
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.generateNewItem(emptyItem));
@@ -332,7 +335,8 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
-                                .status("DONE")
+                                .status("Open")
+                                .category("clothing")
                                 .build()))
                 .build();
         when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
@@ -343,11 +347,12 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
-                                .status("DONE")
+                                .status("Open")
+                                .category("clothing")
                                 .build()))
                 .build());
         //WHEN
-        PackingList actual = packingListService.updatePackingItem(listId, itemId, updatePackingItemDto());
+        PackingList actual = packingListService.updatePackingItem(listId, itemId, packingItemDto());
         //THEN
         PackingList expected = PackingList.builder()
                 .id("1")
@@ -357,7 +362,8 @@ class PackingListServiceTest {
                         PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
-                                .status("DONE")
+                                .status("Open")
+                                .category("clothing")
                                 .build()))
                 .build();
         assertEquals(expected, actual);
@@ -368,13 +374,13 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenIdOfItemIsNotValid_ShouldThrowNoSuchElementException() {
         //GIVEN
-        UpdatePackingItemDto updatedItemDto = UpdatePackingItemDto.builder()
+        PackingItemDto updatedItemDto = PackingItemDto.builder()
                 .name("swimwear")
-                .status("DONE")
+                .status("Done")
                 .build();
         when(packingListRepository.findById(listId)).thenReturn(Optional.of(packingListWithOneItem()));
         //WHEN //THEN
-        assertNotNull(newPackingItemDto().getName());
+        assertNotNull(packingItemDto().getName());
         assertThrows(NoSuchElementException.class, () -> packingListService.updatePackingItem(listId, invalidId, updatedItemDto));
         verify(packingListRepository).findById(listId);
     }
@@ -382,7 +388,7 @@ class PackingListServiceTest {
     @Test
     void updatePackingItem_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
         //GIVEN
-        UpdatePackingItemDto emptyItem = UpdatePackingItemDto.builder()
+        PackingItemDto emptyItem = PackingItemDto.builder()
                 .build();
         //WHEN //THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.updatePackingItem(listId, itemId, emptyItem));
@@ -418,6 +424,7 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("no category")
                         .build()))
                 .build();
     }
@@ -431,11 +438,33 @@ class PackingListServiceTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("no category")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
                                 .status("Open")
+                                .category("clothing")
+                                .build()))
+                .build();
+    }
+
+    public PackingList packingListWithOneItemWithAndOneWithoutCategory() {
+        return PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                                .id("01")
+                                .name("passport")
+                                .status("Open")
+                                .category("no category")
+                                .build(),
+                        PackingItem.builder()
+                                .id("02")
+                                .name("swimwear")
+                                .status("Open")
+                                .category("clothing")
                                 .build()))
                 .build();
     }
@@ -449,28 +478,24 @@ class PackingListServiceTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("no category")
                         .build()))
                 .build();
     }
 
-    public NewPackingItemDto newPackingItemDto() {
-        return NewPackingItemDto.builder()
+    public PackingItemDto packingItemDto() {
+        return PackingItemDto.builder()
                 .name("swimwear")
                 .status("Open")
+                .category("clothing")
                 .build();
     }
 
-    public NewPackingItemDto newPackingItemDto2() {
-        return NewPackingItemDto.builder()
+    public PackingItemDto packingItemDto2() {
+        return PackingItemDto.builder()
                 .name("passport")
                 .status("Open")
-                .build();
-    }
-
-    public UpdatePackingItemDto updatePackingItemDto() {
-        return UpdatePackingItemDto.builder()
-                .name("swimwear")
-                .status("DONE")
+                .category("no category")
                 .build();
     }
 }

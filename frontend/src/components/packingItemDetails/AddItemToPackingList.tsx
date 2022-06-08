@@ -23,7 +23,8 @@ export default function AddItemToPackingList({addItemToPackingList, id}: AddItem
         }
         const newPackingItem : Omit<PackingItem, "id"> = {
             name : newName,
-            status : "Open"
+            status : "Open",
+            category : "no category"
         }
         addItemToPackingList(id, newPackingItem)
         setNewName("")

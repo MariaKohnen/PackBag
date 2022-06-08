@@ -9,7 +9,7 @@ type DropdownProps = {
     setButtonText: (buttonText: string) => void
 }
 
-export default function Dropdown({status, newStatus, setNewStatus, setButtonText}: DropdownProps) {
+export default function StatusDropdown({status, newStatus, setNewStatus, setButtonText}: DropdownProps) {
     const [open, setOpen] = useState<boolean>(false);
 
     const toggle = () => setOpen(!open);

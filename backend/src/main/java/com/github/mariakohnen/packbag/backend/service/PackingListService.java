@@ -1,8 +1,7 @@
 package com.github.mariakohnen.packbag.backend.service;
 
-import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -60,29 +59,30 @@ public class PackingListService {
         packingListRepository.deleteById(id);
     }
 
-    public PackingList addNewPackingItem(String id, NewPackingItemDto newPackingItemDto) {
+    public PackingList addNewPackingItem(String id, PackingItemDto packingItemDto) {
         PackingList updatedPackingList = getPackingListById(id);
         List<PackingItem> actualItemList = updatedPackingList.getPackingItemList();
         if (actualItemList != null) {
             List<PackingItem> updatedItemList = new ArrayList<>(actualItemList);
-            updatedItemList.add(generateNewItem(newPackingItemDto));
+            updatedItemList.add(generateNewItem(packingItemDto));
             updatedPackingList.setPackingItemList(updatedItemList);
         } else {
             List<PackingItem> newItemList = new ArrayList<>();
-            newItemList.add((generateNewItem(newPackingItemDto)));
+            newItemList.add((generateNewItem(packingItemDto)));
             updatedPackingList.setPackingItemList(newItemList);
         }
         return packingListRepository.save(updatedPackingList);
     }
 
-    public PackingItem generateNewItem(NewPackingItemDto newPackingItemDto) {
-        if (newPackingItemDto.getName() == null || newPackingItemDto.getName().trim().equals("")) {
+    public PackingItem generateNewItem(PackingItemDto packingItemDto) {
+        if (packingItemDto.getName() == null || packingItemDto.getName().trim().equals("")) {
             throw new IllegalArgumentException("Name of the given packing item was not given.");
         }
         return PackingItem.builder()
                 .id(idService.generateId())
-                .name(newPackingItemDto.getName())
-                .status(newPackingItemDto.getStatus())
+                .name(packingItemDto.getName())
+                .status(packingItemDto.getStatus())
+                .category(packingItemDto.getCategory())
                 .build();
     }
 
@@ -97,8 +97,8 @@ public class PackingListService {
         } else throw new NoSuchElementException("There is no item with the id: " + itemId);
     }
 
-    public PackingList updatePackingItem(String id, String itemId, UpdatePackingItemDto updatePackingItemDto) {
-        if (updatePackingItemDto.getName() == null) {
+    public PackingList updatePackingItem(String id, String itemId, PackingItemDto packingItemDto) {
+        if (packingItemDto.getName() == null) {
             throw new IllegalArgumentException("The item was not updated. Name of the given item was null.");
         }
         PackingList listToEdit = getPackingListById(id);
@@ -108,8 +108,9 @@ public class PackingListService {
                 .filter(item -> itemId.equals(item.getId()))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
-        itemToUpdate.setName(updatePackingItemDto.getName());
-        itemToUpdate.setStatus(updatePackingItemDto.getStatus());
+        itemToUpdate.setName(packingItemDto.getName());
+        itemToUpdate.setStatus(packingItemDto.getStatus());
+        itemToUpdate.setCategory(packingItemDto.getCategory());
         return packingListRepository.save(listToEdit);
     }
 
@@ -123,4 +124,3 @@ public class PackingListService {
                 .orElseThrow(() -> new NoSuchElementException("The item was not updated. An item with the id: " + itemId + " was not found."));
     }
 }
-

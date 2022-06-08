@@ -36,9 +36,7 @@ export function ItemCard({packingItem, deleteItem, id}: ItemOverviewProps) {
     return (
         <div className="item-card"
              onClick={handleClick}>
-            <IconContext.Provider value={{color: '#d7a36f'}}>
                 <button>{getStatusButton(packingItem)}</button>
-            </IconContext.Provider>
             <p>{packingItem.name}</p>
             <IconContext.Provider value={{color: '#6a7a7a'}}>
                 <button className="delete-button" onClick={confirmDelete}><AiOutlineCloseCircle/></button>

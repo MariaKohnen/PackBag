@@ -1,8 +1,7 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
-import com.github.mariakohnen.packbag.backend.dto.NewPackingItemDto;
+import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
-import com.github.mariakohnen.packbag.backend.dto.UpdatePackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
@@ -68,6 +67,7 @@ class PackingListControllerTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("no category")
                                 .build()))
                         .build(),
                 PackingList.builder()
@@ -167,6 +167,7 @@ class PackingListControllerTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("no category")
                         .build()))
                 .build();
         assertEquals(expected, actual);
@@ -241,7 +242,7 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                         .id("01")
                         .name("passport")
-                        .status("DONE")
+                        .status("Done")
                         .build()))
                 .build());
         //WHEN
@@ -257,7 +258,7 @@ class PackingListControllerTest {
         PackingItem expected = PackingItem.builder()
                 .id("01")
                 .name("passport")
-                .status("DONE")
+                .status("Done")
                 .build();
         assertEquals(expected, actual);
     }
@@ -289,14 +290,24 @@ class PackingListControllerTest {
         when(idService.generateId()).thenReturn("01");
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems")
-                .bodyValue(newPackingItemDto2())
+                .bodyValue(packingItemDto2())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
                 .returnResult()
                 .getResponseBody();
         //THEN
-        PackingList expected = packingListWithOneItem();
+        PackingList expected = PackingList.builder()
+                .id("1")
+                .dateOfArrival(LocalDate.parse("2022-09-03"))
+                .destination("Kyoto")
+                .packingItemList(List.of(PackingItem.builder()
+                        .id("01")
+                        .name("passport")
+                        .status("Open")
+                        .category("no category")
+                        .build()))
+                .build();
         assertEquals(expected, actual);
         verify(idService).generateId();
     }
@@ -307,7 +318,7 @@ class PackingListControllerTest {
         packingListRepository.insert(packingListWithOneItem());
         //WHEN
         assertNotNull(packingListWithOneItem());
-        NewPackingItemDto emptyItem = NewPackingItemDto.builder()
+        PackingItemDto emptyItem = PackingItemDto.builder()
                 .build();
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems")
@@ -372,7 +383,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
-                .bodyValue(updatePackingItemDto())
+                .bodyValue(packingItemDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -386,11 +397,13 @@ class PackingListControllerTest {
                 .packingItemList(List.of(PackingItem.builder()
                                 .id("01")
                                 .name("swimwear")
-                                .status("DONE")
+                                .status("Open")
+                                .category("clothing")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
+                                .category("clothing")
                                 .build()))
                 .build();
         assertEquals(excepted, actual);
@@ -405,7 +418,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + invalidItemId)
-                .bodyValue(updatePackingItemDto())
+                .bodyValue(packingItemDto())
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -413,7 +426,7 @@ class PackingListControllerTest {
     @Test
     void updateExistingPackingItemOfList_whenNameOfItemIsNotGiven_shouldThrowIllegalArgumentException() {
         //GIVEN
-        NewPackingItemDto emptyItem = NewPackingItemDto.builder()
+        PackingItemDto emptyItem = PackingItemDto.builder()
                 .build();
         //WHEN //THEN
         webTestClient.put()
@@ -445,6 +458,7 @@ class PackingListControllerTest {
                         .id("01")
                         .name("passport")
                         .status("Open")
+                        .category("no category")
                         .build()))
                 .build();
     }
@@ -458,32 +472,29 @@ class PackingListControllerTest {
                                 .id("01")
                                 .name("passport")
                                 .status("Open")
+                                .category("no category")
                                 .build(),
                         PackingItem.builder()
                                 .id("02")
                                 .name("swimwear")
+                                .category("clothing")
                                 .build()))
                 .build();
     }
 
-    private NewPackingItemDto newPackingItemDto() {
-        return NewPackingItemDto.builder()
+    public PackingItemDto packingItemDto() {
+        return PackingItemDto.builder()
                 .name("swimwear")
                 .status("Open")
+                .category("clothing")
                 .build();
     }
 
-    private NewPackingItemDto newPackingItemDto2() {
-        return NewPackingItemDto.builder()
+    public PackingItemDto packingItemDto2() {
+        return PackingItemDto.builder()
                 .name("passport")
                 .status("Open")
-                .build();
-    }
-
-    public UpdatePackingItemDto updatePackingItemDto() {
-        return UpdatePackingItemDto.builder()
-                .name("swimwear")
-                .status("DONE")
+                .category("no category")
                 .build();
     }
 }

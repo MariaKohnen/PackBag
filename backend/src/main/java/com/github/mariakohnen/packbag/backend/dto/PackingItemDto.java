@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NewPackingItemDto {
+public class PackingItemDto {
 
     private String name;
     private String status;
+    private String category;
 }
