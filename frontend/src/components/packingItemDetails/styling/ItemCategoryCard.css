@@ -1,4 +1,4 @@
-.item-category-card > p {
+.item-container-header > p, .item-category-card > p {
     margin: 0;
     padding-top: 15px;
     font-weight: bolder;
