@@ -9,7 +9,7 @@ import PackingListDetailMode from "../components/packingListDetails/PackingListD
 import {PackingItem} from "../model/PackingItem";
 
 type PackingListDetailsPageProps = {
-    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id">) => Promise<PackingList | void>
+    updatePackingList: (id: string, editedPackingList: Omit<PackingList, "id" | "color">) => Promise<PackingList | void>
     addNewItem: (id: string, newPackingItem: Omit<PackingItem, "id">) => Promise<PackingList | void>
     deletePackingItem: (id: string, itemId: string) => Promise<PackingList>
     updatePackingItem: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => Promise<PackingList>
@@ -21,7 +21,7 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
     const {id} = useParams()
     const [showsDetails, setShowsDetails] = useState<boolean>(false);
 
-    const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id">) => {
+    const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id" | "color">) => {
         updatePackingList(idOfEditedList, editedPackingList)
             .then((response) => response && setDetailedPackingList(response))
     }

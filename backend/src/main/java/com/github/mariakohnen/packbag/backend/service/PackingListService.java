@@ -35,6 +35,7 @@ public class PackingListService {
         }
         PackingList newPackingList = PackingList.builder()
                 .destination(newPackingListDto.getDestination())
+                .color(newPackingListDto.getColor())
                 .build();
         return packingListRepository.insert(newPackingList);
     }

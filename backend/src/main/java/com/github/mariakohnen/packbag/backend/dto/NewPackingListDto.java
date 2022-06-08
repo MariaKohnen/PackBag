@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class NewPackingListDto {
 
     private String destination;
+    private String color;
 }

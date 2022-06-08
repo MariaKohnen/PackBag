@@ -9,7 +9,7 @@ type EditPackingListProps = {
     id: string
     detailedPackingList: PackingList
     setShowsDetails: (status: boolean) => void
-    updateListAndGetNewDetails: (id: string, editedPackingList: Omit<PackingList, "id">) => void
+    updateListAndGetNewDetails: (id: string, editedPackingList: Omit<PackingList, "id" | "color">) => void
 }
 
 export default function EditPackingList({id, detailedPackingList, setShowsDetails, updateListAndGetNewDetails}: EditPackingListProps) {
@@ -26,7 +26,7 @@ export default function EditPackingList({id, detailedPackingList, setShowsDetail
             setShowsDetails(false)
             return
         }
-        const editedPackingList: Omit<PackingList, "id"> = {
+        const editedPackingList: Omit<PackingList, "id" | "color"> = {
             destination: newDestination,
             dateOfArrival: newDateOfArrival,
             packingItemList: detailedPackingList.packingItemList
