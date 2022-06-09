@@ -9,9 +9,10 @@ import {AiOutlineCloseCircle} from "react-icons/ai";
 type packingListTileProps = {
     packingList: PackingList;
     deletePackingList: (id: string) => void
+    tileColor: string
 }
 
-export default function PackingListTile({packingList, deletePackingList}: packingListTileProps) {
+export default function PackingListTile({packingList, deletePackingList, tileColor}: packingListTileProps) {
 
     const navigate = useNavigate()
     const [popUp, setPopUp] = useState<boolean>(false)
@@ -26,10 +27,11 @@ export default function PackingListTile({packingList, deletePackingList}: packin
             {popUp ?
                 <DeleteAlert
                     id={packingList.id}
+                    tileColor={tileColor}
                     deletePackingList={deletePackingList}
                     setPopUp={setPopUp}/>
                 :
-                <div className="packing-list-tile" onClick={() =>
+                <div className="packing-list-tile" style={{background: tileColor}} onClick={() =>
                     navigate(`/packinglist/${packingList.id}`)}>
                     <p>{packingList.destination}</p>
                         <button onClick={handleDelete}><AiOutlineCloseCircle /></button>

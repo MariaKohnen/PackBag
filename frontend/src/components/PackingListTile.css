@@ -11,7 +11,7 @@
     color: #eaeadf;
 }
 
-.packing-list-tile:nth-child(1){
+/*.packing-list-tile:nth-child(1){
     background-color: #fb5e00;
 }
 
@@ -33,7 +33,7 @@
 
 .packing-list-tile:nth-child(6){
     background-color: #e20002;
-}
+}*/
 
 .packing-list-tile > button{
     position: absolute;
