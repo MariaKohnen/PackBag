@@ -33,6 +33,9 @@ public class PackingListService {
         if (newPackingListDto.getDestination() == null || newPackingListDto.getDestination().trim().equals("")) {
             throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
+        if (newPackingListDto.getColor() == null) {
+            newPackingListDto.setColor("#5f8bc0");
+        }
         PackingList newPackingList = PackingList.builder()
                 .destination(newPackingListDto.getDestination())
                 .color(newPackingListDto.getColor())

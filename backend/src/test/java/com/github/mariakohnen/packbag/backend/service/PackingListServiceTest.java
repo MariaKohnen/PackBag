@@ -72,10 +72,12 @@ class PackingListServiceTest {
         //GIVEN
         PackingList packingListToAdd = PackingList.builder()
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build());
         //WHEN
         PackingList actual = packingListService.addNewPackingList(newPackingListDto());
@@ -83,6 +85,7 @@ class PackingListServiceTest {
         PackingList expected = PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).insert(packingListToAdd);
@@ -105,6 +108,32 @@ class PackingListServiceTest {
                 .build();
         //WHEN//THEN
         assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(itemWithEmptyString));
+    }
+
+    @Test
+    void addNewPackingList_whenColorIsNull_shouldSetDefaultColor() {
+        //GIVEN
+        PackingList packingListToAdd = PackingList.builder()
+                .destination("Kyoto")
+                .color("#5f8bc0")
+                .build();
+        when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
+                .id("1")
+                .destination("Kyoto")
+                .color("#5f8bc0")
+                .build());
+        //WHEN
+        PackingList actual = packingListService.addNewPackingList(NewPackingListDto.builder()
+                .destination("Kyoto")
+                .build());
+        //THEN
+        PackingList expected = PackingList.builder()
+                .id("1")
+                .destination("Kyoto")
+                .color("#5f8bc0")
+                .build();
+        assertEquals(expected, actual);
+        verify(packingListRepository).insert(packingListToAdd);
     }
 
     @Test
@@ -397,6 +426,7 @@ class PackingListServiceTest {
     public NewPackingListDto newPackingListDto() {
         return NewPackingListDto.builder()
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build();
     }
 
