@@ -14,6 +14,10 @@
 
 .item-container-header {
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1.5px solid #6a7a7a;
 }
 
 .item-container-header button {

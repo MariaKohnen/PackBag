@@ -60,7 +60,8 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                         {filteredItems ?
                             <div className="item-container">
                                 <div className="item-container-header">
-                                    <p>Filter: {filterText} <button onClick={handleResetFilter}>reset</button></p>
+                                    <p>Filter: {filterText} </p>
+                                    <button onClick={handleResetFilter}>reset</button>
                                 </div>
                                 {filteredItems && filteredItems.map(item =>
                                     <ItemCard
