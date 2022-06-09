@@ -7,7 +7,7 @@ type PackingListEditModeProps = {
     id: string
     detailedPackingList: PackingList
     setShowsDetails: (status: boolean) => void
-    updateListAndGetNewDetails : (id: string, editedPackingList: Omit<PackingList, "id">) => void
+    updateListAndGetNewDetails : (id: string, editedPackingList: Omit<PackingList, "id" | "color">) => void
 }
 
 export default function PackingListEditMode({id, detailedPackingList, setShowsDetails, updateListAndGetNewDetails}: PackingListEditModeProps) {

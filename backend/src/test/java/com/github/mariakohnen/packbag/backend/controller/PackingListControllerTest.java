@@ -126,6 +126,7 @@ class PackingListControllerTest {
         PackingList expected = PackingList.builder()
                 .id(actual.getId())
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -142,6 +143,33 @@ class PackingListControllerTest {
                 .bodyValue(emptyPackingList)
                 .exchange()
                 .expectStatus().isEqualTo(400);
+    }
+
+    @Test
+    void postNewPackingList_whenColorIsNotGiven_shouldSetColorAsDefault() {
+        //GIVEN
+        NewPackingListDto newPackingListDto = NewPackingListDto.builder()
+                .destination("Kyoto")
+                .build();
+        //WHEN
+        PackingList actual = webTestClient.post()
+                .uri("/api/packinglists")
+                .bodyValue(newPackingListDto)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(PackingList.class)
+                .returnResult()
+                .getResponseBody();
+        //THEN
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        PackingList expected = PackingList.builder()
+                .id(actual.getId())
+                .destination("Kyoto")
+                .color("#5f8bc0")
+                .build();
+        assertEquals(24, actual.getId().length());
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -439,6 +467,7 @@ class PackingListControllerTest {
     private NewPackingListDto newPackingListDto() {
         return NewPackingListDto.builder()
                 .destination("Kyoto")
+                .color("#fbc117")
                 .build();
     }
 

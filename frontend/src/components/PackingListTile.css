@@ -11,30 +11,6 @@
     color: #eaeadf;
 }
 
-.packing-list-tile:nth-child(1){
-    background-color: #fb5e00;
-}
-
-.packing-list-tile:nth-child(2){
-    background-color: #9ac8c8;
-}
-
-.packing-list-tile:nth-child(3){
-    background-color: #005a5a;
-}
-
-.packing-list-tile:nth-child(4){
-    background-color: #f583b4;
-}
-
-.packing-list-tile:nth-child(5){
-    background-color: #fbc117;
-}
-
-.packing-list-tile:nth-child(6){
-    background-color: #e20002;
-}
-
 .packing-list-tile > button{
     position: absolute;
     bottom: 10px;

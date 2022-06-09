@@ -19,11 +19,13 @@ export default function PackingListOverviewPage({packingLists, addPackingList, d
             </div>
                 <div>
                     <AddNewPackingList
-                    addPackingList={addPackingList}/>
+                    addPackingList={addPackingList}
+                    lengthOfList={packingLists.length}/>
                 </div>
                 <div className="packing-list-overview">
                     {packingLists.map(list => <PackingListTile
                         key={list.id}
+                        tileColor={list.color}
                         packingList={list}
                         deletePackingList={deletePackingList} />)
                         .reverse()}

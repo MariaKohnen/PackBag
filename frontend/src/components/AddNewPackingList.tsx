@@ -1,28 +1,35 @@
 import {FormEvent, useState} from "react";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 import {PackingList} from "../model/PackingList";
 import "./AddNewPackingList.css";
+import {ColorData} from "../data/ColorData";
 
 type AddPackingListProp = {
-    addPackingList : (newPackingList : Omit<PackingList, "id" | "dateOfArrival">) => void
+    addPackingList: (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => void
+    lengthOfList: number
 }
 
-export default function AddNewPackingList({addPackingList} : AddPackingListProp) {
+export default function AddNewPackingList({addPackingList, lengthOfList}: AddPackingListProp) {
     const [newDestination, setNewDestination] = useState('')
 
-    const getOnSubmit = (event : FormEvent<HTMLFormElement>) => {
+    const getOnSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newDestination.trim()) {
             toast.error("Destination is required.")
             setNewDestination('')
             return
         }
-        const newPackingList : Omit<PackingList, "id" | "dateOfArrival"> = {
-            destination : newDestination
+        const newPackingList: Omit<PackingList, "id" | "dateOfArrival"> = {
+            destination: newDestination,
+            color: getColorForList()
         }
         addPackingList(newPackingList)
         setNewDestination('')
-        }
+    }
+
+    const getColorForList = () : string => {
+        return ColorData[lengthOfList%ColorData.length]
+    }
 
     return (
         <div>
