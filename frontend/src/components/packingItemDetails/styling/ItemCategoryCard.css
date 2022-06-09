@@ -1,4 +1,4 @@
-.item-container-header > p, .item-category-card > p {
+.item-container-header > p {
     margin: 0;
     padding-top: 15px;
     font-weight: bolder;
@@ -6,4 +6,30 @@
     color: #414e4f;
     letter-spacing: 1px;
     border-bottom: 1.5px solid #6a7a7a;
+}
+
+.dd-category {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1.5px solid #6a7a7a;
+}
+
+.dd-category > p {
+    margin: 0;
+    padding-top: 15px;
+    font-weight: bolder;
+    font-size: 0.9rem;
+    color: #414e4f;
+    letter-spacing: 1px;
+}
+
+.dd-category > div {
+    padding-right: 13px;
+    margin-bottom: -4px;
+}
+
+polyline {
+    stroke: #414e4f;
 }
