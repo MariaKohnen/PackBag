@@ -4,7 +4,7 @@
     align-items: stretch;
 }
 
-.add-packing-list .text-field {
+.text-field {
     padding: 10px 0 10px 40px;
     background-color: unset;
     border: 0;
@@ -22,7 +22,7 @@
     border: 1px solid #6a7a7a;
 }
 
-.add-packing-list .button {
+.form-button {
     background-color: #d7a36f;
     border: 0;
     border-radius: 10px;
