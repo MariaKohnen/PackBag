@@ -14,7 +14,7 @@ import java.util.HashMap;
 @Service
 public class JwtUtilService {
 
-    @Value("${packBag.app.jwt.secret}")
+    @Value("${packbag.app.jwt.secret}")
     private String JWT_SECRET;
 
 
