@@ -1,7 +1,6 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
 import com.github.mariakohnen.packbag.backend.dto.AppUserDto;
-import com.github.mariakohnen.packbag.backend.security.model.AppUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

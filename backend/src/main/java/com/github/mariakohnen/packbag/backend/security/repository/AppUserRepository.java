@@ -11,4 +11,5 @@ public interface AppUserRepository extends MongoRepository<AppUser, String> {
 
     Optional<AppUser> findByUsername(String username);
 
+
 }
