@@ -1,6 +1,5 @@
 package com.github.mariakohnen.packbag.backend.controller;
 
-import com.github.mariakohnen.packbag.backend.dto.AppUserDto;
 import com.github.mariakohnen.packbag.backend.dto.PackingItemDto;
 import com.github.mariakohnen.packbag.backend.dto.NewPackingListDto;
 import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;

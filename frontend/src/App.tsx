@@ -12,15 +12,7 @@ import RequireAuth from "./routing/RequireAuth";
 
 export default function App() {
 
-    const {
-        packingLists,
-        addPackingList,
-        updatePackingList,
-        deletePackingList,
-        addNewItem,
-        deletePackingItem,
-        updatePackingItem
-    } = usePackingLists();
+    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem} = usePackingLists();
 
     return (
         <div className="App">
