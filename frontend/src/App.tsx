@@ -1,32 +1,43 @@
 import React from 'react';
 import './App.css';
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import PackingListOverviewPage from "./pages/PackingListOverviewPage";
 import PackingListDetailsPage from "./pages/PackingListDetailsPage";
 import NavigationBar from "./components/general/NavigationBar";
 import usePackingLists from "./hooks/usePackingLists";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import LoginPage from "./pages/LoginPage";
+import RequireAuth from "./routing/RequireAuth";
 
 export default function App() {
 
-    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem} = usePackingLists();
+    const {
+        packingLists,
+        addPackingList,
+        updatePackingList,
+        deletePackingList,
+        addNewItem,
+        deletePackingItem,
+        updatePackingItem
+    } = usePackingLists();
 
     return (
-        <HashRouter>
-            <div className="App">
-                <ToastContainer
-                    position="top-center"
-                    autoClose={1500}
-                    hideProgressBar={true}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss={false}
-                    draggable
-                    pauseOnHover
-                />
-                <Routes>
+        <div className="App">
+            <ToastContainer
+                position="top-center"
+                autoClose={1500}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover
+            />
+            <Routes>
+                <Route path={'/login'} element={<LoginPage/>}/>
+                <Route element={<RequireAuth/>}>
                     <Route path="/"
                            element={<PackingListOverviewPage
                                packingLists={packingLists}
@@ -37,10 +48,10 @@ export default function App() {
                                updatePackingList={updatePackingList}
                                addNewItem={addNewItem}
                                deletePackingItem={deletePackingItem}
-                               updatePackingItem={updatePackingItem}/>} />
-                </Routes>
-                <NavigationBar/>
-            </div>
-        </HashRouter>
+                               updatePackingItem={updatePackingItem}/>}/>
+                </Route>
+            </Routes>
+            <NavigationBar/>
+        </div>
     )
 }
