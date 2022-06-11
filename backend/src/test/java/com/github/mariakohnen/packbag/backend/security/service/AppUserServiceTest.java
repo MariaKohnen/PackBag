@@ -4,6 +4,8 @@ import com.github.mariakohnen.packbag.backend.security.dto.AppUserLoginDto;
 import com.github.mariakohnen.packbag.backend.security.model.AppUser;
 import com.github.mariakohnen.packbag.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
@@ -40,22 +42,12 @@ class AppUserServiceTest {
                 .build());
     }
 
-    @Test
-    void createNewAppUser_whenUsernameIsNull_shouldThrowIllegalArgumentException() {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void createNewAppUser_whenUsernameIsNull_shouldThrowIllegalArgumentException(String input) {
         //GIVEN
         AppUserLoginDto userWithoutName = AppUserLoginDto.builder()
-                .password("m)84n%5Bl")
-                .build();
-        //WHEN //THEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> appUserService.createNewAppUser(userWithoutName));
-        assertEquals("The name of the user is not given, please enter a valid name.", exception.getMessage());
-    }
-
-    @Test
-    void createNewAppUser_whenUsernameIsEmtpy_shouldThrowIllegalArgumentException() {
-        //GIVEN
-        AppUserLoginDto userWithoutName = AppUserLoginDto.builder()
-                .username("")
+                .username(input)
                 .password("m)84n%5Bl")
                 .build();
         //WHEN //THEN
