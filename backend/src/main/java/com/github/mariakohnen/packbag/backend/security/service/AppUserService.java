@@ -6,18 +6,17 @@ import com.github.mariakohnen.packbag.backend.security.repository.AppUserReposit
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 @Service
 public class AppUserService {
 
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final PasswordValidation passwordValidation;
 
-    public AppUserService(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
+    public AppUserService(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, PasswordValidation passwordValidation) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.passwordValidation = passwordValidation;
     }
 
     public void createNewAppUser(AppUserLoginDto appUserLoginDto) throws IllegalArgumentException {
@@ -28,7 +27,7 @@ public class AppUserService {
         if (appUserRepository.findByUsername(appUserLoginDto.getUsername()).isPresent()) {
             throw new IllegalArgumentException("The name already exist, please choose another one.");
         }
-        if (!validatePassword(appUserLoginDto.getPassword())) {
+        if (!passwordValidation.validatePassword(appUserLoginDto.getPassword())) {
             throw new IllegalArgumentException("The password is not valid, please enter a valid one.");
         }
         newUser.setUsername(appUserLoginDto.getUsername());
@@ -36,13 +35,4 @@ public class AppUserService {
         appUserRepository.save(newUser);
     }
 
-    public boolean validatePassword(String userPassword) {
-        String regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
-        Pattern p = Pattern.compile(regex);
-        if (userPassword == null) {
-            throw new IllegalArgumentException("The password is not given, please enter a valid password.");
-        }
-        Matcher m = p.matcher(userPassword);
-        return m.matches();
-    }
 }
