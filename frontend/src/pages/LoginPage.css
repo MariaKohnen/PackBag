@@ -1,0 +1,20 @@
+.login-container {
+    height: 58vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.login-container > .form-button {
+    margin-top: 15px;
+}
+
+.login-container > input[type="text"] {
+    background-image: url('../../public/username-icon.png');
+}
+
+.login-container input[type="password"] {
+    background-image: url('../../public/password-icon.png');
+}

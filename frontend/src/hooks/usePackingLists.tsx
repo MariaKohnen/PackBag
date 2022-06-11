@@ -1,26 +1,28 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {PackingList} from "../model/PackingList";
 import {toast} from "react-toastify";
 import {getAllPackingLists, postPackingList, putPackingList, deletePackingListById, addItemAndUpdateList, deletePackingItemById, updateItemOfList} from "../service/api-service";
 import {PackingItem} from "../model/PackingItem";
+import {AuthContext} from "../context/AuthProvider";
 
 export default function usePackingLists() {
-    const [packingLists, setPackingLists] = useState<PackingList[]>([]);
+    const [packingLists, setPackingLists] = useState<PackingList[]>([])
+    const {token} = useContext(AuthContext)
 
     useEffect(() => {
-        getAllPackingLists()
+        getAllPackingLists(token)
             .then((lists) => setPackingLists(lists))
             .catch((exception) => toast.error(exception + "Connection failed. Please try again."));
-    }, []);
+    }, [token]);
 
     const addPackingList = (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => {
-        postPackingList(newPackingList)
+        postPackingList(newPackingList, token)
             .then(addedPackingList => setPackingLists([...packingLists, addedPackingList]))
             .catch((exception) => toast.error(exception + "Connection failed! Please try again later."))
     }
 
     const updatePackingList = (id: string, editedPackingList: Omit<PackingList, "id" | "color">) => {
-        return putPackingList(id, editedPackingList)
+        return putPackingList(id, editedPackingList, token)
             .then(updatedPackingList => {
                 setPackingLists(packingLists.map(list => list.id === updatedPackingList.id
                     ? updatedPackingList
@@ -31,13 +33,13 @@ export default function usePackingLists() {
     }
 
     const deletePackingList = (id: string) => {
-        return deletePackingListById(id)
+        return deletePackingListById(id, token)
             .then(() => setPackingLists(packingLists.filter(packingList => packingList.id !== id)))
             .catch(() => toast.error("Error while removing packing list. Please try again"))
     }
 
     const addNewItem = (id: string, newPackingItem: Omit<PackingItem, "id">) => {
-        return addItemAndUpdateList(id, newPackingItem)
+        return addItemAndUpdateList(id, newPackingItem, token)
             .then(packingListWithItem => {
                 setPackingLists(packingLists.map(list => list.id === packingListWithItem.id
                     ? packingListWithItem
@@ -48,7 +50,7 @@ export default function usePackingLists() {
     }
 
     const updatePackingItem = (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => {
-        return updateItemOfList(id, itemId, updatedPackingItem)
+        return updateItemOfList(id, itemId, updatedPackingItem, token)
             .then(packingListWithUpdatedItem => {
                 setPackingLists(packingLists.map(list => list.id === packingListWithUpdatedItem.id
                     ? packingListWithUpdatedItem
@@ -59,7 +61,7 @@ export default function usePackingLists() {
     }
 
     const deletePackingItem = (id: string, removeItemId: string) => {
-        return deletePackingItemById(id, removeItemId)
+        return deletePackingItemById(id, removeItemId, token)
             .then(packingListWithoutItem => {
                 setPackingLists(packingLists.map(list => list.id === packingListWithoutItem.id
                     ? packingListWithoutItem

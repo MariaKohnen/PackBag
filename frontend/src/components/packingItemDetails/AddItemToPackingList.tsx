@@ -36,7 +36,7 @@ export default function AddItemToPackingList({addItemToPackingList, id}: AddItem
             <form className="add-packing-item" onSubmit={getOnSubmit}>
                 <button className="button"
                         type="submit"><AiOutlinePlus/></button>
-                <input className="text-field"
+                <input className="text-field-item"
                        type="name"
                        placeholder="add a new item to your list"
                        value={newName}

@@ -39,7 +39,7 @@ export default function AddNewPackingList({addPackingList, lengthOfList}: AddPac
                        placeholder="where do you want to go next?"
                        value={newDestination}
                        onChange={event => setNewDestination(event.target.value)}/>
-                <input className="button"
+                <input className="form-button"
                        type="submit"
                        value={"add destination"}/>
             </form>

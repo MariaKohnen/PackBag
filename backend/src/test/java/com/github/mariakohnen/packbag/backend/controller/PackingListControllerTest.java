@@ -6,12 +6,16 @@ import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
+import com.github.mariakohnen.packbag.backend.security.dto.AppUserLoginDto;
+import com.github.mariakohnen.packbag.backend.security.model.AppUser;
+import com.github.mariakohnen.packbag.backend.security.repository.AppUserRepository;
 import com.github.mariakohnen.packbag.backend.service.IdService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDate;
@@ -24,14 +28,24 @@ import static org.mockito.Mockito.*;
 class PackingListControllerTest {
 
     @Autowired
-    WebTestClient webTestClient;
+    private PackingListRepository packingListRepository;
 
     @Autowired
-    PackingListRepository packingListRepository;
+    private AppUserRepository appUserRepository;
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    private String jwtToken;
 
     @BeforeEach
     public void cleanUp() {
         packingListRepository.deleteAll();
+        appUserRepository.deleteAll();
+        jwtToken = generateJWTToken();
     }
 
     @MockBean
@@ -53,6 +67,7 @@ class PackingListControllerTest {
         //WHEN
         List<PackingList> actual = webTestClient.get()
                 .uri("/api/packinglists")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(PackingList.class)
@@ -86,6 +101,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         PackingList actual = webTestClient.get()
                 .uri("/api/packinglists/" + listId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -105,6 +121,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         webTestClient.get()
                 .uri("/api/packinglists/" + invalidId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is4xxClientError();
     }
@@ -114,6 +131,7 @@ class PackingListControllerTest {
         //WHEN
         PackingList actual = webTestClient.post()
                 .uri("/api/packinglists")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(newPackingListDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -140,6 +158,7 @@ class PackingListControllerTest {
         //WHEN//THEN
         webTestClient.post()
                 .uri("/api/packinglists")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(emptyPackingList)
                 .exchange()
                 .expectStatus().isEqualTo(400);
@@ -154,6 +173,7 @@ class PackingListControllerTest {
         //WHEN
         PackingList actual = webTestClient.post()
                 .uri("/api/packinglists")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(newPackingListDto)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -180,6 +200,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(updatePackingListDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -212,6 +233,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(listWithoutDestination)
                 .exchange()
                 .expectStatus().isEqualTo(400);
@@ -229,6 +251,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(listWithEmptyString)
                 .exchange()
                 .expectStatus().isEqualTo(400);
@@ -243,6 +266,7 @@ class PackingListControllerTest {
         String invalidId = "123";
         webTestClient.put()
                 .uri("/api/packinglists/" + invalidId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(updatePackingListDto())
                 .exchange()
                 .expectStatus().isEqualTo(404);
@@ -256,6 +280,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithOneItem());
         webTestClient.delete()
                 .uri("/api/packinglists/" + listId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
     }
@@ -277,6 +302,7 @@ class PackingListControllerTest {
         assertNotNull(listById);
         PackingItem actual = webTestClient.get()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingItem.class)
@@ -299,6 +325,7 @@ class PackingListControllerTest {
         assertNotNull(listById);
         webTestClient.get()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + invalidId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -318,6 +345,7 @@ class PackingListControllerTest {
         when(idService.generateId()).thenReturn("01");
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(packingItemDto2())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -350,6 +378,7 @@ class PackingListControllerTest {
                 .build();
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems")
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(emptyItem)
                 .exchange()
                 .expectStatus().isEqualTo(400);
@@ -363,6 +392,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         PackingList actual = webTestClient.delete()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemToDelete)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(PackingList.class)
@@ -383,6 +413,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         webTestClient.delete()
                 .uri("/api/packinglists/" + wrongListId + "/packingitems/" + itemToDelete)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -399,6 +430,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithNoItems);
         webTestClient.delete()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .exchange()
                 .expectStatus().isEqualTo(404);
     }
@@ -411,6 +443,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         PackingList actual = webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(packingItemDto())
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -446,6 +479,7 @@ class PackingListControllerTest {
         assertNotNull(packingListWithTwoItems());
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + invalidItemId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(packingItemDto())
                 .exchange()
                 .expectStatus().isEqualTo(404);
@@ -459,9 +493,31 @@ class PackingListControllerTest {
         //WHEN //THEN
         webTestClient.put()
                 .uri("/api/packinglists/" + listId + "/packingitems/" + itemId)
+                .headers(http -> http.setBearerAuth(jwtToken))
                 .bodyValue(emptyItem)
                 .exchange()
                 .expectStatus().isEqualTo(400);
+    }
+
+    private String generateJWTToken() {
+        String hashedPassword = passwordEncoder.encode("userPassword");
+        AppUser testUser = AppUser.builder()
+                .id("111")
+                .username("nameOfUser")
+                .password(hashedPassword)
+                .build();
+        appUserRepository.save(testUser);
+
+        return webTestClient.post()
+                .uri("/auth/login")
+                .bodyValue(AppUserLoginDto.builder()
+                        .username("nameOfUser")
+                        .password("userPassword")
+                        .build())
+                .exchange()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
     }
 
     private NewPackingListDto newPackingListDto() {
@@ -526,4 +582,5 @@ class PackingListControllerTest {
                 .category("no category")
                 .build();
     }
+
 }
