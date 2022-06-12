@@ -54,5 +54,4 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
-
 }

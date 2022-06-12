@@ -91,5 +91,4 @@ class AppUserServiceTest {
         verify(appUserRepository).findByUsername("userName");
         verify(passwordValidation).validatePassword("geheim123");
     }
-
 }
