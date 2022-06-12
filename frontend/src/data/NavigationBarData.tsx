@@ -1,5 +1,5 @@
 import React from 'react';
-import {AiOutlineHome} from "react-icons/ai";
+import {AiOutlineHome, AiOutlineLogout} from "react-icons/ai";
 
 export const NavigationBarData = [
     {
@@ -9,9 +9,9 @@ export const NavigationBarData = [
         cName: "nav-text"
     },
     {
-        title: "Home",
-        path: "/",
-        icon: <AiOutlineHome />,
+        title: "Logout",
+        path: "/hello",
+        icon: <AiOutlineLogout />,
         cName: "nav-text"
     }
 ]

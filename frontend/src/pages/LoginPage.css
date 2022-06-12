@@ -1,5 +1,12 @@
-.login-container {
-    height: 58vh;
+.auth-container > h2 {
+    margin-bottom: 5px;
+    font-size: 1.4rem;
+    color: #eaeadf;
+    border-bottom: 1.5px solid #eaeadf;
+}
+
+.auth-container {
+    height: 57vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -7,14 +14,24 @@
     gap: 20px;
 }
 
-.login-container > .form-button {
+.auth-container > .form-button {
     margin-top: 15px;
 }
 
-.login-container > input[type="text"] {
+.auth-container > input[type="text"] {
     background-image: url('../../public/username-icon.png');
 }
 
-.login-container input[type="password"] {
+.auth-container input[type="password"] {
     background-image: url('../../public/password-icon.png');
+}
+
+.text-button {
+    width: 100%;
+    margin-top: 10px;
+    background: unset;
+    border: none;
+    color: #d7a36f;
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
 }

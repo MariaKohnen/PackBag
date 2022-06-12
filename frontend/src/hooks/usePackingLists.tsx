@@ -12,13 +12,13 @@ export default function usePackingLists() {
     useEffect(() => {
         getAllPackingLists(token)
             .then((lists) => setPackingLists(lists))
-            .catch((exception) => toast.error(exception + "Connection failed. Please try again."));
+            .catch((exception) => token && toast.error(exception + "Connection failed. Please try again."));
     }, [token]);
 
     const addPackingList = (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => {
         postPackingList(newPackingList, token)
             .then(addedPackingList => setPackingLists([...packingLists, addedPackingList]))
-            .catch((exception) => toast.error(exception + "Connection failed! Please try again later."))
+            .catch(exception => toast.error(exception + "Connection failed! Please try again later."))
     }
 
     const updatePackingList = (id: string, editedPackingList: Omit<PackingList, "id" | "color">) => {
