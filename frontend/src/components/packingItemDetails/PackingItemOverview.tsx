@@ -68,6 +68,7 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                                         key={item.id}
                                         packingItem={item}
                                         deleteItem={deleteItem}
+                                        updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
                                         id={id}/>)
                                     .reverse()}
                             </div>
@@ -77,6 +78,7 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
                                         key={key}
                                         category={key}
                                         filteredItems={categorizedItems?.get(key)!}
+                                        updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
                                         deleteItem={deleteItem}
                                         id={id}/>)}
                             </div>

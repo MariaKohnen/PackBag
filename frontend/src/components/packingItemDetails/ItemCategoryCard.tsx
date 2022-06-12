@@ -7,11 +7,12 @@ import {GrDown, GrUp} from "react-icons/gr";
 type ItemOverviewProps = {
     filteredItems: PackingItem[]
     deleteItem: (id: string, itemId: string) => void
+    updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
     id: string
     category: string
 }
 
-export function ItemCategoryCard({filteredItems, deleteItem, id, category}: ItemOverviewProps) {
+export function ItemCategoryCard({filteredItems, deleteItem, id, updateItemAndGetUpdatedList, category}: ItemOverviewProps) {
 
     const [open, setOpen] = useState<boolean>(true)
 
@@ -31,6 +32,7 @@ export function ItemCategoryCard({filteredItems, deleteItem, id, category}: Item
                     key={item.id}
                     packingItem={item}
                     deleteItem={deleteItem}
+                    updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}
                     id={id}/>)
                 .reverse()}
         </div>
