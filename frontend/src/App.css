@@ -9,3 +9,12 @@
   --toastify-text-color-light: #eaeadf;
   --toastify-toast-min-height: 20vh;
 }
+
+.note-text {
+  margin-top: -20px;
+  margin-bottom: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.2px;
+  color: #eaeadf;
+  align-self: flex-start;
+}

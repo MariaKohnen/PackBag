@@ -39,6 +39,7 @@ export default function RegistrationPage() {
                        value={password}
                        placeholder={"Enter your password"}
                        onChange={event => setPassword(event.target.value)}/>
+                <p className="note-text">Use 8 or more characters with at least one uppercase and lowercase letter, digits and symbols</p>
                 <button className="form-button"
                         type={"submit"}>Sign Up
                 </button>
