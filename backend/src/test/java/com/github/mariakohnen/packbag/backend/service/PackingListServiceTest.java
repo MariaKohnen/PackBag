@@ -6,8 +6,11 @@ import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
+import com.github.mariakohnen.packbag.backend.security.model.AppUser;
+import com.github.mariakohnen.packbag.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,9 +24,11 @@ class PackingListServiceTest {
 
     final PackingListRepository packingListRepository = mock(PackingListRepository.class);
 
+    final AppUserRepository appUserRepository = mock(AppUserRepository.class);
+
     final IdService idService = mock(IdService.class);
 
-    final PackingListService packingListService = new PackingListService(packingListRepository, idService);
+    final PackingListService packingListService = new PackingListService(packingListRepository, appUserRepository, idService);
 
     String listId = "1";
     String itemId = "01";
@@ -35,15 +40,26 @@ class PackingListServiceTest {
     }
 
     @Test
-    void getAllPackingLists() {
+    void getAllPackingListsByUser_whenUsernameIsValid_shouldReturnPackingLists() {
         //GIVEN
-        when(packingListRepository.findAll()).thenReturn(List.of(packingListWithOneItem(), packingListWithoutItem()));
+        when(appUserRepository.findByUsername("nameOfUser")).thenReturn(Optional.ofNullable(newAppUser()));
+        when(packingListRepository.findAllByUserId("001")).thenReturn(List.of(packingListWithOneItem(), packingListWithoutItem()));
         //WHEN
-        List<PackingList> actual = packingListService.getAllPackingLists();
+        List<PackingList> actual = packingListService.getAllPackingListsByUser("nameOfUser");
         //THEN
         List<PackingList> expected = List.of((packingListWithOneItem()), packingListWithoutItem());
         assertEquals(expected, actual);
-        verify(packingListRepository).findAll();
+        verify(appUserRepository).findByUsername("nameOfUser");
+        verify(packingListRepository).findAllByUserId("001");
+    }
+
+    @Test
+    void getAllPackingListsByUser_whenUsernameIsNotValid_shouldThrowNoSuch() {
+        //GIVEN
+        when(appUserRepository.findByUsername("invalidUsername")).thenReturn(Optional.empty());
+        //WHEN //THEN
+        assertThrows(UsernameNotFoundException.class, () -> packingListService.getAllPackingListsByUser("invalidUsername"));
+        verify(appUserRepository).findByUsername("invalidUsername");
     }
 
     @Test
@@ -155,6 +171,7 @@ class PackingListServiceTest {
                         .status("Open")
                         .category("no category")
                         .build()))
+                .userId("001")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById("1");
@@ -367,6 +384,7 @@ class PackingListServiceTest {
                                 .status("Open")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
         when(packingListRepository.save(updatedPackingList)).thenReturn(PackingList.builder()
                 .id("1")
@@ -379,6 +397,7 @@ class PackingListServiceTest {
                                 .status("Open")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build());
         //WHEN
         PackingList actual = packingListService.updatePackingItem(listId, itemId, packingItemDto());
@@ -394,6 +413,7 @@ class PackingListServiceTest {
                                 .status("Open")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).findById(listId);
@@ -423,6 +443,13 @@ class PackingListServiceTest {
         assertThrows(IllegalArgumentException.class, () -> packingListService.updatePackingItem(listId, itemId, emptyItem));
     }
 
+    public AppUser newAppUser() {
+        return AppUser.builder()
+                .id("001")
+                .username("nameOfUser")
+                .build();
+    }
+
     public NewPackingListDto newPackingListDto() {
         return NewPackingListDto.builder()
                 .destination("Kyoto")
@@ -442,6 +469,7 @@ class PackingListServiceTest {
                 .id("1")
                 .dateOfArrival(LocalDate.parse("2022-09-03"))
                 .destination("Kyoto")
+                .userId("001")
                 .build();
     }
 
@@ -456,6 +484,7 @@ class PackingListServiceTest {
                         .status("Open")
                         .category("no category")
                         .build()))
+                .userId("001")
                 .build();
     }
 
@@ -476,6 +505,7 @@ class PackingListServiceTest {
                                 .status("Open")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
     }
 
@@ -496,6 +526,7 @@ class PackingListServiceTest {
                                 .status("Open")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
     }
 
@@ -510,6 +541,7 @@ class PackingListServiceTest {
                         .status("Open")
                         .category("no category")
                         .build()))
+                .userId("001")
                 .build();
     }
 

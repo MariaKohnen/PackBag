@@ -23,4 +23,5 @@ public class PackingList {
     private LocalDate dateOfArrival;
     private String color;
     private List<PackingItem> packingItemList;
+    private String userId;
 }
