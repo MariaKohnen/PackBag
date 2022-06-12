@@ -40,8 +40,9 @@ public class PackingListController {
     }
 
     @PostMapping
-    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto) {
-        return packingListService.addNewPackingList(newPackingListDto);
+    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto, Principal principal) {
+        String username = principal.getName();
+        return packingListService.addNewPackingList(newPackingListDto, username);
     }
 
     @PutMapping("{id}")

@@ -143,6 +143,7 @@ class PackingListControllerTest {
                 .id(actual.getId())
                 .destination("Kyoto")
                 .color("#fbc117")
+                .userId("001")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -185,6 +186,7 @@ class PackingListControllerTest {
                 .id(actual.getId())
                 .destination("Kyoto")
                 .color("#5f8bc0")
+                .userId("001")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);

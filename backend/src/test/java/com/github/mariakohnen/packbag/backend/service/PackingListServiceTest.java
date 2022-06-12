@@ -86,25 +86,31 @@ class PackingListServiceTest {
     @Test
     void addNewPackingList_whenNameIsGiven_shouldReturnNewPackingList() {
         //GIVEN
+        when(appUserRepository.findByUsername("nameOfUser")).thenReturn(Optional.ofNullable(newAppUser()));
+
         PackingList packingListToAdd = PackingList.builder()
                 .destination("Kyoto")
                 .color("#fbc117")
+                .userId("001")
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
                 .color("#fbc117")
+                .userId("001")
                 .build());
         //WHEN
-        PackingList actual = packingListService.addNewPackingList(newPackingListDto());
+        PackingList actual = packingListService.addNewPackingList(newPackingListDto(), "nameOfUser");
         //THEN
         PackingList expected = PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
                 .color("#fbc117")
+                .userId("001")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).insert(packingListToAdd);
+        verify(appUserRepository).findByUsername("nameOfUser");
     }
 
     @Test
@@ -113,7 +119,7 @@ class PackingListServiceTest {
         NewPackingListDto emptyList = NewPackingListDto.builder()
                 .build();
         //WHEN//THEN
-        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(emptyList));
+        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(emptyList, "nameOfUser"));
     }
 
     @Test
@@ -123,30 +129,35 @@ class PackingListServiceTest {
                 .destination("   ")
                 .build();
         //WHEN//THEN
-        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(itemWithEmptyString));
+        assertThrows(IllegalArgumentException.class, () -> packingListService.addNewPackingList(itemWithEmptyString, "nameOfUser"));
     }
 
     @Test
     void addNewPackingList_whenColorIsNull_shouldSetDefaultColor() {
         //GIVEN
+        when(appUserRepository.findByUsername("nameOfUser")).thenReturn(Optional.ofNullable(newAppUser()));
+
         PackingList packingListToAdd = PackingList.builder()
                 .destination("Kyoto")
                 .color("#5f8bc0")
+                .userId("001")
                 .build();
         when(packingListRepository.insert(packingListToAdd)).thenReturn(PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
                 .color("#5f8bc0")
+                .userId("001")
                 .build());
         //WHEN
         PackingList actual = packingListService.addNewPackingList(NewPackingListDto.builder()
                 .destination("Kyoto")
-                .build());
+                .build(), "nameOfUser");
         //THEN
         PackingList expected = PackingList.builder()
                 .id("1")
                 .destination("Kyoto")
                 .color("#5f8bc0")
+                .userId("001")
                 .build();
         assertEquals(expected, actual);
         verify(packingListRepository).insert(packingListToAdd);

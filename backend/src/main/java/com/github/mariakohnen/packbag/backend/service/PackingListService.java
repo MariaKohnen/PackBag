@@ -31,22 +31,25 @@ public class PackingListService {
     }
 
     public List<PackingList> getAllPackingListsByUser(String username) {
-        AppUser appUser= appUserRepository.findByUsername(username)
+        AppUser actualAppUser= appUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("The user with the name: " + username + "could not be found."));
-        String userId = appUser.getId();
+        String userId = actualAppUser.getId();
         return packingListRepository.findAllByUserId(userId);
     }
 
-    public PackingList addNewPackingList(NewPackingListDto newPackingListDto) {
+    public PackingList addNewPackingList(NewPackingListDto newPackingListDto, String username) {
         if (newPackingListDto.getDestination() == null || newPackingListDto.getDestination().trim().equals("")) {
             throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
         if (newPackingListDto.getColor() == null) {
             newPackingListDto.setColor("#5f8bc0");
         }
+        AppUser actualAppUser = appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("The user with the name: " + username + "could not be found."));
         PackingList newPackingList = PackingList.builder()
                 .destination(newPackingListDto.getDestination())
                 .color(newPackingListDto.getColor())
+                .userId(actualAppUser.getId())
                 .build();
         return packingListRepository.insert(newPackingList);
     }
