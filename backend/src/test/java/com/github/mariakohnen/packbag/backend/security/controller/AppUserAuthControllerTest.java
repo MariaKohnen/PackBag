@@ -87,7 +87,7 @@ class AppUserAuthControllerTest {
                 .build();
         //WHEN
         String jwt = webTestClient.post()
-                .uri("/auth/login/registration")
+                .uri("/auth/registration")
                 .bodyValue(newUserDto)
                 .exchange()
                 .expectStatus().isOk()
@@ -116,7 +116,7 @@ class AppUserAuthControllerTest {
                 .uri("/auth/login/registration")
                 .bodyValue(newUserDto)
                 .exchange()
-                .expectStatus().isEqualTo(400);
+                .expectStatus().isEqualTo(404);
     }
 
     @ParameterizedTest
@@ -133,7 +133,7 @@ class AppUserAuthControllerTest {
                 .uri("/auth/login/registration")
                 .bodyValue(newUserDto)
                 .exchange()
-                .expectStatus().isEqualTo(400);
+                .expectStatus().isEqualTo(404);
     }
 
     private AppUser createTestUserInRepoAndGet() {

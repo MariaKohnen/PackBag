@@ -18,7 +18,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         ErrorResponse bodyOfResponse = ErrorResponse.builder()
                 .error(HttpStatus.BAD_REQUEST)
-                .errorMessage("There was an illegal argument in the request.")
+                .errorMessage(exception.getMessage())
                 .errorCause(exception.toString())
                 .timestamp(LocalDateTime.now())
                 .requestUri(request.getDescription(false))
@@ -32,7 +32,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         ErrorResponse bodyOfResponse = ErrorResponse.builder()
                 .error(HttpStatus.NOT_FOUND)
-                .errorMessage("Element not found.")
+                .errorMessage(exception.getMessage())
                 .errorCause(exception.toString())
                 .timestamp(LocalDateTime.now())
                 .requestUri(request.getDescription(false))
@@ -40,4 +40,19 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
+
+    @ExceptionHandler(value = {NameAlreadyExistException.class})
+    protected ResponseEntity<Object> handleConflict(NameAlreadyExistException exception, WebRequest request) {
+
+        ErrorResponse bodyOfResponse = ErrorResponse.builder()
+                .error(HttpStatus.CONFLICT)
+                .errorMessage(exception.getMessage())
+                .errorCause(exception.toString())
+                .timestamp(LocalDateTime.now())
+                .requestUri(request.getDescription(false))
+                .build();
+
+        return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
 }

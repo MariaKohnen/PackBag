@@ -9,6 +9,8 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import LoginPage from "./pages/LoginPage";
 import RequireAuth from "./routing/RequireAuth";
+import RegistrationPage from "./pages/RegistrationPage";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
 
@@ -28,7 +30,9 @@ export default function App() {
                 pauseOnHover
             />
             <Routes>
-                <Route path={'/login'} element={<LoginPage/>}/>
+                <Route path={'/hello'} element={<LandingPage />} />
+                <Route path={'/login'} element={<LoginPage />}/>
+                <Route path={'/registration'} element={<RegistrationPage/>}/>
                 <Route element={<RequireAuth/>}>
                     <Route path="/"
                            element={<PackingListOverviewPage

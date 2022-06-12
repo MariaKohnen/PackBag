@@ -8,5 +8,5 @@ export default function RequireAuth() {
 
     return (token ?
     <Outlet />
-    : <Navigate to={"/login"} />)
+    : <Navigate to={"/hello"} />)
 }

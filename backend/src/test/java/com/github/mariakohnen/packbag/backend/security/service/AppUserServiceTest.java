@@ -1,5 +1,6 @@
 package com.github.mariakohnen.packbag.backend.security.service;
 
+import com.github.mariakohnen.packbag.backend.controller.status.NameAlreadyExistException;
 import com.github.mariakohnen.packbag.backend.security.dto.AppUserLoginDto;
 import com.github.mariakohnen.packbag.backend.security.model.AppUser;
 import com.github.mariakohnen.packbag.backend.security.repository.AppUserRepository;
@@ -23,7 +24,7 @@ class AppUserServiceTest {
     private final AppUserService appUserService = new AppUserService(appUserRepository, passwordEncoder, passwordValidation);
 
     @Test
-    void createNewAppUser_whenUsernameAndPasswordIsValid_repoShouldContainUser() {
+    void createNewAppUser_whenUsernameAndPasswordIsValid_repoShouldContainUser() throws NameAlreadyExistException {
         //GIVEN
         AppUserLoginDto newUserDto = AppUserLoginDto.builder()
                 .username("nameOfUser")
@@ -68,7 +69,7 @@ class AppUserServiceTest {
                 .password("m)84n%5Bl")
                 .build();
         //WHEN //THEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> appUserService.createNewAppUser(newUserDto));
+        NameAlreadyExistException exception = assertThrows(NameAlreadyExistException.class, () -> appUserService.createNewAppUser(newUserDto));
         assertEquals("The name already exist, please choose another one.", exception.getMessage());
         verify(appUserRepository).findByUsername("existingUser");
     }

@@ -30,14 +30,11 @@ public class AppUserAuthController {
         return jwtUtilService.createToken(appUserLoginDto.getUsername());
     }
 
-    @PostMapping("/login/registration")
+    @PostMapping("/registration")
     public String postNewAppUser(@RequestBody AppUserLoginDto appUserLoginDto) {
-        try {
-            appUserService.createNewAppUser(appUserLoginDto);
-        } catch (Exception exception) {
-            throw new IllegalArgumentException("Registration failed: " + exception.getMessage());
-        }
+        appUserService.createNewAppUser(appUserLoginDto);
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUserLoginDto.getUsername(), appUserLoginDto.getPassword()));
         return jwtUtilService.createToken(appUserLoginDto.getUsername());
     }
 }
+
