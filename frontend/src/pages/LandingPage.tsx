@@ -6,12 +6,11 @@ import {AuthContext} from "../context/AuthProvider";
 export default function LandingPage() {
 
     const navigate = useNavigate()
-    const {setToken} = useContext(AuthContext)
+    const {logout} = useContext(AuthContext)
 
     useEffect(() => {
-        localStorage.removeItem("AuthToken")
-        setToken("")
-    }, [setToken])
+        logout()
+    }, [logout])
 
     return (
         <div className="landing-page-container">
