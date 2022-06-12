@@ -1,9 +1,17 @@
 import {useNavigate} from "react-router-dom";
 import "./LandingPage.css";
+import {useContext, useEffect} from "react";
+import {AuthContext} from "../context/AuthProvider";
 
 export default function LandingPage() {
 
     const navigate = useNavigate()
+    const {setToken} = useContext(AuthContext)
+
+    useEffect(() => {
+        localStorage.removeItem("AuthToken")
+        setToken("")
+    }, [setToken])
 
     return (
         <div className="landing-page-container">

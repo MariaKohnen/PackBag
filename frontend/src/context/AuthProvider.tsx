@@ -5,9 +5,11 @@ import axios from "axios";
 
 const AUTH_KEY = "AuthToken"
 
-export const AuthContext = createContext<{ token: string | undefined, login: (credentials: { username: string, password: string }) => void, userRegistration: (credentials: { username: string, password: string }) => void }>(
+export const AuthContext = createContext<{ token: string | undefined, setToken: (token: string | undefined) => void, login: (credentials: { username: string, password: string }) => void, userRegistration: (credentials: { username: string, password: string }) => void }>(
     {
-        token: undefined, login: () => {
+        token: undefined, setToken: () => {
+            toast.error("Token is not initialized ")
+        }, login: () => {
             toast.error("Login not initialized.")
         }, userRegistration: () => {
             toast.error("Registration not initialized")
@@ -47,7 +49,7 @@ export default function AuthProvider({children}: AuthProviderProps) {
 
     return (
         <div>
-            <AuthContext.Provider value={{token, login, userRegistration}}>
+            <AuthContext.Provider value={{token, setToken, login, userRegistration}}>
                 {children}
             </AuthContext.Provider>
         </div>
