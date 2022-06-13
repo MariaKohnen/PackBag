@@ -1,26 +1,32 @@
 .landing-page-container {
-    height: 85vh;
+    min-width: 350px;
+    max-width: 60%;
+    margin: 114px auto 0 auto;
+    height: 65vh;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-end;
 }
 
-.landing-page-container > h1 {
+.landing-page-container > div {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.landing-page-container h1 {
     margin: 0;
-    padding-left: 20px;
-    padding-right: 20px;
     font-size: 5rem;
     color: #eaeadf;
 }
 
-.landing-page-container > h1:nth-child(odd) {
-    text-align: left;
+.landing-page-container > div > h1:nth-child(odd) {
+    margin-left: -40px;
     margin-bottom: -10px;
 }
 
-.landing-page-container > h1:nth-child(even) {
-    text-align: right;
+.landing-page-container > div > h1:nth-child(even) {
+    margin-left: 40px;
 }
 
 .landing-page-container > button {

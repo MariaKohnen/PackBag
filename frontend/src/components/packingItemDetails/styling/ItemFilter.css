@@ -11,11 +11,11 @@
 }
 
 .dd-filter-buttons {
+    width: 30%;
+    float: right;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    position: absolute;
-    right: 50px;
     padding: 5px;
     background-color: #eaeadf;
     border-top: 1.2px solid #414e4f;
@@ -27,4 +27,8 @@
     border: none;
     font-size: 0.9rem;
     color: #5a6b6c;
+}
+
+.dd-filter-wrapper p {
+    display: inline-block;
 }

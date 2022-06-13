@@ -56,7 +56,7 @@ export default function ItemFilter({actualItemList, setFilter, filteredItems, se
     return (
         <IconContext.Provider value={{color: '#465556'}}>
             <div className="dd-filter-wrapper">
-                <div role="button" onClick={() => toggle()}>Filter
+                <div role="button" onClick={() => toggle()}><p>Filter</p>
                     {open ? <AiOutlineMinus/>
                         : <AiOutlinePlus/>}
                 </div>

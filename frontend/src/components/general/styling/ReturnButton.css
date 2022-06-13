@@ -1,8 +1,9 @@
 .return-button-container {
     margin-left: -30px;
+    padding-right: 5px;
     display: inline;
     position: fixed;
-    top: 50%;
+    top: 43px;
 }
 
 .return-button-container button {
