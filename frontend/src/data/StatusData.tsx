@@ -1,8 +1,7 @@
 import {GrCircleAlert, GrRadial, GrStatusGood} from "react-icons/gr";
 import React from "react";
 
-export const StatusData =
-    [
+export const StatusData = [
         {
             id: 1,
             value: "Open",
@@ -18,4 +17,4 @@ export const StatusData =
             value: "Packed",
             icon: <GrStatusGood />
         },
-    ];
+    ]

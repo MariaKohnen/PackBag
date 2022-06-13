@@ -5,12 +5,12 @@ import AddNewPackingList from "../components/AddNewPackingList";
 import {PackingList} from "../model/PackingList";
 
 type PackingListOverviewPageProps = {
-    packingLists : PackingList[]
-    addPackingList : (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => void
-    deletePackingList : (id: string) => void
+    packingLists: PackingList[]
+    addPackingList: (newPackingList: Omit<PackingList, "id" | "dateOfArrival">) => void
+    deletePackingList: (id: string) => void
 }
 
-export default function PackingListOverviewPage({packingLists, addPackingList, deletePackingList} : PackingListOverviewPageProps) {
+export default function PackingListOverviewPage({packingLists, addPackingList, deletePackingList}: PackingListOverviewPageProps) {
 
     return (
         <div>

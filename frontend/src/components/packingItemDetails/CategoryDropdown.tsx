@@ -12,13 +12,13 @@ type CategoryDropdownProps = {
 export default function CategoryDropdown({categories, newCategory, setNewCategory, setButtonText}: CategoryDropdownProps) {
     const [open, setOpen] = useState<boolean>(false)
 
-    const toggle = () => setOpen(!open);
+    const toggle = () => setOpen(!open)
 
     const handleOnClick = (item: string) => {
         if (categories.map(current => current === item)) {
             setNewCategory(item)
             setButtonText("confirm")
-            toggle();
+            toggle()
         } else return
     }
 

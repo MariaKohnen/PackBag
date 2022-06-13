@@ -48,7 +48,6 @@ export default function LoginPage() {
                     onClick={() => navigate("/registration")}>
                 You have no account? <b>Please sign up here!</b>
             </button>
-
         </div>
     )
 }
