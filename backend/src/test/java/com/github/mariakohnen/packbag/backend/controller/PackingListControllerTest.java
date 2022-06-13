@@ -56,14 +56,15 @@ class PackingListControllerTest {
     String invalidId = "123";
 
     @Test
-    void getAllPackingLists() {
+    void getAllPackingListsByUser_whenUsernameIsValid_shouldReturnPackingListOfUser() {
         //GIVEN
-        PackingList packingList2 = PackingList.builder()
+        PackingList packingListOfOtherUser = PackingList.builder()
                 .id("2")
                 .destination("Tokyo")
+                .userId("002")
                 .build();
         packingListRepository.insert(packingListWithOneItem());
-        packingListRepository.insert(packingList2);
+        packingListRepository.insert(packingListOfOtherUser);
         //WHEN
         List<PackingList> actual = webTestClient.get()
                 .uri("/api/packinglists")
@@ -84,10 +85,7 @@ class PackingListControllerTest {
                                 .status("Open")
                                 .category("no category")
                                 .build()))
-                        .build(),
-                PackingList.builder()
-                        .id("2")
-                        .destination("Tokyo")
+                        .userId("001")
                         .build());
         assertEquals(expected, actual);
     }
@@ -145,6 +143,7 @@ class PackingListControllerTest {
                 .id(actual.getId())
                 .destination("Kyoto")
                 .color("#fbc117")
+                .userId("001")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -187,6 +186,7 @@ class PackingListControllerTest {
                 .id(actual.getId())
                 .destination("Kyoto")
                 .color("#5f8bc0")
+                .userId("001")
                 .build();
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
@@ -218,6 +218,7 @@ class PackingListControllerTest {
                         .status("Open")
                         .category("no category")
                         .build()))
+                .userId("001")
                 .build();
         assertEquals(expected, actual);
     }
@@ -466,6 +467,7 @@ class PackingListControllerTest {
                                 .name("swimwear")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
         assertEquals(excepted, actual);
     }
@@ -502,7 +504,7 @@ class PackingListControllerTest {
     private String generateJWTToken() {
         String hashedPassword = passwordEncoder.encode("userPassword");
         AppUser testUser = AppUser.builder()
-                .id("111")
+                .id("001")
                 .username("nameOfUser")
                 .password(hashedPassword)
                 .build();
@@ -545,6 +547,7 @@ class PackingListControllerTest {
                         .status("Open")
                         .category("no category")
                         .build()))
+                .userId("001")
                 .build();
     }
 
@@ -564,6 +567,7 @@ class PackingListControllerTest {
                                 .name("swimwear")
                                 .category("clothing")
                                 .build()))
+                .userId("001")
                 .build();
     }
 

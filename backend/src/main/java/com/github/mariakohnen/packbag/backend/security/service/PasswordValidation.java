@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class PasswordValidation {
 
     public boolean validatePassword(String userPassword) {
-        String regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+        String regex = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=/§!()?])(?=\\S+$).{8,}";
         Pattern p = Pattern.compile(regex);
         if (userPassword == null) {
             throw new IllegalArgumentException("The password is not given, please enter a valid password.");

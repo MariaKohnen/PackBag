@@ -6,7 +6,10 @@ import com.github.mariakohnen.packbag.backend.dto.UpdatePackingListDto;
 import com.github.mariakohnen.packbag.backend.model.PackingItem;
 import com.github.mariakohnen.packbag.backend.model.PackingList;
 import com.github.mariakohnen.packbag.backend.repository.PackingListRepository;
+import com.github.mariakohnen.packbag.backend.security.model.AppUser;
+import com.github.mariakohnen.packbag.backend.security.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,28 +20,36 @@ import java.util.NoSuchElementException;
 public class PackingListService {
 
     private final PackingListRepository packingListRepository;
+    private final AppUserRepository appUserRepository;
     private final IdService idService;
 
     @Autowired
-    public PackingListService(PackingListRepository packingListRepository, IdService idService) {
+    public PackingListService(PackingListRepository packingListRepository, AppUserRepository appUserRepository, IdService idService) {
         this.packingListRepository = packingListRepository;
+        this.appUserRepository = appUserRepository;
         this.idService = idService;
     }
 
-    public List<PackingList> getAllPackingLists() {
-        return packingListRepository.findAll();
+    public List<PackingList> getAllPackingListsByUser(String username) {
+        AppUser actualAppUser= appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("The user with the name: " + username + "could not be found."));
+        String userId = actualAppUser.getId();
+        return packingListRepository.findAllByUserId(userId);
     }
 
-    public PackingList addNewPackingList(NewPackingListDto newPackingListDto) {
+    public PackingList addNewPackingList(NewPackingListDto newPackingListDto, String username) {
         if (newPackingListDto.getDestination() == null || newPackingListDto.getDestination().trim().equals("")) {
             throw new IllegalArgumentException("Destination of the given packing list was not given.");
         }
         if (newPackingListDto.getColor() == null) {
             newPackingListDto.setColor("#5f8bc0");
         }
+        AppUser actualAppUser = appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("The user with the name: " + username + "could not be found."));
         PackingList newPackingList = PackingList.builder()
                 .destination(newPackingListDto.getDestination())
                 .color(newPackingListDto.getColor())
+                .userId(actualAppUser.getId())
                 .build();
         return packingListRepository.insert(newPackingList);
     }

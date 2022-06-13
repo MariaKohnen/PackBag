@@ -9,6 +9,7 @@ import com.github.mariakohnen.packbag.backend.service.PackingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,9 @@ public class PackingListController {
     }
 
     @GetMapping
-    public List<PackingList> getAllPackingLists() {
-        return packingListService.getAllPackingLists();
+    public List<PackingList> getAllPackingListsByUser(Principal principal) {
+        String username = principal.getName();
+        return packingListService.getAllPackingListsByUser(username);
     }
 
     @GetMapping("{id}")
@@ -38,8 +40,9 @@ public class PackingListController {
     }
 
     @PostMapping
-    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto) {
-        return packingListService.addNewPackingList(newPackingListDto);
+    public PackingList postNewPackingList(@RequestBody NewPackingListDto newPackingListDto, Principal principal) {
+        String username = principal.getName();
+        return packingListService.addNewPackingList(newPackingListDto, username);
     }
 
     @PutMapping("{id}")
