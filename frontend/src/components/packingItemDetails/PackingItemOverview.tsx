@@ -53,7 +53,7 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
 
                         <ItemFilter
                             actualItemList={actualItemList}
-                            setFilter={setFilteredItems}
+                            setFilteredItems={setFilteredItems}
                             filteredItems={filteredItems}
                             setFilterText={setFilterText}/>
 
