@@ -2,7 +2,6 @@
     margin: 30px 20px 10px 20px;
     border-bottom: 1px solid #6a7a7a;
     display: flex;
-    justify-content: space-between;
 }
 
 .add-packing-item .text-field-item {
