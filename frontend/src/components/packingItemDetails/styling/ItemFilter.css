@@ -1,8 +1,14 @@
 .dd-filter-wrapper {
     margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
 }
 
 .dd-filter-wrapper > div {
+    position: absolute;
+    right: 0;
     font-size: 0.9rem;
     letter-spacing: 1px;
     font-weight: bold;
@@ -11,8 +17,9 @@
 }
 
 .dd-filter-buttons {
+    position: absolute;
+    top: 35px;
     width: 30%;
-    float: right;
     display: flex;
     flex-direction: column;
     align-items: flex-end;

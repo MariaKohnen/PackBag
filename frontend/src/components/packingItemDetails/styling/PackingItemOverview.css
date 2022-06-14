@@ -9,7 +9,7 @@
 }
 
 .item-container {
-    margin: 15px 20px 0 20px;
+    margin: 55px 20px 0 20px;
 }
 
 .item-container-header {
@@ -21,7 +21,6 @@
 }
 
 .item-container-header button {
-    float: right;
     background: unset;
     border: none;
     font-weight: bolder;
