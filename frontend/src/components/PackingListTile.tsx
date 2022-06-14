@@ -18,7 +18,7 @@ export default function PackingListTile({packingList, deletePackingList, tileCol
     const [popUp, setPopUp] = useState<boolean>(false)
 
     const handleDelete: MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.stopPropagation();
+        event.stopPropagation()
         setPopUp(true)
     }
 
@@ -30,11 +30,10 @@ export default function PackingListTile({packingList, deletePackingList, tileCol
                     tileColor={tileColor}
                     deletePackingList={deletePackingList}
                     setPopUp={setPopUp}/>
-                :
-                <div className="packing-list-tile" style={{background: tileColor}} onClick={() =>
+                :<div className="packing-list-tile" style={{background: tileColor}} onClick={() =>
                     navigate(`/packinglist/${packingList.id}`)}>
                     <p>{packingList.destination}</p>
-                        <button onClick={handleDelete}><AiOutlineCloseCircle /></button>
+                    <button onClick={handleDelete}><AiOutlineCloseCircle/></button>
                 </div>}
         </IconContext.Provider>
     )

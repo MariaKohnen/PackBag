@@ -13,4 +13,4 @@ export const CategoryData =
         "shoes",
         "toiletries",
         "no category"
-    ];
+    ]

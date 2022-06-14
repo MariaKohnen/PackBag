@@ -16,7 +16,7 @@ type PackingListDetailModeProps = {
 
 export default function PackingListDetailMode({detailedPackingList, setShowsDetails, addItemToPackingList, deleteItem, updateItemAndGetUpdatedList}: PackingListDetailModeProps) {
 
-    const formattedDate = new Date(detailedPackingList.dateOfArrival).toLocaleDateString();
+    const formattedDate = new Date(detailedPackingList.dateOfArrival).toLocaleDateString()
 
     return (
         <div>

@@ -14,7 +14,7 @@ import LandingPage from "./pages/LandingPage";
 
 export default function App() {
 
-    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem} = usePackingLists();
+    const {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem} = usePackingLists()
 
     return (
         <div className="App">

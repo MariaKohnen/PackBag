@@ -10,13 +10,13 @@ type AddPackingListProp = {
 }
 
 export default function AddNewPackingList({addPackingList, lengthOfList}: AddPackingListProp) {
-    const [newDestination, setNewDestination] = useState('')
+    const [newDestination, setNewDestination] = useState("")
 
     const getOnSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newDestination.trim()) {
             toast.error("Destination is required.")
-            setNewDestination('')
+            setNewDestination("")
             return
         }
         const newPackingList: Omit<PackingList, "id" | "dateOfArrival"> = {
@@ -24,11 +24,11 @@ export default function AddNewPackingList({addPackingList, lengthOfList}: AddPac
             color: getColorForList()
         }
         addPackingList(newPackingList)
-        setNewDestination('')
+        setNewDestination("")
     }
 
     const getColorForList = () : string => {
-        return ColorData[lengthOfList%ColorData.length]
+        return ColorData[lengthOfList % ColorData.length]
     }
 
     return (
@@ -43,7 +43,6 @@ export default function AddNewPackingList({addPackingList, lengthOfList}: AddPac
                        type="submit"
                        value={"add destination"}/>
             </form>
-
         </div>
     )
 }

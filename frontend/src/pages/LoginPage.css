@@ -6,11 +6,14 @@
 }
 
 .auth-container {
-    height: 57vh;
+    min-width: 350px;
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 65vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    align-items: stretch;
     gap: 20px;
 }
 

@@ -16,10 +16,10 @@ type ItemOverviewProps = {
 
 export function ItemCard({packingItem, deleteItem, updateItemAndGetUpdatedList, id}: ItemOverviewProps) {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const confirmDelete: MouseEventHandler<HTMLButtonElement> = (event) => {
-        event.stopPropagation();
+        event.stopPropagation()
         deleteItem(id, packingItem.id)
     }
 
@@ -42,13 +42,13 @@ export function ItemCard({packingItem, deleteItem, updateItemAndGetUpdatedList, 
                 status: nextStatus,
                 category: packingItem.category
             }
-            updateItemAndGetUpdatedList(id, packingItem.id, editItemDto);
+            updateItemAndGetUpdatedList(id, packingItem.id, editItemDto)
         }
     }
 
     const getNextStatus = (status: string) => {
         const actualIndex = StatusData.findIndex(obj => obj.value === status)
-        const nextIndex = (actualIndex + 1)%StatusData.length
+        const nextIndex = (actualIndex + 1) % StatusData.length
         return StatusData[nextIndex].value
     }
 
