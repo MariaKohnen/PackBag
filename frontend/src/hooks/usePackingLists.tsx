@@ -72,5 +72,4 @@ export default function usePackingLists() {
     }
 
 return {packingLists, addPackingList, updatePackingList, deletePackingList, addNewItem, deletePackingItem, updatePackingItem}
-
 }
