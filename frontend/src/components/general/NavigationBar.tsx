@@ -8,10 +8,9 @@ import {GiHamburgerMenu} from "react-icons/gi";
 
 export default function NavigationBar() {
 
-    const [openNavBar, setOpenNavBar] = useState(false);
+    const [openNavBar, setOpenNavBar] = useState(false)
 
-    const openSidebar = () => setOpenNavBar(!openNavBar);
-
+    const openSidebar = () => setOpenNavBar(!openNavBar)
 
     return (
         <IconContext.Provider value={{color: '#eaeadf'}}>

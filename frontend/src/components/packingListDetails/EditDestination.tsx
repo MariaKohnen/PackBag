@@ -1,9 +1,9 @@
 import {PackingList} from "../../model/PackingList";
 
 type EditDestinationProps = {
-    detailedPackingList : PackingList
-    newDestination : string
-    setNewDestination: (newDestination : string) => void
+    detailedPackingList: PackingList
+    newDestination: string
+    setNewDestination: (newDestination: string) => void
     setButtonText: (buttonText: string) => void
 }
 

@@ -6,12 +6,13 @@ import "./styling/ItemFilter.css";
 
 type FilteredItemProps = {
     actualItemList: PackingItem[] | undefined
-    setFilter: (filteredItems: PackingItem[] | undefined) => void
+    setFilteredItems: (filteredItems: PackingItem[] | undefined) => void
     filteredItems: PackingItem[] | undefined
-    setFilterText: (text: string) => void
+    newFilter: string
+    setNewFilter: (filterText: string) => void
 }
 
-export default function ItemFilter({actualItemList, setFilter, filteredItems, setFilterText}: FilteredItemProps) {
+export default function ItemFilter({actualItemList, setFilteredItems, filteredItems, newFilter, setNewFilter}: FilteredItemProps) {
 
     const [open, setOpen] = useState<boolean>(false)
 
@@ -19,53 +20,44 @@ export default function ItemFilter({actualItemList, setFilter, filteredItems, se
 
     useEffect(() => {
         const updatedFilterItems = filteredItems?.filter(item => {
-           return actualItemList?.includes(item)})
-        setFilter(updatedFilterItems)
+            return actualItemList?.includes(item)
+        })
+        setFilteredItems(updatedFilterItems)
         // eslint-disable-next-line
     }, [actualItemList])
 
-    const handleFilterAll = () => {
-        actualItemList && setFilter(actualItemList)
-        setFilterText("show all")
-        toggle()
-    }
-
-    const handleFilterStatusOpen = () => {
-        actualItemList && setFilter(actualItemList.filter(item => item.status === "Open"))
-        setFilterText("Open")
-        toggle()
-    }
-
-    const handleFilterStatusToDo = () => {
-        actualItemList && setFilter(actualItemList.filter(item => item.status === "To be done"))
-        setFilterText("To be done")
-        toggle()
-    }
-
-    const handleFilterStatusDone = () => {
-        actualItemList && setFilter(actualItemList.filter(item => item.status === "Done"))
-        setFilterText("Done")
-        toggle()
-    }
+    useEffect(() => {
+        if (newFilter === "") {
+            return
+        }
+        newFilter === "show all" ?
+            actualItemList && setFilteredItems(actualItemList)
+            : actualItemList && setFilteredItems(actualItemList.filter(item => item.status === newFilter))
+        setNewFilter(newFilter)
+        open && toggle()
+        //eslint-disable-next-line
+    }, [actualItemList, newFilter])
 
     const handleResetFilter = () => {
-        setFilter(undefined)
+        setFilteredItems(undefined)
+        setNewFilter("")
         toggle()
     }
+
+    const filterOption = ["show all", "Open", "To be done", "Packed"]
 
     return (
         <IconContext.Provider value={{color: '#465556'}}>
             <div className="dd-filter-wrapper">
-                <div role="button" onClick={() => toggle()}>Filter
+                <div role="button" onClick={() => toggle()}><p>Filter</p>
                     {open ? <AiOutlineMinus/>
                         : <AiOutlinePlus/>}
                 </div>
                 {open &&
                     <div className="dd-filter-buttons">
-                        <button type="submit" onClick={handleFilterAll}>show all</button>
-                        <button type="submit" onClick={handleFilterStatusOpen}> Open</button>
-                        <button type="submit" onClick={handleFilterStatusToDo}> To be done</button>
-                        <button type="submit" onClick={handleFilterStatusDone}> Done</button>
+                        {filterOption.map(filter => <button type="submit"
+                                                            key={filter.toString()}
+                                                            onClick={() => setNewFilter(filter)}>{filter}</button>)}
                         <button type="submit" onClick={handleResetFilter}>Reset</button>
                     </div>
                 }

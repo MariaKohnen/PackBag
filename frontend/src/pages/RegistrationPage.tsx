@@ -46,7 +46,7 @@ export default function RegistrationPage() {
             </form>
             <button className="text-button"
                     type="submit"
-                    onClick={() => navigate("/registration")}>
+                    onClick={() => navigate("/login")}>
                 You have an account already? <b>Login here!</b>
             </button>
         </div>

@@ -10,15 +10,15 @@ type DropdownProps = {
 }
 
 export default function StatusDropdown({status, newStatus, setNewStatus, setButtonText}: DropdownProps) {
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false)
 
-    const toggle = () => setOpen(!open);
+    const toggle = () => setOpen(!open)
 
     const handleOnClick = (item: { id: number, value: string, icon: JSX.Element }) => {
         if (status.map(current => current.id === item.id)) {
             setNewStatus(item);
             setButtonText("confirm")
-            toggle();
+            toggle()
         } else return
     }
 

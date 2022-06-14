@@ -20,12 +20,12 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
 
     const {itemId} = useParams()
     const navigate = useNavigate()
-    const [newName, setNewName] = useState<string>('')
+    const [newName, setNewName] = useState<string>("")
     const [newStatus, setNewStatus] = useState<{ id: number, value: string, icon: JSX.Element }>()
-    const [newCategory, setNewCategory] = useState<string>('')
+    const [newCategory, setNewCategory] = useState<string>("")
     const [buttonText, setButtonText] = useState<string>("go back")
 
-    const handleClick  = (event: FormEvent<HTMLFormElement>) => {
+    const handleClick = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!newName.trim()) {
             toast.error("The item was not updated, the name was not given!")
@@ -33,27 +33,30 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
         }
         if (detailedPackingItem) {
             const editedItemDto: Omit<PackingItem, "id"> = {
-            name: newName,
-            status : getStatusOfItem(detailedPackingItem),
-            category : newCategory
-        }
+                name: newName,
+                status: getStatusOfItem(detailedPackingItem),
+                category: newCategory
+            }
             itemId && updateItemAndGetUpdatedList(id, itemId, editedItemDto)
-            navigate(-1)}}
-
-    const getStatusOfItem = (packingList: PackingItem): string => {
-         return newStatus ?
-            newStatus.value :
-            packingList.status
+            navigate(-1)
+        }
     }
 
-    useEffect( () => {
-        if(detailedPackingItem) {
+    const getStatusOfItem = (packingList: PackingItem): string => {
+        return newStatus ?
+            newStatus.value
+            : packingList.status
+    }
+
+    useEffect(() => {
+        if (detailedPackingItem) {
             const actualStatus = StatusData.find(status => status.value === detailedPackingItem.status)
             actualStatus && setNewStatus(actualStatus)
             setNewCategory(detailedPackingItem.category)
-        detailedPackingItem?
-            setNewName(detailedPackingItem.name)
-            :setNewName('')}
+            detailedPackingItem ?
+                setNewName(detailedPackingItem.name)
+                : setNewName('')
+        }
     }, [detailedPackingItem])
 
     useEffect(() => {
@@ -66,13 +69,15 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
         <form className="edit-item-container" onSubmit={handleClick}>
             <p>Change the name:</p>
             <input className="item-input-field"
-                type={"text"}
-                value={newName}
-                placeholder={detailedPackingItem && detailedPackingItem.name}
-                onChange={event => {setNewName(event.target.value)
-                    event.target.value.trim()?
-                        setButtonText("confirm")
-                        :setButtonText("go back")}}
+                   type={"text"}
+                   value={newName}
+                   placeholder={detailedPackingItem && detailedPackingItem.name}
+                   onChange={event => {
+                       setNewName(event.target.value)
+                       event.target.value.trim() ?
+                           setButtonText("confirm")
+                           : setButtonText("go back")
+                   }}
             />
             <p>Choose a status:</p>
             <StatusDropdown status={StatusData}
@@ -84,8 +89,8 @@ export default function EditPackingItem({updateItemAndGetUpdatedList, id}: EditP
                 categories={CategoryData}
                 newCategory={newCategory}
                 setNewCategory={setNewCategory}
-                setButtonText={setButtonText} />
-        <button type={"submit"}>{buttonText}</button>
+                setButtonText={setButtonText}/>
+            <button type={"submit"}>{buttonText}</button>
         </form>
     )
 }

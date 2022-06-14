@@ -8,7 +8,6 @@
 }
 
 .dd-category {
-    margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -25,7 +24,7 @@
 }
 
 .dd-category > div {
-    padding-right: 13px;
+    padding-right: 7px;
     margin-bottom: -4px;
 }
 

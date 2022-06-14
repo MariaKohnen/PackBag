@@ -19,14 +19,14 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
 
     const {detailedPackingList, getDetailedPackingListById, setDetailedPackingList} = useDetailedPackingList()
     const {id} = useParams()
-    const [showsDetails, setShowsDetails] = useState<boolean>(false);
+    const [showsDetails, setShowsDetails] = useState<boolean>(false)
 
     const updateListAndGetNewDetails = (idOfEditedList: string, editedPackingList: Omit<PackingList, "id" | "color">) => {
         updatePackingList(idOfEditedList, editedPackingList)
             .then((response) => response && setDetailedPackingList(response))
     }
 
-    const addItemToPackingList = (idOfList: string, newPackingItem : Omit<PackingItem, "id">) => {
+    const addItemToPackingList = (idOfList: string, newPackingItem: Omit<PackingItem, "id">) => {
         addNewItem(idOfList, newPackingItem)
             .then(response => response && setDetailedPackingList(response))
     }
@@ -64,8 +64,7 @@ export default function PackingListDetailsPage({updatePackingList, addNewItem, d
                                 setShowsDetails={setShowsDetails}
                                 addItemToPackingList={addItemToPackingList}
                                 deleteItem={deleteItemGetUpdatedList}
-                                updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}/>
-                        }
+                                updateItemAndGetUpdatedList={updateItemAndGetUpdatedList}/>}
                     </div>}
             </div>
         </IconContext.Provider>

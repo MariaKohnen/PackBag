@@ -16,11 +16,17 @@ type PackingItemOverviewProps = {
     updateItemAndGetUpdatedList: (id: string, itemId: string, updatedPackingItem: Omit<PackingItem, "id">) => void
 }
 
-export default function PackingItemOverview({actualItemList, addItemToPackingList, id, deleteItem, updateItemAndGetUpdatedList}: PackingItemOverviewProps) {
+export default function PackingItemOverview({
+                                                actualItemList,
+                                                addItemToPackingList,
+                                                id,
+                                                deleteItem,
+                                                updateItemAndGetUpdatedList
+                                            }: PackingItemOverviewProps) {
 
     const [categorizedItems, setCategorizedItems] = useState<Map<string, PackingItem[]>>(new Map())
     const [filteredItems, setFilteredItems] = useState<PackingItem[] | undefined>()
-    const [filterText, setFilterText] = useState<string>()
+    const [newFilter, setNewFilter] = useState("")
 
     useEffect(() => {
         const itemsByCategory = new Map<string, PackingItem[]>()
@@ -37,6 +43,7 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
 
     const handleResetFilter = () => {
         setFilteredItems(undefined)
+        setNewFilter("")
     }
 
     return (
@@ -53,14 +60,15 @@ export default function PackingItemOverview({actualItemList, addItemToPackingLis
 
                         <ItemFilter
                             actualItemList={actualItemList}
-                            setFilter={setFilteredItems}
+                            setFilteredItems={setFilteredItems}
                             filteredItems={filteredItems}
-                            setFilterText={setFilterText}/>
+                            newFilter={newFilter}
+                            setNewFilter={setNewFilter}/>
 
                         {filteredItems ?
                             <div className="item-container">
                                 <div className="item-container-header">
-                                    <p>Filter: {filterText} </p>
+                                    <p>Filter: {newFilter} </p>
                                     <button onClick={handleResetFilter}>reset</button>
                                 </div>
                                 {filteredItems && filteredItems.map(item =>

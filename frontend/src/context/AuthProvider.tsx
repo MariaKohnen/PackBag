@@ -37,20 +37,22 @@ export default function AuthProvider({children}: AuthProviderProps) {
     }
 
     const userRegistration = (credentials: { username: string, password: string }) => {
-            axios.post("auth/registration", credentials)
-                .then(response => response.data)
-                .then(newToken => {
-                    setToken(newToken)
-                    localStorage.setItem(AUTH_KEY, newToken)
-                })
-                .then(() => navigate("/"))
-                .catch(exception => toast.error(exception + "Login failed"))
-        }
+        axios.post("auth/registration", credentials)
+            .then(response => response.data)
+            .then(newToken => {
+                setToken(newToken)
+                localStorage.setItem(AUTH_KEY, newToken)
+            })
+            .then(() => navigate("/"))
+            .catch(error => toast.error(error.response.status === 409 ?
+                "Username already exist. Please choose another one."
+                : "Username is empty or password is invalid. Please proof your input."))
+    }
 
-        const logout = () => {
-            localStorage.removeItem("AuthToken")
-            setToken("")
-        }
+    const logout = () => {
+        localStorage.removeItem("AuthToken")
+        setToken("")
+    }
 
     return (
         <div>

@@ -6,15 +6,15 @@ import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import "./styling/EditDateOfArrival.css";
 
 type EditDateOfArrivalProps = {
-    newDateOfArrival : Date
+    newDateOfArrival: Date
     setNewDateOfArrival: (newDateOfArrival: Date) => void
     setButtonText: (buttonText: string) => void
 }
 
 export default function EditDateOfArrival({newDateOfArrival, setNewDateOfArrival, setButtonText}: EditDateOfArrivalProps) {
 
-    const today = new Date();
-    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    const today = new Date()
+    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
 
     return (
         <div className="to-change">
@@ -34,4 +34,3 @@ export default function EditDateOfArrival({newDateOfArrival, setNewDateOfArrival
         </div>
     )
 }
-
