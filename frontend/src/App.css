@@ -1,6 +1,4 @@
 .App {
-  min-width: 350px;
-  max-width: 60%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 30px;
@@ -29,4 +27,10 @@ button, .packing-list-tile, .form-button, .item-card, .item-card p, div[role="bu
 
 h2, p {
   cursor: default;
+}
+
+@media (min-width: 768px) {
+  .App  {
+    width: 65%;
+  }
 }

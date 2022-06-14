@@ -1,6 +1,4 @@
 .landing-page-container {
-    min-width: 350px;
-    max-width: 60%;
     margin: 114px auto 0 auto;
     height: 65vh;
     display: flex;
