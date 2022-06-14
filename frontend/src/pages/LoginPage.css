@@ -6,8 +6,6 @@
 }
 
 .auth-container {
-    min-width: 350px;
-    max-width: 60%;
     margin-left: auto;
     margin-right: auto;
     height: 65vh;

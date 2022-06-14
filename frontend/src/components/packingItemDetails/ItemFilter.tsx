@@ -8,13 +8,13 @@ type FilteredItemProps = {
     actualItemList: PackingItem[] | undefined
     setFilteredItems: (filteredItems: PackingItem[] | undefined) => void
     filteredItems: PackingItem[] | undefined
-    setFilterText: (text: string) => void
+    newFilter: string
+    setNewFilter: (filterText: string) => void
 }
 
-export default function ItemFilter({actualItemList, setFilteredItems, filteredItems, setFilterText}: FilteredItemProps) {
+export default function ItemFilter({actualItemList, setFilteredItems, filteredItems, newFilter, setNewFilter}: FilteredItemProps) {
 
     const [open, setOpen] = useState<boolean>(false)
-    const [newFilter, setNewFilter] = useState("")
 
     const toggle = () => setOpen(!open)
 
@@ -33,13 +33,14 @@ export default function ItemFilter({actualItemList, setFilteredItems, filteredIt
         newFilter === "show all" ?
             actualItemList && setFilteredItems(actualItemList)
             : actualItemList && setFilteredItems(actualItemList.filter(item => item.status === newFilter))
-        setFilterText(newFilter)
+        setNewFilter(newFilter)
         open && toggle()
         //eslint-disable-next-line
     }, [actualItemList, newFilter])
 
     const handleResetFilter = () => {
         setFilteredItems(undefined)
+        setNewFilter("")
         toggle()
     }
 

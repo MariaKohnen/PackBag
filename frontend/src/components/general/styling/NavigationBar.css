@@ -51,4 +51,14 @@
     left: 45%;
 }
 
+@media (min-width: 768px) {
+    .menu-open  {
+        left: 49%;
+    }
+}
 
+@media (min-width: 768px) {
+    .navbar-toogle {
+        left: 49%;
+    }
+}
