@@ -17,7 +17,7 @@
 .add-packing-item .button {
     background-color: unset;
     border: 0;
-    padding-top: 10px;
+    padding: 10px 0 0 0;
     font-size: 1.4rem;
     color: #253d3e;
 }
